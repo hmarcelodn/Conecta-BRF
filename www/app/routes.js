@@ -20,6 +20,10 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			templateUrl: 'app/views/search.html',
 			controller: 'searchController'
 		})
+		.when('/AddPdv', {
+			templateUrl: 'app/views/new-pdv.html',
+			controller: 'pdvController'
+		})
 		.otherwise({
 			redirecTo: '/'
 		})
