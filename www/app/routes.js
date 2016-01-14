@@ -28,7 +28,21 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			templateUrl: 'app/views/search.html',
 			controller: 'searchController'			
 		})
+		.when('/Coaching',{
+			templateUrl: 'app/views/coaching.html',
+			controller: 'coachingController'
+		})
+		.when('/Execution', {
+			templateUrl: 'app/views/execution.html',
+			controller: 'executionController'
+		})
 		.otherwise({
 			redirecTo: '/'
 		})
-}]);
+}]).
+run(function($rootScope){
+	$rootScope.$on('$viewContentLoaded', function(event){
+		$('.collapsible').collapsible();
+		$('select').material_select();
+	});
+});

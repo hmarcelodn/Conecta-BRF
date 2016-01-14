@@ -1,5 +1,7 @@
 <div class="fixed-action-btn" style="bottom:15px; right: 15px;">
-	<a class="btn-floating btn-large green" href="#/Welcome"><i class="large material-icons">add_circle</i></a>
+	<a class="btn-floating btn-large green" href="#/Welcome">
+		<i class="large material-icons">add_circle</i>
+	</a>
 </div>
 		
 <main>		  
@@ -7,11 +9,11 @@
 
 		<article class="col s12">
 			<select>
-				<option value="" disabled selected>HOY</option>
+				<option value="0" disabled selected>HOY</option>
 				<option value="1">ESTA SEMANA</option>
 				<option value="2">MES ACTUAL</option>
 				<option value="3">ÚLTIMOS 30 DÍAS</option>
-				<option value="3">TRIMESTRE</option>
+				<option value="4">TRIMESTRE</option>
 			</select>
 		</article>
 
@@ -20,8 +22,12 @@
 				<div class="card-content white-text">
 					<p>
 						<center style="overflow:auto;">
-							<strong style="float:left;font-size:40px;">12</strong>
-							<strong style="float:right;font-size:20px;">PDV<br/>VISITADOS</strong>
+							<strong style="float:left;font-size:40px;">
+								{{visitedPDVs}}
+							</strong>
+							<strong style="float:right;font-size:20px;">
+								PDV<br/>VISITADOS
+							</strong>
 						</center>
 					</p>
 				</div>						
@@ -33,8 +39,12 @@
 				<div class="card-content white-text">			
 					<div class="card-content teal white-text" style="width:85%;"></div>
 						<p style="overflow:auto; margin-top:10px;">
-							<strong class="center-align" style="float:left;font-size:40px;">85%</strong>
-							<strong class="center-align" style="float:right;font-size:16px;margin-top:5px;">CUMPLIMIENTO<br/>OBTENIDO</strong>
+							<strong class="center-align" style="float:left;font-size:40px;">
+								{{obtainedCompliance}}
+							</strong>
+							<strong class="center-align" style="float:right;font-size:16px;margin-top:5px;">
+								CUMPLIMIENTO<br/>OBTENIDO
+							</strong>
 						</p>							
 				</div>						
 			</article>
@@ -45,47 +55,33 @@
 				<li>
 					<div class="collapsible-header">
 						<i class="material-icons">account_circle</i>Coching
-						<span class="badge" style="color:#54922a;"><i class="material-icons">check_circle</i>93%</span>
+						<span class="badge" style="color:#54922a;"><i class="material-icons">check_circle</i>{{executionPoints.percentage}}%
+						</span>
 					</div>
 					<div class="collapsible-body">
-							<p>Punto #1 
+							<p>
+								<span ng-repeat-start="executionPoint in executionPoints.points">{{executionPoint.name}}</span>
 								<span class="badge" style="color:#54922a;">
-									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">check_circle</i>93%
+									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">check_circle</i>{{executionPoint.percentage}}%
 								</span>
-								<br/>
-								Punto #2 
-								<span class="badge" style="color:#54922a;">
-									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">check_circle</i>93%</span>
-								<br/>
-								Punto #3 
-								<span class="badge" style="color:#f6a704;">
-									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">warning</i>72%
-								</span>
-								<br/>
-								Punto #4 
-								<span class="badge" style="color:#e84033;">
-									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">error</i>54%
-								</span>
-								<br/>							
+								<br ng-repeat-end/>						
 							</p>
 						</div>
 					</li>
 					<li>
 						<div class="collapsible-header">
 							<i class="material-icons">find_in_page</i>Ejecución
-								<span class="badge" style="color:#f6a704;"><i class="material-icons">warning
-							</i>72%</span>
+								<span class="badge" style="color:#f6a704;">
+									<i class="material-icons">warning</i>{{coachingPoints.percentage}}%
+								</span>
 						</div>
 						<div class="collapsible-body">
 							<p>							
-								Punto #1 <span class="badge" style="color:#54922a;"><i class="material-icons" style="font-size:12.9px;padding-right:5px;">check_circle</i>93%</span>
-								<br/>
-								Punto #2 <span class="badge" style="color:#54922a;"><i class="material-icons" style="font-size:12.9px;padding-right:5px;">check_circle</i>93%</span>
-								<br/>
-								Punto #3 <span class="badge" style="color:#f6a704;"><i class="material-icons" style="font-size:12.9px;padding-right:5px;">warning</i>72%</span>
-								<br/>
-								Punto #4 <span class="badge" style="color:#e84033;"><i class="material-icons" style="font-size:12.9px;padding-right:5px;">error</i>54%</span>
-								<br/>							
+								<span ng-repeat-start="coachingPoint in coachingPoints.points">{{coachingPoint.name}}</span>
+								<span class="badge" style="color:#54922a;">
+									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">check_circle</i>{{coachingPoint.percentage}}%
+								</span>
+								<br ng-repeat-end/>						
 							</p>
 						</div>
 					</li>						
