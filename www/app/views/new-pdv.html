@@ -14,7 +14,7 @@
 			<article class="card col s12">					
 				<p class="center-align">NUEVO PUNTO DE VENTA</p>
 
-				<form action="search.php" class="row" method="GET">						
+				<form class="row" ng-controller="pdvController" ng-submit="submitSearch()">						
 					<input type="hidden" name="mode" value="1">
 						
 					<div class="input-field col s12">

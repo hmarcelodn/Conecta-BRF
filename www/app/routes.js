@@ -16,13 +16,17 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			templateUrl: 'app/views/channels.html',
 			controller: 'channelsController'
 		})
-		.when('/Search', {
-			templateUrl: 'app/views/search.html',
-			controller: 'searchController'
+		.when('/Form', {
+			templateUrl: 'app/views/form.html',
+			controller: 'formController'
 		})
 		.when('/AddPdv', {
 			templateUrl: 'app/views/new-pdv.html',
 			controller: 'pdvController'
+		})
+		.when('/Search', {
+			templateUrl: 'app/views/search.html',
+			controller: 'searchController'			
 		})
 		.otherwise({
 			redirecTo: '/'
