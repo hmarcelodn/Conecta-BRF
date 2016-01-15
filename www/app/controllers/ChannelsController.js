@@ -1,3 +1,13 @@
 brfPhoneGapApp.controller('channelsController', function($scope, $route){
-	$scope.test = "PhoneGap!";
+	
+	$scope.channelsData = 
+	{
+		"channels":
+		[
+			{ "id": 1, "name": "Moderno"},
+			{ "id": 2, "name": "Tradicional"},
+			{ "id": 3, "name": "Food Service"}
+		]
+	};
+
 });

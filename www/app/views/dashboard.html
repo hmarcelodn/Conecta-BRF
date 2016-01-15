@@ -8,12 +8,8 @@
 	<section class="row col s12">
 
 		<article class="col s12">
-			<select>
-				<option value="0" disabled selected>HOY</option>
-				<option value="1">ESTA SEMANA</option>
-				<option value="2">MES ACTUAL</option>
-				<option value="3">ÚLTIMOS 30 DÍAS</option>
-				<option value="4">TRIMESTRE</option>
+			<select ng-options="option.name for option in dashboardOpts.availableOptions track by option.id" 
+					ng-model="dashboardOpts.selectedOption">
 			</select>
 		</article>
 
@@ -55,7 +51,8 @@
 				<li>
 					<div class="collapsible-header">
 						<i class="material-icons">account_circle</i>Coching
-						<span class="badge" style="color:#54922a;"><i class="material-icons">check_circle</i>{{executionPoints.percentage}}%
+						<span class="badge" style="color:#54922a;"><i class="material-icons">check_circle</i>
+							{{executionPoints.percentage}}%
 						</span>
 					</div>
 					<div class="collapsible-body">
@@ -72,7 +69,8 @@
 						<div class="collapsible-header">
 							<i class="material-icons">find_in_page</i>Ejecución
 								<span class="badge" style="color:#f6a704;">
-									<i class="material-icons">warning</i>{{coachingPoints.percentage}}%
+									<i class="material-icons">warning</i>
+									{{coachingPoints.percentage}}%
 								</span>
 						</div>
 						<div class="collapsible-body">

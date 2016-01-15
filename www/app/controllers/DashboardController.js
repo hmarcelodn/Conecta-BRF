@@ -25,4 +25,17 @@ brfPhoneGapApp.controller('dashboardController', function($scope, $route){
 			{ name: 'Punto #4', percentage: 90 }
 		]		
 	};
+
+	$scope.dashboardOpts = {
+		availableOptions:
+		[
+			{ id: '0', name: "HOY" },
+			{ id: '1', name: "ESTA SEMANA" },
+			{ id: '2', name: "MES ACTUAL" },
+			{ id: '3', name: "ULTIMOS 30 DIAS" },
+			{ id: '4', name: "TRIMESTRE" }
+		],
+		selectedOption: { id: '0', name: 'HOY' }
+	};
+		
 });

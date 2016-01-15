@@ -11,32 +11,14 @@
 <main style="margin-top:-30px;">		  
 	<section class="row col s12">			
 		<ul class="collection with-header">				
-			<li class="collection-item">						
+			<li class="collection-item" ng-repeat="channel in channelsData.channels">						
 				<a href="#/Form">
-					CANAL MODERNO
+					{{channel.name}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>
 					</div>
 				</a>						
-			</li>
-					
-			<li class="collection-item">
-				<a href="#/Form">
-					CANAL TRADICIONAL
-					<div class="secondary-content">
-						<i class="material-icons">chevron_right</i>
-					</div>
-				</a>						
-			</li>
-					
-			<li class="collection-item">						
-				<a href="#/Form">
-					FOOD SERVICE
-					<div class="secondary-content">
-						<i class="material-icons">chevron_right</i>
-					</div>
-				</a>						
-			</li>					
+			</li>									
 		</ul>
 	</article>
 </main>

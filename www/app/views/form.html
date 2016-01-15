@@ -2,7 +2,7 @@
 	<article class="col s12">
 		<article class="card blue-grey darken-1 col s12">
 			<div class="card-content white-text">
-				<p>BÚSQUEDA <?php echo $title[$mode]; ?></p>
+				<p>BÚSQUEDA PUNTO DE VENTA</p>
 			</div>					
 		</article>			
 	</article>
@@ -25,9 +25,9 @@
 <main style="margin-top:-30px;">		  
 	<section class="row col s12">		
 		<ul class="collection with-header">				
-			<li class="collection-item">						
+			<li class="collection-item" ng-repeat="customer in customersData.customers">						
 				<a href="#/AddPdv">
-					MONROE 3596, OLIVOS
+					{{customer.address}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>
 					</div>

@@ -1,6 +1,6 @@
 brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 	$routeProvider
-		.when('/', {
+		.when('/Main', {
 			templateUrl: 'app/views/main.html',
 			controller: 'mainController'
 		})
@@ -35,6 +35,10 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		.when('/Execution', {
 			templateUrl: 'app/views/execution.html',
 			controller: 'executionController'
+		})
+		.when('/',{
+			templateUrl: 'app/views/login.html',
+			controller: 'loginController'
 		})
 		.otherwise({
 			redirecTo: '/'
