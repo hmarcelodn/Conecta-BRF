@@ -37,28 +37,42 @@
         
         <title>BRF APP</title>
     </head>
-    <body ng-app="brfPhoneGapApp">                
+    <body ng-app="brfPhoneGapApp" ng-init="createApplicationSchema()">                
         <nav>            
             <ul id="slide-out" class="side-nav">      
                 <li style="background-color:#e53935;background-image:url('img/gui/bg.jpg');">
                     <img src="img/content/logo.png" style="padding-top:20px;margin-left:10px;"></img>
                 </li>            
                 <li style="color:#494849;border-bottom:1px solid #a3a3a3;" class="center-align">            
-                    <a href="#/">Hernán Matías Fernández</a>            
+                    <a href="login.php">Hernán Matías Fernández</a>            
                 </li>            
-                <li>
-                     <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">stars</i>
-                        <a href="#/Dashboard">Proceso de Ventas</a>
-                    </div>
+                <li class="no-padding">            
+                    <ul class="collapsible collapsible-accordion">
+                        <li>                    
+                            <a class="collapsible-header" style="margin-left:-5px;">
+                                <i class="material-icons" style="color:#E53935">stars</i>
+                                Proceso de Ventas
+                            </a>
+                          
+                            <div class="collapsible-body">
+                                <ul>                                
+                                    <li><a href="#/Welcome">Nueva Auditoría</a></li>
+                                    <li><a href="#/Dashboard">Dashboard</a></li>
+                                    <li><a href="#/Synchronizer">Sincronizar</a></li>
+                                    <li><a href="#/Synchronizer">Enviar Datos</a></li>                                  
+                                </ul>
+                             </div>                      
+                        </li>
+                     </ul>            
                 </li>            
                 <li>
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">lock_open</i>
-                        <a href="#/">Cerrar Sesión</a>
+                        <a href="index.php">Cerrar Sesión</a>
                     </div>
-                </li>                                       
-            </ul>      
+                </li>                        
+            </ul>
+          
             <a href="#" data-activates="slide-out" class="button-collapse show-on-large">
                 <i class="mdi-navigation-menu"></i>
             </a>        
@@ -102,9 +116,16 @@
         <script type="text/javascript" src="app/controllers/CoachingController.js"></script>
         <script type="text/javascript" src="app/controllers/ExecutionController.js"></script>
         <script type="text/javascript" src="app/controllers/LoginController.js"></script>
+        <script type="text/javascript" src="app/controllers/SynchronizerController.js"></script>
+        <script type="text/javascript" src="app/controllers/DoSynchronizationController.js"></script>
 
         <!-- Angulart Services -->
-        <script type="text/javascript" src="app/services/MaterialService.js"></script>
+        <script type="text/javascript" src="app/services/ChannelService.js"></script>
+        <script type="text/javascript" src="app/services/CategoryService.js"></script>
+        <script type="text/javascript" src="app/services/CustomerService.js"></script>
+        <script type="text/javascript" src="app/services/ModuleService.js"></script>
+        <script type="text/javascript" src="app/services/QuestionService.js"></script>
+        <script type="text/javascript" src="app/services/SellerService.js"></script>
 
         <!-- Initializer -->
         <script type="text/javascript">

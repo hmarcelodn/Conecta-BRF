@@ -40,6 +40,14 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			templateUrl: 'app/views/login.html',
 			controller: 'loginController'
 		})
+		.when('/Synchronizer', {
+			templateUrl: 'app/views/synchronizer.html',
+			controller: 'synchronizerController'
+		})
+		.when('/DoSynchronization', {
+			templateUrl: 'app/views/doSynchronization.html',
+			controller: 'doSynchronizationController'
+		})
 		.otherwise({
 			redirecTo: '/'
 		})
