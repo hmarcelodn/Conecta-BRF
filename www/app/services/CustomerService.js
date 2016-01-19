@@ -30,6 +30,22 @@ brfPhoneGapApp.factory('customerService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;
+		},
+		getCustomers: function(){
+			var deferred = $q.defer(), result = [];
+
+			db.transaction(function(tx){
+				tx.executeSql('Select customerId, address From Customer', [], function(tx, res){
+
+	               for(var i = 0; i < res.rows.length; i++){
+	                    result.push({ id: res.rows.item(i).customerId, address: res.rows.item(i).address });
+	                }
+	                
+	                deferred.resolve(result);
+				});
+			});
+
+			return deferred.promise;
 		}
 	};	
 

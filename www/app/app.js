@@ -29,6 +29,7 @@ var app = {
 
         db.transaction(function(tx) {
 
+            /*
             tx.executeSql('DROP TABLE IF EXISTS Channel');
             tx.executeSql('DROP TABLE IF EXISTS Customer');
             tx.executeSql('DROP TABLE IF EXISTS CustomerType');
@@ -39,7 +40,7 @@ var app = {
             tx.executeSql('DROP TABLE IF EXISTS Category');
             tx.executeSql('DROP TABLE IF EXISTS CategoryChannels');
             tx.executeSql('DROP TABLE IF EXISTS CategoryImage');
-            tx.executeSql('DROP TABLE IF EXISTS Question');
+            tx.executeSql('DROP TABLE IF EXISTS Question');*/
 
             tx.executeSql('CREATE TABLE IF NOT EXISTS Channel(id integer primary key, channelId integer, name text)'); 
             tx.executeSql('CREATE TABLE IF NOT EXISTS Customer(id integer primary key, customerId integer,companyName text, cuit text, address text)'); 

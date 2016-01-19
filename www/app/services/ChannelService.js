@@ -15,6 +15,22 @@ brfPhoneGapApp.factory('channelService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;
+		},
+		getChannels: function(){
+			var deferred = $q.defer(), result = [];
+
+			db.transaction(function(tx){
+				tx.executeSql('Select channelId, name From Channel', [], function(tx, res){
+
+	               for(var i = 0; i < res.rows.length; i++){
+	                    result.push({ id: res.rows.item(i).channelId, name: res.rows.item(i).name });
+	                }
+	                
+	                deferred.resolve(result);
+				});
+			});
+
+			return deferred.promise;
 		}
 	};	
 

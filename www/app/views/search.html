@@ -14,7 +14,7 @@
 			<article class="card col s12">		
 				<form action="#" class="row">						
 					<p class="input-field col s12">
-						<input id="input_text" type="text" placeholder="Búsqueda">
+						<input id="input_text" type="text" placeholder="Búsqueda" ng-model="query">
 					</p>						 
 				</form>						
 			</article>
@@ -25,7 +25,7 @@
 <main style="margin-top:-30px;">		  
 	<section class="row col s12">			
 		<ul class="collection with-header">								   
-			<li class="collection-item" ng-repeat="seller in sellersData.sellers">						
+			<li class="collection-item" ng-repeat="seller in sellers | filter: query">						
 				<a href="#/Coaching">
 					{{seller.name}}
 					<div class="secondary-content">

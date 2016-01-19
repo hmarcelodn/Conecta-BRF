@@ -35,13 +35,6 @@ brfPhoneGapApp.factory('categoryService', ['$http', '$q', function($http, $q){
 		setCategoryImage: function(imageId, idMod, idCat, image, icon){
 			var deferred = $q.defer();
 
-			console.log("ejecutar!");
-			console.log(imageId);
-			console.log(idMod);
-			console.log(imageId);
-			console.log(image);
-
-
 			db.transaction(function(tx){
 				return tx.executeSql('INSERT INTO CategoryImage(imageId, idMod, idCat, image, icon) VALUES(?, ?, ?, ?, ?)', [imageId, idMod, idCat, image, icon], function(tx, res){
 					deferred.resolve();

@@ -15,6 +15,22 @@ brfPhoneGapApp.factory('sellerService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;
+		},
+		getSellers: function(){
+			var deferred = $q.defer(), result = [];
+
+			db.transaction(function(tx){
+				tx.executeSql('Select sellerId, name From Seller', [], function(tx, res){
+
+	               for(var i = 0; i < res.rows.length; i++){
+	                    result.push({ id: res.rows.item(i).sellerId, name: res.rows.item(i).name });
+	                }
+	                
+	                deferred.resolve(result);
+				});
+			});
+
+			return deferred.promise;
 		}
 	};	
 

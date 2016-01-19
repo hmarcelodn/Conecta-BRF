@@ -15,6 +15,9 @@ brfPhoneGapApp.factory('questionService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;	
+		},
+		getCoachingQuestions: function(){
+			
 		}
 	};	
 
