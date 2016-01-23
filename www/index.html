@@ -38,7 +38,7 @@
         <title>BRF APP</title>
     </head>
     <body ng-app="brfPhoneGapApp" ng-init="createApplicationSchema()">                
-        <nav>            
+        <nav ng-controller="loginController" ng-show="authenticated()">            
             <ul id="slide-out" class="side-nav">      
                 <li style="background-color:#e53935;background-image:url('img/gui/bg.jpg');">
                     <img src="img/content/logo.png" style="padding-top:20px;margin-left:10px;"></img>
@@ -68,7 +68,7 @@
                 <li>
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">lock_open</i>
-                        <a href="index.php">Cerrar Sesión</a>
+                        <a ng-controller="loginController" ng-click="logout()">Cerrar Sesión</a>
                     </div>
                 </li>                        
             </ul>
@@ -128,6 +128,10 @@
         <script type="text/javascript" src="app/services/ModuleService.js"></script>
         <script type="text/javascript" src="app/services/QuestionService.js"></script>
         <script type="text/javascript" src="app/services/SellerService.js"></script>
+        <script type="text/javascript" src="app/services/LoginService.js"></script>
+
+        <!-- Session -->
+        <script type="text/javascript" src="js/session.js"></script>
 
         <!-- Initializer -->
         <script type="text/javascript">
