@@ -1,10 +1,10 @@
 brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route, channelService, 
-	customerService, sellerService, moduleService, categoryService, questionService, $q){
+	customerService, sellerService, moduleService, categoryService, questionService, $q, $location){
 	
 	// 0 - Waiting
 	// 1 - Running
 	// 2 - Success
-	$scope.syncChannels = 1;
+	$scope.syncChannels = 0;
 	$scope.syncCustomers = 0;
 	$scope.syncCustomersType = 0;
 	$scope.syncSellers = 0;
@@ -13,20 +13,35 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 	$scope.syncCategoriesImg = 0;
 	$scope.syncQuestions = 0;
 
+	var dropSchemaPromises = [];
 
-	channelService.synchronizeChannels()
-		.then(function(channels){
+	dropSchemaPromises.push(channelService.recreateSchema());
+	dropSchemaPromises.push(customerService.recreateSchema());
+	dropSchemaPromises.push(sellerService.recreateSchema());
+	dropSchemaPromises.push(moduleService.recreateSchema());
+	dropSchemaPromises.push(categoryService.recreateSchema());
+	dropSchemaPromises.push(questionService.recreateSchema());
+
+		$q.all(dropSchemaPromises).then(function(){
 
 			var deferred = $q.defer();
-			var promises = [];
+			$scope.syncChannels = 1;
+			
+			channelService.synchronizeChannels().then(function(channels){
 
-			angular.forEach(channels.data.channels, function(value, key){
-				promises.push(channelService.setChannel(value.id, value.name));				
-			});
+				var promises = [];
 
-			$q.all(promises).then(function(){
-				$scope.syncChannels = 2;	
-				deferred.resolve();		
+				angular.forEach(channels.data.channels, function(value, key){
+					promises.push(channelService.setChannel(value.id, value.name));				
+				});
+
+				$q.all(promises).then(function(){
+					$scope.syncChannels = 2;	
+					deferred.resolve();		
+				});
+			})
+			.catch(function(error){			
+				deferred.reject(error);
 			});
 
 			return deferred.promise;
@@ -47,6 +62,9 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 					$scope.syncCustomers = 2;
 					deferred.resolve();
 				});
+			})
+			.catch(function(error){			
+				deferred.reject(error);
 			});
 
 			return deferred.promise;
@@ -67,6 +85,9 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 					$scope.syncCustomersType = 2;	
 					deferred.resolve();			
 				});
+			})
+			.catch(function(error){			
+				deferred.reject(error);
 			});
 
 			return deferred.promise;
@@ -87,6 +108,9 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 					$scope.syncSellers = 2;		
 					deferred.resolve();		
 				});
+			})
+			.catch(function(error){			
+				deferred.reject(error);
 			});
 
 			return deferred.promise;
@@ -118,6 +142,9 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 					$scope.syncModules = 2;		
 					deferred.resolve();		
 				});
+			})
+			.catch(function(error){			
+				deferred.reject(error);
 			});
 
 			return deferred.promise;
@@ -144,6 +171,9 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 					$scope.syncCategories = 2;		
 					deferred.resolve();		
 				});
+			})
+			.catch(function(error){			
+				deferred.reject(error);
 			});
 
 			return deferred.promise;
@@ -164,6 +194,9 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 					$scope.syncCategoriesImg = 2;	
 					deferred.resolve();						
 				});
+			})
+			.catch(function(error){			
+				deferred.reject(error);
 			});
 
 			return deferred.promise;
@@ -183,10 +216,17 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 				$q.all(promises).then(function(){
 					$scope.syncQuestions = 2;
 					deferred.resolve();
+					$location.path("/SyncOk");
 				});
+			})
+			.catch(function(error){			
+				deferred.reject(error);
 			});
 			
 			return deferred.promise;
-		});
-	
+		})
+		.catch(function(error){
+			console.log(error);
+			$location.path("/SyncNok");
+		});	
 });

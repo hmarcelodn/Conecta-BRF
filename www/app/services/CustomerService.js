@@ -46,6 +46,23 @@ brfPhoneGapApp.factory('customerService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;
+		},
+		recreateSchema: function(){
+			var deferred = $q.defer();
+
+			db.transaction(function(tx){
+				tx.executeSql('DROP TABLE IF EXISTS Customer', [], function(tx, res){
+					tx.executeSql('DROP TABLE IF EXISTS CustomerType', [], function(tx, res){
+						tx.executeSql('CREATE TABLE IF NOT EXISTS Customer(id integer primary key, customerId integer,companyName text, cuit text, address text)', [], function(){
+            				tx.executeSql('CREATE TABLE IF NOT EXISTS CustomerType(id integer primary key, customerTypeId, name text)', [], function(){
+								deferred.resolve();            					
+            				}); 
+						}); 
+					});					
+				});
+			});
+
+			return deferred.promise;			
 		}
 	};	
 

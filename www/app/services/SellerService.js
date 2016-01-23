@@ -31,6 +31,19 @@ brfPhoneGapApp.factory('sellerService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;
+		},
+		recreateSchema: function(){
+			var deferred = $q.defer();
+
+			db.transaction(function(tx){
+				tx.executeSql('DROP TABLE IF EXISTS Seller', [], function(tx, res){
+					tx.executeSql('CREATE TABLE IF NOT EXISTS Seller(id integer primary key, sellerId integer, name text)', [], function(){
+						deferred.resolve();
+					}); 
+				});
+			});
+
+			return deferred.promise;			
 		}
 	};	
 

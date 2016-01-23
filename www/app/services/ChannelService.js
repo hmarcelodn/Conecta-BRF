@@ -31,6 +31,19 @@ brfPhoneGapApp.factory('channelService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;
+		},
+		recreateSchema: function(){
+			var deferred = $q.defer();
+
+			db.transaction(function(tx){
+				tx.executeSql('DROP TABLE IF EXISTS Channel', [], function(tx, res){
+					tx.executeSql('CREATE TABLE IF NOT EXISTS Channel(id integer primary key, channelId integer, name text)',[], function(tx, res){
+						deferred.resolve();
+					});
+				});
+			});
+
+			return deferred.promise;
 		}
 	};	
 

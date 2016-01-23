@@ -43,6 +43,27 @@ brfPhoneGapApp.factory('categoryService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;
+		},
+		recreateSchema: function(){
+			var deferred = $q.defer();
+
+			db.transaction(function(tx){
+				tx.executeSql('DROP TABLE IF EXISTS Category', [], function(tx, res){
+					tx.executeSql('DROP TABLE IF EXISTS CategoryChannels', [], function(tx, res){
+						tx.executeSql('DROP TABLE IF EXISTS CategoryImage', [], function(tx, res){
+				            tx.executeSql('CREATE TABLE IF NOT EXISTS Category(id integer primary key, categoryId integer, type integer, name text)', [], function(tx, res){
+				            	tx.executeSql('CREATE TABLE IF NOT EXISTS CategoryChannels(id integer primary key, categoryId, channelId)', [], function(tx, res){
+				            		tx.executeSql('CREATE TABLE IF NOT EXISTS CategoryImage(id integer primary key, imageId integer, idMod integer, idCat integer, image text, icon text)', [], function(){
+										deferred.resolve();
+				            		}); 
+				            	});
+				            });           							
+						});						
+					});					
+				});
+			});
+
+			return deferred.promise;			
 		}
 	};	
 
