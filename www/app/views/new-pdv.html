@@ -30,9 +30,7 @@
 					<div class="row col s12">								
 						<select class="browser-default">
 							<option value="" disabled selected>Tipo de PDV</option>
-							<option value="1">Almacén</option>
-							<option value="2">Almacén</option>
-							<option value="3">Almacén</option>
+							<option ng-repeat="customerType in customerTypes" value="customerType.id">{{customerType.name}}</option>
 						</select>								
 					</div>
 							

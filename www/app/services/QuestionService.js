@@ -20,10 +20,19 @@ brfPhoneGapApp.factory('questionService', ['$http', '$q', function($http, $q){
 			var deferred = $q.defer(), result = [];
 
 			db.transaction(function(tx){
-				tx.executeSql('Select sellerId, name From Seller', [], function(tx, res){
+				tx.executeSql('SELECT questionId, render, answer, title, data, helper FROM Question', [], function(tx, res){
 
 	               for(var i = 0; i < res.rows.length; i++){
-	                    result.push({ id: res.rows.item(i).sellerId, name: res.rows.item(i).name });
+	                    result.push(
+	                    	{ 
+	                    		id: res.rows.item(i).questionId, 
+	                    		render: res.rows.item(i).render,
+	                    		answer: res.rows.item(i).answer,
+	                    		title: res.rows.item(i).title,
+	                    		data: res.rows.item(i).data,
+	                    		helper: res.rows.item(i).helper
+	                    	}
+	                    );
 	                }
 	                
 	                deferred.resolve(result);

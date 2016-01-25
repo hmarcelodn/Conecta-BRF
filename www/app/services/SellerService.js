@@ -20,10 +20,10 @@ brfPhoneGapApp.factory('sellerService', ['$http', '$q', function($http, $q){
 			var deferred = $q.defer(), result = [];
 
 			db.transaction(function(tx){
-				tx.executeSql('Select sellerId, name From Seller', [], function(tx, res){
+				tx.executeSql('Select id, name From Seller', [], function(tx, res){
 
 	               for(var i = 0; i < res.rows.length; i++){
-	                    result.push({ id: res.rows.item(i).sellerId, name: res.rows.item(i).name });
+	                    result.push({ id: res.rows.item(i).id, name: res.rows.item(i).name });
 	                }
 	                
 	                deferred.resolve(result);
@@ -37,7 +37,7 @@ brfPhoneGapApp.factory('sellerService', ['$http', '$q', function($http, $q){
 
 			db.transaction(function(tx){
 				tx.executeSql('DROP TABLE IF EXISTS Seller', [], function(tx, res){
-					tx.executeSql('CREATE TABLE IF NOT EXISTS Seller(id integer primary key, sellerId integer, name text)', [], function(){
+					tx.executeSql('CREATE TABLE IF NOT EXISTS Seller(id integer primary key, name text)', [], function(){
 						deferred.resolve();
 					}); 
 				});

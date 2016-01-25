@@ -23,10 +23,15 @@
 </section>
 		
 <main style="margin-top:-30px;">		  
-	<section class="row col s12">		
+	<section class="row col s12">
+		<section class="fixed-action-btn" style="bottom:15px; right: 15px;">
+			<a class="btn-floating btn-large green modal-trigger" href="#/AddPdv">
+				<i class="large material-icons">add_circle</i>
+			</a>
+		</section>		
 		<ul class="collection with-header">				
 			<li class="collection-item" ng-repeat="customer in customers | filter: query">						
-				<a href="#/AddPdv">
+				<a href="#/Search">
 					{{customer.address}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>

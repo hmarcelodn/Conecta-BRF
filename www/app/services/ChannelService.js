@@ -20,7 +20,7 @@ brfPhoneGapApp.factory('channelService', ['$http', '$q', function($http, $q){
 			var deferred = $q.defer(), result = [];
 
 			db.transaction(function(tx){
-				tx.executeSql('Select channelId, name From Channel', [], function(tx, res){
+				tx.executeSql('Select id, name From Channel', [], function(tx, res){
 
 	               for(var i = 0; i < res.rows.length; i++){
 	                    result.push({ id: res.rows.item(i).channelId, name: res.rows.item(i).name });
@@ -37,7 +37,7 @@ brfPhoneGapApp.factory('channelService', ['$http', '$q', function($http, $q){
 
 			db.transaction(function(tx){
 				tx.executeSql('DROP TABLE IF EXISTS Channel', [], function(tx, res){
-					tx.executeSql('CREATE TABLE IF NOT EXISTS Channel(id integer primary key, channelId integer, name text)',[], function(tx, res){
+					tx.executeSql('CREATE TABLE IF NOT EXISTS Channel(id integer primary key, name text)',[], function(tx, res){
 						deferred.resolve();
 					});
 				});
