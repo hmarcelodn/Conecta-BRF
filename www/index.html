@@ -38,7 +38,11 @@
         <title>BRF APP</title>
     </head>
     <body ng-app="brfPhoneGapApp" ng-init="createApplicationSchema()">                
-        <nav ng-controller="loginController" ng-show="authenticated()">            
+        <nav ng-controller="loginController" ng-show="authenticated()">    
+
+
+            <!-- No Audit Menu -->      
+              
             <ul id="slide-out" class="side-nav">      
                 <li style="background-color:#e53935;background-image:url('img/gui/bg.jpg');">
                     <img src="img/content/logo.png" style="padding-top:20px;margin-left:10px;"></img>
@@ -72,12 +76,96 @@
                     </div>
                 </li>                        
             </ul>
-          
+
+            
+            <!-- Audit Menu -->
+
+            <!--
+            <ul id="slide-out" class="side-nav">
+  
+                <li style="background-color:#e53935;background-image:url('img/gui/bg.jpg');">
+                    <img src="img/content/logo.png" style="padding-top:20px;margin-left:10px;"></img>
+                </li>
+                
+                <li style="color:#494849;border-bottom:1px solid #a3a3a3;" class="center-align">                
+                    <a href="login.php">Hernán Matías Fernández</a>                
+                </li>                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#">account_circle</i>
+                        <a href="coaching.php">Coaching Supervisor</a>
+                    </div>
+                </li>                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">find_in_page</i>
+                        <a href="cat_select.php">Ejecución PDV</a>
+                    </div>
+                </li>                                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">storage</i>
+                        <a href="cat_select.php?mode=1">Toma de Precios</a>
+                    </div>
+                </li>                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">notifications_active</i>
+                        <a href="no_brf.php">Acá No Hay BRF</a>
+                    </div>
+                </li>                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">beenhere</i>
+                        <a href="cat_select.php?mode=3">Mix Prioritario</a>
+                    </div>
+                </li>                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">map</i>
+                        <a href="cat_select.php?mode=4">Planograma</a>
+                    </div>
+                </li>                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">layers</i>
+                        <a href="cat_select.php?mode=6">Exhibiciones Adicionales</a>
+                    </div>
+                </li>                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">local_convenience_store</i>
+                        <a href="cat_select.php?mode=7">POP</a>
+                    </div>
+                </li>                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">edit</i>
+                        <a href="observaciones.php">Observaciones</a>
+                    </div>
+                </li>                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">center_focus_strong</i>
+                        <a href="cat_select.php?mode=2">Cobertura</a>
+                    </div>
+                </li>                
+                <li>
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">cancel</i>
+                        <a href="home.php">Cerrar Auditoría</a>
+                    </div>
+                </li>                                
+            </ul>
+        -->
+
             <a href="#" data-activates="slide-out" class="button-collapse show-on-large">
                 <i class="mdi-navigation-menu"></i>
             </a>        
             <strong class="text-flow hide-on-small-only" style="padding-left:10px;font-size:20px;">APP BRF</strong>      
         </nav>
+
+
 
         <!-- Angular Routing -->
         <div ng-view></div>
@@ -129,6 +217,7 @@
         <script type="text/javascript" src="app/services/QuestionService.js"></script>
         <script type="text/javascript" src="app/services/SellerService.js"></script>
         <script type="text/javascript" src="app/services/LoginService.js"></script>
+        <script type="text/javascript" src="app/services/SurveyService.js"></script>
 
         <!-- Session -->
         <script type="text/javascript" src="js/session.js"></script>
