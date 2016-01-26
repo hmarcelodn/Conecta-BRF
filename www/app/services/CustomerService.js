@@ -7,11 +7,11 @@ brfPhoneGapApp.factory('customerService', ['$http', '$q', function($http, $q){
 		synchronizeCustomerTypes: function(){
 			return $http.get('http://ws.brf-horizonte.com/get/customers/type/?token=560a100abad225d5afdf4fc6e5334917');
 		},
-		setCustomer: function(id, companyName, cuit, address, deferred){
+		setCustomer: function(id, companyName, cuit, address, pdvType){
 			var deferred = $q.defer();
 
 			db.transaction(function(tx){
-				return tx.executeSql('INSERT INTO Customer(customerId, companyName, cuit, address) VALUES(?, ?, ?, ?)', [id, companyName, cuit, address], function(tx, res){
+				return tx.executeSql('INSERT INTO Customer(customerId, companyName, cuit, address, pdvType) VALUES(?, ?, ?, ?, ?)', [id, companyName, cuit, address, pdvType], function(tx, res){
 					deferred.resolve();
 					return true;
 				});
@@ -69,7 +69,7 @@ brfPhoneGapApp.factory('customerService', ['$http', '$q', function($http, $q){
 			db.transaction(function(tx){
 				tx.executeSql('DROP TABLE IF EXISTS Customer', [], function(tx, res){
 					tx.executeSql('DROP TABLE IF EXISTS CustomerType', [], function(tx, res){
-						tx.executeSql('CREATE TABLE IF NOT EXISTS Customer(id integer primary key, customerId integer,companyName text, cuit text, address text)', [], function(){
+						tx.executeSql('CREATE TABLE IF NOT EXISTS Customer(id integer primary key, customerId integer, companyName text, cuit text, address text, pdvType integer)', [], function(){
             				tx.executeSql('CREATE TABLE IF NOT EXISTS CustomerType(id integer primary key, name text)', [], function(){
 								deferred.resolve();            					
             				}); 

@@ -1,5 +1,5 @@
 brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route, channelService, 
-	customerService, sellerService, moduleService, categoryService, questionService, $q, $location){
+	customerService, sellerService, moduleService, categoryService, questionService, surveyService, $q, $location){
 	
 	// 0 - Waiting
 	// 1 - Running
@@ -21,6 +21,7 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 	dropSchemaPromises.push(moduleService.recreateSchema());
 	dropSchemaPromises.push(categoryService.recreateSchema());
 	dropSchemaPromises.push(questionService.recreateSchema());
+	dropSchemaPromises.push(surveyService.recreateSchema());
 
 		$q.all(dropSchemaPromises).then(function(){
 
@@ -55,7 +56,7 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 				var promises = [];
 
 				angular.forEach(customers.data.customers, function(value, key){
-					promises.push(customerService.setCustomer(value.id, value["company_name"], value.cuit, value.address));			
+					promises.push(customerService.setCustomer(value.id, value["company_name"], value.cuit, value.address, 0));			
 				});
 
 				$q.all(promises).then(function(){

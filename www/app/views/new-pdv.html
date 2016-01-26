@@ -14,23 +14,27 @@
 			<article class="card col s12">					
 				<p class="center-align">NUEVO PUNTO DE VENTA</p>
 
-				<form class="row" ng-controller="pdvController" ng-submit="submitSearch()">						
+				<form class="row" ng-controller="pdvController" ng-submit="addPdv()">						
 					<input type="hidden" name="mode" value="1">
 						
 					<div class="input-field col s12">
-						<input id="field_1" type="text" class="validate" placeholder="Razón Social o Marca">
+						<input id="field_1" type="text" class="validate" placeholder="Razón Social o Marca" ng-model="companyName">
 						<label for="field_1">Nombre PDV</label>
 					</div>
 							
 					<div class="input-field col s12">
-						<input id="field_1" type="text" class="validate" placeholder="Calle #, Localidad, Provincia">
+						<input id="field_1" type="text" class="validate" placeholder="Calle #, Localidad, Provincia" ng-model="address">
 						<label for="field_1">Dirección</label>
+					</div>
+
+					<div class="input-field col s12">
+						<input id="field_1" type="text" class="validate" placeholder="CUIT" ng-model="identifier">
+						<label for="field_1">CUIT</label>
 					</div>
 							
 					<div class="row col s12">								
-						<select class="browser-default">
-							<option value="" disabled selected>Tipo de PDV</option>
-							<option ng-repeat="customerType in customerTypes" value="customerType.id">{{customerType.name}}</option>
+						<select class="browser-default" ng-options="customerType.name for customerType in customerTypes" 
+														ng-model="selectedCustomerType">
 						</select>								
 					</div>
 							
