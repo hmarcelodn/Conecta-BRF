@@ -1,6 +1,6 @@
 var BrfNameSpace = BrfNameSpace || {};
 
-brfPhoneGapApp.controller('loginController', function($scope, $route, $location, loginService){
+brfPhoneGapApp.controller('loginController', function($scope, $route, $location, loginService, surveyService){
 	
 	$scope.username;
 	$scope.password;
@@ -28,13 +28,16 @@ brfPhoneGapApp.controller('loginController', function($scope, $route, $location,
 	};
 
 	$scope.logout = function(){
-
 		loginService.authenticate(undefined);
 		$location.path("/");
 	};
 
 	$scope.authenticated = function(){
 		return loginService.authenticated();
+	};
+
+	$scope.isAuditModeEnabled = function(){
+		return surveyService.getAuditMode();
 	};
 
 });

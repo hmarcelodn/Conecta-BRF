@@ -11,7 +11,6 @@ BrfNameSpace.Session = (function(){
 		return {
 
 			set: function(sessionData){
-				console.log("holis!");
 				window.localStorage.setItem(sessionIdKey, JSON.stringify(sessionData));
 			},
 

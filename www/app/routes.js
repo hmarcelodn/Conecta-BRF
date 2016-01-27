@@ -4,63 +4,72 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			templateUrl: 'app/views/main.html',
 			controller: 'mainController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}
 		})
 		.when('/Dashboard', {
 			templateUrl: 'app/views/dashboard.html',
 			controller: 'dashboardController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}
 		})
 		.when('/Welcome', {
 			templateUrl: 'app/views/welcome.html',
 			controller: 'welcomeController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}			
 		})
 		.when('/Channels', {
 			templateUrl: 'app/views/channels.html',
 			controller: 'channelsController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}
 		})
 		.when('/Form', {
 			templateUrl: 'app/views/form.html',
 			controller: 'formController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}
 		})
 		.when('/AddPdv', {
 			templateUrl: 'app/views/new-pdv.html',
 			controller: 'pdvController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}
 		})
 		.when('/Search', {
 			templateUrl: 'app/views/search.html',
 			controller: 'searchController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}	
 		})
 		.when('/Coaching',{
 			templateUrl: 'app/views/coaching.html',
 			controller: 'coachingController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: true
 			}
 		})
 		.when('/Execution', {
 			templateUrl: 'app/views/execution.html',
 			controller: 'executionController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: true
 			}
 		})
 		.when('/',{
@@ -74,35 +83,39 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			templateUrl: 'app/views/synchronizer.html',
 			controller: 'synchronizerController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}
 		})
 		.when('/DoSynchronization', {
 			templateUrl: 'app/views/doSynchronization.html',
 			controller: 'doSynchronizationController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}
 		})
 		.when('/SyncOk', {
 			templateUrl: 'app/views/syncOk.html',
 			controller: 'syncOkController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}
 		})
 		.when('/SyncNok', {
 			templateUrl: 'app/views/syncNok.html',
 			controller: 'syncNokController',
 			access:{
-				isFreeAccess: false
+				isFreeAccess: false,
+				audit: false
 			}
 		})		
 		.otherwise({
 			redirecTo: '/'
 		})
 }]).
-run(function($rootScope, $location, loginService){
+run(function($rootScope, $location, loginService, surveyService){
 	$rootScope.$on('$viewContentLoaded', function(event){
 		$('.collapsible').collapsible();
 		$('select').material_select();
@@ -113,6 +126,12 @@ run(function($rootScope, $location, loginService){
             if (!prevRoute.access.isFreeAccess && !loginService.authenticated()) {
                 $location.path('/');
             }
+        }
+
+        if(prevRoute.access != undefined){
+        	 if(!prevRoute.access.audit && surveyService.getAuditMode()){
+        	 	$location.path('/Coaching');
+        	 }
         }
 	});
 });

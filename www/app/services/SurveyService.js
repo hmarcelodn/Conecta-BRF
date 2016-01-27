@@ -1,3 +1,5 @@
+var auditModeKey = "audit-mode";
+
 brfPhoneGapApp.factory('surveyService', ['$http', '$q', function($http, $q){
 	return {
 		setSurvey: function(survey, data, surveyType){
@@ -26,6 +28,25 @@ brfPhoneGapApp.factory('surveyService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;				
+		},
+		setSurveyTimeStamp: function(){
+
+		},
+		getSurveyTimeStamp: function(){
+
+		},
+		enableAuditMode: function(){
+			window.localStorage.setItem(auditModeKey, true);
+		},
+		disableAuditMode: function(){
+			window.localStorage.setItem(auditModeKey, false);
+		},
+		getAuditMode: function(){
+			if(window.localStorage.getItem(auditModeKey) === undefined){
+				window.localStorage.setItem(auditModeKey, false);
+			}
+
+			return (window.localStorage.getItem(auditModeKey) === 'true');
 		}
 	}
 }]);
