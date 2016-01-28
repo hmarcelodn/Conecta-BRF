@@ -2,7 +2,20 @@ brfPhoneGapApp.controller('coachingController', function($scope, $route, questio
 
 	questionService.getCoachingQuestions().then(function(questions){
 		$scope.questions = questions;
-		surveyService.enableAuditMode();
+
+		surveyService.getPendingSurvey(1).then(function(pendingSurveyData){
+
+			if(pendingSurveyData === undefined){
+				surveyService.setSurvey(new Date().getTime().toString())
+				.then(function(){
+					surveyService.enableAuditMode();
+				})
+				.catch(function(error){
+					surveyService.disableAuditMode();
+				});	
+			}
+
+		});
 	});
 	
 });
