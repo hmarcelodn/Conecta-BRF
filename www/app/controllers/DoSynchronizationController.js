@@ -211,7 +211,7 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 				var promises = [];
 
 				angular.forEach(questions.data.questions, function(value, key){
-					promises.push(questionService.setQuestion(value.id, value.id_category, value.pdv_filter, value.render, value.answer, value.title, value.data, value.helper, value.big, value.thumb));
+					promises.push(questionService.setQuestion(value.id, value.id_category, value.pdv_filter, value.render, value.answer, value.title, value.data, value.helper, value.big, value.thumb, 0));
 				});
 
 				$q.all(promises).then(function(){
