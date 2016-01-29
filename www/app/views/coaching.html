@@ -10,27 +10,23 @@
 		
 <main style="margin-top:-30px;">		  
 	<section class="row col s12">
-
+		
 		<article class="col s12" ng-repeat="question in questions">
-			<article class="card col s12">					
-				<div class="col s12  right-align" style="height:25px;">
-					<a href="help.php">
-						<i class="material-icons" style="margin-top:5px;margin-right:-15px;color:#2ba0c9;font-size:22px;">
-							help_outline
-						</i>
-					</a>
-				</div>
-				<div class="card-conten">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent velit elit, interdum in facilisis eget, venenatis a mi. In facilisis dictum diam sit amet accumsan.</p>
-				</div>				
-				<div class="card-action right-align">
-					<i class="material-icons left" style="position:relative;left:-20px;top:-5px;color:#54922a;">check_circle</i>
-					<strong style="color:#54922a;">SI CUMPLE</strong>
-				</div>						
-			</article>
-		</article>	
+			<article class="card col s12">			
 
+				<question-content content="question"></question-content>				
+														
+				<question-action content="question"></question-action>				
+
+			</article>
+		</article>
+
+	</section>
 </main>
+
+<section id="modal1" class="modal" style="width:100%;">
+	<img class="activator" src="img/content/office.jpg"></img>
+</section>
 		
 <aside class="row col s12">			
 	<section class="col s12">

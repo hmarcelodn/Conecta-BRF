@@ -76,7 +76,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			templateUrl: 'app/views/login.html',
 			controller: 'loginController',
 			access:{
-				isFreeAccess: true
+				isFreeAccess: true				
 			}
 		})
 		.when('/Synchronizer', {
@@ -132,6 +132,9 @@ run(function($rootScope, $location, loginService, surveyService){
         	 if(!prevRoute.access.audit && surveyService.getAuditMode()){
         	 	$location.path('/Coaching');
         	 }
+        }
+        else{
+        	$location.path('/Main');
         }
 	});
 });
