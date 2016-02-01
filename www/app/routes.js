@@ -24,7 +24,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}			
 		})
-		.when('/Channels', {
+		.when('/Channel', {
 			templateUrl: 'app/views/channels.html',
 			controller: 'channelsController',
 			access:{
@@ -32,7 +32,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}
 		})
-		.when('/Form', {
+		.when('/Channel/:channelId/Pdv', {
 			templateUrl: 'app/views/form.html',
 			controller: 'formController',
 			access:{
@@ -48,7 +48,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}
 		})
-		.when('/Search', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller', {
 			templateUrl: 'app/views/search.html',
 			controller: 'searchController',
 			access:{
@@ -56,7 +56,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}	
 		})
-		.when('/Coaching',{
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Coaching',{
 			templateUrl: 'app/views/coaching.html',
 			controller: 'coachingController',
 			access:{
@@ -111,6 +111,38 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}
 		})		
+		.when('/Observations', {
+			templateUrl: 'app/views/observations.html',
+			controller: 'observationsController',
+			access:{
+				isFreeAccess: false,
+				audit: true
+			}
+		})
+		.when('/NoBrf', {
+			templateUrl: 'app/views/nobrf.html',
+			controller: 'noBrfController',
+			access:{
+				isFreeAccess: false,
+				audit: true
+			}
+		})
+		.when('/CategorySearch', {
+			templateUrl: 'app/views/categorySearch.html',
+			controller: 'categoryController',
+			access:{
+				isFreeAccess: false,
+				audit: true
+			}
+		})
+		.when('/Prices', {
+			templateUrl: 'app/views/prices.html',
+			controller: 'pricesController',
+			access: {
+				isFreeAccess: false,
+				audit: true
+			}
+		})
 		.otherwise({
 			redirecTo: '/'
 		})
@@ -130,7 +162,10 @@ run(function($rootScope, $location, loginService, surveyService){
 
         if(prevRoute.access != undefined){
         	 if(!prevRoute.access.audit && surveyService.getAuditMode()){
-        	 	$location.path('/Coaching');
+        	 	$location.path('/Channel/' + surveyService.getAuditChannel() + 
+        	 				   '/Pdv/' + surveyService.getAuditPdv() + 
+        	 				   '/Seller/' + surveyService.getAuditSeller() + 
+        	 				   '/Coaching');
         	 }
         }
         else{

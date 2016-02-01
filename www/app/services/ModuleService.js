@@ -60,6 +60,32 @@ brfPhoneGapApp.factory('moduleService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;			
+		},
+		getModuleByName: function(moduleName){
+
+			var deferred = $q.defer();
+			var result = [];
+
+			db.transaction(function(tx){
+				tx.executeSql('SELECT id, moduleId, behavior, modName, categoryType, color, icon FROM Module WHERE modName = ?', [moduleName], function(tx, res){
+					for(var i = 0; i < res.rows.length; i++){
+	                    result.push(
+	                    	{ 
+	                    		id: res.rows.item(i).id, 
+	                    		moduleId: res.rows.item(i).moduleId,
+	                    		behavior: res.rows.item(i).behavior,
+	                    		modName: res.rows.item(i).modName,
+	                    		categoryType: res.rows.item(i).categoryType,
+	                    		color: res.rows.item(i).color,
+	                    		icon: res.rows.item(i).icon
+	                    	}
+	                    );
+	                }
+					deferred.resolve(result);
+				});
+			});
+
+			return deferred.promise;
 		}
 	};	
 

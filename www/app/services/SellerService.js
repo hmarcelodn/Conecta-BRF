@@ -1,3 +1,5 @@
+var pdvKeyId = "pdv-key"; 
+
 brfPhoneGapApp.factory('sellerService', ['$http', '$q', function($http, $q){
 	
 	return {
@@ -44,6 +46,9 @@ brfPhoneGapApp.factory('sellerService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;			
+		},
+		setChoosenPdv: function(id){
+			window.localStorage.setItem(pdvKeyId, id);
 		}
 	};	
 

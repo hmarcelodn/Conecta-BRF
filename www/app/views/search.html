@@ -26,7 +26,7 @@
 	<section class="row col s12">			
 		<ul class="collection with-header">								   
 			<li class="collection-item" ng-repeat="seller in sellers | filter: query">						
-				<a href="#/Coaching">
+				<a ng-href="#/Channel/{{channelId}}/Pdv/{{pdvId}}/Seller/{{seller.id}}/Coaching">
 					{{seller.name}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>

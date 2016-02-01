@@ -31,7 +31,7 @@
 		</section>		
 		<ul class="collection with-header">				
 			<li class="collection-item" ng-repeat="customer in customers | filter: query">						
-				<a href="#/Search">
+				<a ng-href="#/Channel/{{channelId}}/Pdv/{{customer.id}}/Seller">
 					{{customer.address}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>

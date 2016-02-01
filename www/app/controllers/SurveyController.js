@@ -1,11 +1,10 @@
 brfPhoneGapApp.controller('surveyController', function($scope, $route, $location, surveyService){
 	
-	$scope.closeAudit = function(){
-		$location.path("/Main");
-
-		surveyService.closeSurvey().then(function(){
-			surveyService.disableAuditMode();		
-			$location.path('/Welcome');
+	$scope.closeAudit = function(){		
+		surveyService.disableAuditMode();
+		
+		surveyService.closeSurvey().then(function(){						
+			$location.path('/Dashboard');
 		});
 	};
 	

@@ -12,7 +12,7 @@
 	<section class="row col s12">			
 		<ul class="collection with-header">				
 			<li class="collection-item" ng-repeat="channel in channels">						
-				<a href="#/Form">
+				<a ng-href="#/Channel/{{channel.id}}/Pdv">
 					{{channel.name}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>

@@ -9,18 +9,8 @@
 </section>
 		
 <main style="margin-top:-30px;">		  
-	<section class="row col s12">
-		
-		<article class="col s12" ng-repeat="question in questions">
-			<article class="card col s12">			
-
-				<question-content content="question"></question-content>				
-														
-				<question-action content="question"></question-action>				
-
-			</article>
-		</article>
-
+	<section class="row col s12" ng-controller="questionsController">		
+		<questions content="questions"></questions>
 	</section>
 </main>
 

@@ -64,6 +64,27 @@ brfPhoneGapApp.factory('categoryService', ['$http', '$q', function($http, $q){
 			});
 
 			return deferred.promise;			
+		},
+		getCategories: function(){
+			var deferred = $q.defer(), result = [];
+
+			db.transaction(function(tx){
+				tx.executeSql('SELECT id, categoryId, type, name FROM Category', [], function(tx, res){
+
+					for(var i = 0; i < res.rows.length; i++){
+	                    result.push({ 
+	                    	id: res.rows.item(i).id, 
+	                    	categoryId: res.rows.item(i).categoryId,
+	                    	type: res.rows.item(i).type,
+	                    	name: res.rows.item(i).name
+	                    });
+	                }
+
+					deferred.resolve(result);
+				});
+			});
+
+			return deferred.promise;
 		}
 	};	
 

@@ -37,7 +37,7 @@
         
         <title>BRF APP</title>
     </head>
-    <body ng-app="brfPhoneGapApp" ng-init="createApplicationSchema()">                
+    <body ng-app="brfPhoneGapApp">                
         <nav ng-controller="loginController" ng-show="authenticated()">    
 
             <!-- No Audit Menu -->      
@@ -47,7 +47,7 @@
                     <img src="img/content/logo.png" style="padding-top:20px;margin-left:10px;"></img>
                 </li>            
                 <li style="color:#494849;border-bottom:1px solid #a3a3a3;" class="center-align">            
-                    <a href="login.php">Hernán Matías Fernández</a>            
+                    <a ng-href="/">Hernán Matías Fernández</a>            
                 </li>            
                 <li class="no-padding" ng-show="!isAuditModeEnabled()">            
                     <ul class="collapsible collapsible-accordion">
@@ -77,25 +77,25 @@
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#">account_circle</i>
-                        <a href="#/Coaching">Coaching Supervisor</a>
+                        <a ng-href="#/Coaching">Coaching Supervisor</a>
                     </div>
                 </li>                
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">find_in_page</i>
-                        <a href="cat_select.php">Ejecución PDV</a>
+                        <a ng-href="#/CategorySearch">Ejecución PDV</a>
                     </div>
                 </li>                                
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">storage</i>
-                        <a href="cat_select.php?mode=1">Toma de Precios</a>
+                        <a ng-href="#/CategorySearch?mode=1">Toma de Precios</a>
                     </div>
                 </li>                
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">notifications_active</i>
-                        <a href="no_brf.php">Acá No Hay BRF</a>
+                        <a ng-href="#/NoBrf">Acá No Hay BRF</a>
                     </div>
                 </li>                
                 <li ng-show="false">
@@ -125,7 +125,7 @@
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">edit</i>
-                        <a href="observaciones.php">Observaciones</a>
+                        <a ng-href="#/Observations">Observaciones</a>
                     </div>
                 </li>                
                 <li ng-show="false">
@@ -148,8 +148,6 @@
             </a>        
             <strong class="text-flow hide-on-small-only" style="padding-left:10px;font-size:20px;">APP BRF</strong>      
         </nav>
-
-
 
         <!-- Angular Routing -->
         <div ng-view></div>
@@ -193,6 +191,11 @@
         <script type="text/javascript" src="app/controllers/SyncOkController.js"></script>
         <script type="text/javascript" src="app/controllers/SyncNokController.js"></script>
         <script type="text/javascript" src="app/controllers/SurveyController.js"></script>
+        <script type="text/javascript" src="app/controllers/ObservationsController.js"></script>
+        <script type="text/javascript" src="app/controllers/NoBrfController.js"></script>
+        <script type="text/javascript" src="app/controllers/CategoryController.js"></script>
+        <script type="text/javascript" src="app/controllers/PricesController.js"></script>
+        <script type="text/javascript" src="app/controllers/QuestionsController.js"></script>
 
         <!-- Angulart Services -->
         <script type="text/javascript" src="app/services/ChannelService.js"></script>
@@ -205,8 +208,7 @@
         <script type="text/javascript" src="app/services/SurveyService.js"></script>
 
         <!-- Directives -->
-        <script type="text/javascript" src="app/directives/QuestionActionDirective.js"></script>
-        <script type="text/javascript" src="app/directives/QuestionContentDirective.js"></script>
+        <script type="text/javascript" src="app/directives/QuestionsDirective.js"></script>
 
         <!-- Session -->
         <script type="text/javascript" src="js/session.js"></script>

@@ -56,7 +56,7 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 				var promises = [];
 
 				angular.forEach(customers.data.customers, function(value, key){
-					promises.push(customerService.setCustomer(value.id, value["company_name"], value.cuit, value.address, 0));			
+					promises.push(customerService.setCustomer(value.id, value["company_name"], value.cuit, value.address, value.type_pdv));			
 				});
 
 				$q.all(promises).then(function(){
@@ -211,7 +211,27 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 				var promises = [];
 
 				angular.forEach(questions.data.questions, function(value, key){
-					promises.push(questionService.setQuestion(value.id, value.id_category, value.pdv_filter, value.render, value.answer, value.title, value.data, value.helper, value.big, value.thumb, 0));
+					var questionId = value.id;
+
+					promises.push(
+					questionService.setQuestion({
+						questionId: value.id, 
+						categoryId: value.id_category, 
+						render: value.render, 
+						answer: value.answer, 
+						title: value.title, 
+						data: value.data, 
+						helper: value.helper, 
+						big: value.big, 
+						thumb: value.thumb, 
+						questionModuleId: value.id_question_mod,
+						config: (typeof value.config === 'object') ? JSON.stringify(value.config) : value.config,
+						styling: (typeof value.styling === 'object') ? JSON.stringify(value.styling) : value.styling
+					}));
+				
+					angular.forEach(value.pdv_filter, function(value, key){
+						promises.push(questionService.setQuestionPdv(questionId, value));
+					});
 				});
 
 				$q.all(promises).then(function(){

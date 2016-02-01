@@ -1,0 +1,35 @@
+<section class="row center-align" style="width:100%;">		
+	<article class="col s12">			
+		<article class="card blue-grey darken-1 col s12">				
+			<div class="card-content white-text">
+				<p>{{categoryTitle}}</p>
+			</div>					
+		</article>			
+	</article>
+</section>
+
+<main style="margin-top:-30px;">		  
+	<section class="row col s12">			
+		<ul class="collection with-header">		
+				
+			<li class="collection-item" style="background-color:#cccccc;padding-bottom:10px;border-top:1px #545454 solid;border-bottom:1px #545454 solid;">							
+				<a href="ejecucion_cat_special_adherencia.php" class="white-text">
+					ADHERENCIA MIX Y PRECIO
+					<div class="secondary-content">
+						<i class="material-icons white-text">chevron_right</i>
+					</div>
+				</a>							
+			</li>					
+							   
+			<li class="collection-item" ng-repeat="category in categories">						
+				<a ng-href="{{(mode === 1) ? '#/Prices' : '#/Execution'}}">
+					{{category.name}}
+					<div class="secondary-content">
+						<i class="material-icons">chevron_right</i>
+					</div>
+				</a>							
+			</li>					
+
+		</ul>				
+	</section>
+</main>

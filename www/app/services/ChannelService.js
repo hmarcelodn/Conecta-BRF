@@ -23,7 +23,7 @@ brfPhoneGapApp.factory('channelService', ['$http', '$q', function($http, $q){
 				tx.executeSql('Select id, name From Channel', [], function(tx, res){
 
 	               for(var i = 0; i < res.rows.length; i++){
-	                    result.push({ id: res.rows.item(i).channelId, name: res.rows.item(i).name });
+	                    result.push({ id: res.rows.item(i).id, name: res.rows.item(i).name });
 	                }
 	                
 	                deferred.resolve(result);
