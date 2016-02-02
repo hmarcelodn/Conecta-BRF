@@ -56,7 +56,15 @@ brfPhoneGapApp.factory('surveyService', ['$http', '$q', '$timeout', function($ht
 					tx.executeSql('CREATE TABLE IF NOT EXISTS Survey(id integer primary key, survey text, syncStatus integer)', [], function(tx, res){
 						tx.executeSql('DROP TABLE IF EXISTS SurveyQuestionsResults', [], function(tx, res){
 							tx.executeSql('CREATE TABLE IF NOT EXISTS SurveyQuestionsResults(id integer primary key, surveyId integer, questionId integer, JSONData text)', [], function(tx, res){
-								deferred.resolve();
+								tx.executeSql('DROP TABLE IF EXISTS SurveyNoBrfResults', [], function(tx, res){
+									tx.executeSql('CREATE TABLE IF NOT EXISTS SurveyNoBrfResults(id integer primary key, surveyId integer,noBrf boolean)',[], function(tx, res){
+										tx.executeSql('DROP TABLE IF EXISTS SurveyObservationResults', [], function(tx, res){
+											tx.executeSql('CREATE TABLE IF NOT EXISTS SurveyObservationResults(id integer primary key, surveyId integer, observations text)', [], function(tx, res){
+												deferred.resolve();
+											});
+										});
+									});
+								});
 							});							
 						});						
 					}); 
@@ -122,6 +130,86 @@ brfPhoneGapApp.factory('surveyService', ['$http', '$q', '$timeout', function($ht
 			});
 
 			return deferred.promise;
+		},
+		setNoBrf: function(surveyId, noBrfResult){
+			var deferred = $q.defer();
+
+			db.transaction(function(tx){
+				tx.executeSql('UPDATE SurveyNoBrfResults SET noBrf = ? WHERE surveyId = ?', [noBrfResult, surveyId], function(tx, res){
+					if(res.rowsAffected === 0){
+						tx.executeSql('INSERT INTO SurveyNoBrfResults(surveyId, noBrf) VALUES(?, ?)', [surveyId, noBrfResult], function(tx, res){
+							deferred.resolve();
+						});
+					}
+					else{
+						deferred.resolve();
+					}
+				});
+			});
+
+			return deferred.promise;
+		},
+		setObservations: function(surveyId, observations){
+			var deferred = $q.defer();
+
+			db.transaction(function(tx){
+				tx.executeSql('UPDATE SurveyObservationResults SET observations = ? WHERE surveyId = ?', [observations, surveyId], function(tx, res){
+					if(res.rowsAffected === 0){
+						tx.executeSql('INSERT INTO SurveyObservationResults(surveyId, observations) VALUES(?, ?)', [surveyId, observations], function(tx, res){
+							deferred.resolve();
+						});
+					}
+					else{
+						deferred.resolve();
+					}
+				});
+			});
+
+			return deferred.promise;
+		},
+		getNoBrf: function(surveyId){
+			var deferred = $q.defer(), result = [];
+
+			db.transaction(function(tx){
+
+				tx.executeSql('SELECT noBrf FROM SurveyNoBrfResults WHERE surveyId = ?',[surveyId], function(tx, res){
+
+					for(var i = 0; i < res.rows.length; i++){
+	                    result.push(
+	                    	{ 
+	                    		noBrf: res.rows.item(i).noBrf
+	                    	}
+	                    );
+	                }
+
+					deferred.resolve(result);
+				});
+
+			});
+
+			return deferred.promise;
+		},
+		getObservations: function(surveyId){
+			var deferred = $q.defer(), result = [];
+
+			db.transaction(function(tx){
+
+				tx.executeSql('SELECT observations FROM SurveyObservationResults WHERE surveyId = ?', [surveyId], function(tx, res){
+
+					for(var i = 0; i < res.rows.length; i++){
+	                    result.push(
+	                    	{ 
+	                    		observations: res.rows.item(i).observations
+	                    	}
+	                    );
+	                }
+
+					deferred.resolve(result);
+				});
+
+			});
+
+			return deferred.promise;			
 		}
 	}
 }]);

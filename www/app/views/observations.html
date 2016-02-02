@@ -16,7 +16,10 @@
 				<p>Dejar un comentario sobre este punto de venta.</p>
 					<form action="#" class="row">						
 						<p class="input-field col s12">
-							<textarea id="textarea1" class="materialize-textarea" length="500"></textarea>
+							<textarea id="textarea1" class="materialize-textarea" length="500" 
+									  ng-model="observations"
+									  ng-change="observationsChanged()">
+							</textarea>
 						</p>						 
 					</form>						
 			</article>

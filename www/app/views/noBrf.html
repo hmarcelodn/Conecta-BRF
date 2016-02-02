@@ -18,7 +18,9 @@
 							<div class="switch">
 								<label>
 								  No Declarar
-								  <input type="checkbox">
+								  <input type="checkbox" 
+								  		 ng-model="noBrfStatus"
+								  		 ng-change="noBrfChanged()">
 									  <span class="lever"></span>
 									  Declarar No Hay BRF
 								</label>
@@ -26,8 +28,8 @@
 						 </p>						 
 					</form>
 						 
-					<hr class="division">						 
-					<p>En este momento no está declarada la situación "Acá no hay BRF"</p>						
+					<hr class="division" ng-show="!noBrfStatus">						 
+					<p ng-show="!noBrfStatus">En este momento no está declarada la situación "Acá no hay BRF"</p>						
 			</article>
 		</article>				
 	</section>		
