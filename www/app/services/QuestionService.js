@@ -66,10 +66,6 @@ brfPhoneGapApp.factory('questionService', ['$http', '$q', function($http, $q){
 				query = query + ' AND q.categoryId = ' + categoryId;
 			}
 
-			console.log(query);
-			console.log(moduleId);
-			console.log(surveyId);
-
 			db.transaction(function(tx){
 				tx.executeSql(query, [surveyId, moduleId], function(tx, res){
 

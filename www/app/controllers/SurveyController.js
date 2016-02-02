@@ -4,7 +4,7 @@ brfPhoneGapApp.controller('surveyController', function($scope, $route, $location
 		surveyService.disableAuditMode();
 		
 		surveyService.closeSurvey().then(function(){						
-			$location.path('/Dashboard');
+			$location.path('/Welcome');
 		});
 	};
 	

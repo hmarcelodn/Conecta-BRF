@@ -41,4 +41,10 @@ brfPhoneGapApp.controller('loginController', function($scope, $route, $location,
 		return surveyService.getAuditMode();
 	};
 
+	$scope.getUserName = function(){
+		var token = loginService.getToken();
+
+		return token.name;
+	};
+
 });

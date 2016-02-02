@@ -46,7 +46,7 @@
 
 		<!-- Content Bis Content -->
 		<h5 ng-if="question.render === 'complete_bis'" 
-			style="font-size:18px;">
+			ng-style="{'font-size': question.styling.css.size_title, 'color': question.styling.css.color_title }">
 			{{question.title}}
 		</h5>
 
@@ -96,7 +96,7 @@
 		<div ng-if="question.answer === 'price'" 
 		     class="card-action" 
 		     style="margin-left:-20px;overflow:auto;">
-			<span style="float:left;display:block;background-color:#ed6944;padding:3px 5px;color:white;">
+			<span ng-style="{ 'float': 'left', 'display': 'block', 'background-color': question.styling.css.bg_data, 'padding':'3px 5px', 'color':question.styling.css.color_data}">
 				{{question.data}}
 			</span>				  
 			

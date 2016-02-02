@@ -52,7 +52,7 @@
                     <img src="img/content/logo.png" style="padding-top:20px;margin-left:10px;"></img>
                 </li>            
                 <li style="color:#494849;border-bottom:1px solid #a3a3a3;" class="center-align">            
-                    <a ng-href="#/">Hernán Matías Fernández</a>            
+                    <a ng-href="#/">{{getUserName()}}</a>            
                 </li>            
                 <li class="no-padding" ng-show="!isAuditModeEnabled()">            
                     <ul class="collapsible collapsible-accordion">
@@ -65,7 +65,7 @@
                             <div class="collapsible-body">
                                 <ul>                                
                                     <li><a ng-href="#/Welcome">Nueva Auditoría</a></li>
-                                    <li><a ng-href="#/Dashboard">Dashboard</a></li>
+                                    <li ng-if="false"><a ng-href="#/Dashboard">Dashboard</a></li>
                                     <li><a ng-href="#/Synchronizer">Sincronizar</a></li>
                                     <li><a ng-href="#/Synchronizer">Enviar Datos</a></li>                                  
                                 </ul>

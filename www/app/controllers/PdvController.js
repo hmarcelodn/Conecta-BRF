@@ -1,4 +1,4 @@
-brfPhoneGapApp.controller('pdvController', function($scope, $route, $location, customerService){
+brfPhoneGapApp.controller('pdvController', function($scope, $route, $location, $routeParams, customerService){
 	
 	customerService.getCustomerTypes().then(function(customerTypes){
 		$scope.customerTypes = customerTypes;
@@ -11,7 +11,7 @@ brfPhoneGapApp.controller('pdvController', function($scope, $route, $location, c
 
 	$scope.addPdv = function(event){	
 		customerService.setCustomer(0, $scope.companyName, $scope.identifier, $scope.address, $scope.selectedCustomerType.id).then(function(){
-			$location.path('/Search');
+			$location.path('Channel/' + $routeParams.channelId + '/Pdv/0/Seller');
 		});
 	};
 });

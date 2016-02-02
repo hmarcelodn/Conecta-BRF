@@ -17,7 +17,6 @@ brfPhoneGapApp.controller('coachingController', function($scope, $route, $routeP
 					});	
 				}
 				else{
-					console.log(module);
 					questionService.getQuestions(module[0].moduleId, pendingSurvey.id, undefined, module[0].categoryType).then(function(questions){
 						$scope.questions = questions;
 					});
