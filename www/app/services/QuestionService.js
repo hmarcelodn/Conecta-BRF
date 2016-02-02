@@ -43,12 +43,11 @@ brfPhoneGapApp.factory('questionService', ['$http', '$q', function($http, $q){
 
 			return deferred.promise;	
 		},		
-		getQuestions: function(module, survey){
+		getQuestions: function(moduleId, surveyId, categoryId, categoryType){
 			var deferred = $q.defer(), result = [];
-			var moduleId = module[0].moduleId;
 			var query;			
 
-			if(module[0].categoryType === 0){
+			if(categoryType === 0){
 				query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, res.JSONData FROM Question q' +
 						' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
 						' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
@@ -63,8 +62,16 @@ brfPhoneGapApp.factory('questionService', ['$http', '$q', function($http, $q){
 						' WHERE q.questionModuleId = ?';
 			}
 
+			if(categoryId !== undefined && categoryId !== null && categoryId != 0){
+				query = query + ' AND q.categoryId = ' + categoryId;
+			}
+
+			console.log(query);
+			console.log(moduleId);
+			console.log(surveyId);
+
 			db.transaction(function(tx){
-				tx.executeSql(query, [survey.id, moduleId], function(tx, res){
+				tx.executeSql(query, [surveyId, moduleId], function(tx, res){
 
 					var renderJSONData = function(JSONData, answerType){
 						var result;

@@ -2,9 +2,11 @@ brfPhoneGapApp.controller('searchController', function($scope, $route, $routePar
 
 	$scope.pdvId = $routeParams.pdvId;
 	$scope.channelId = $routeParams.channelId;
+	$scope.loadingSellers = true;
 
 	sellerService.getSellers().then(function(sellers){
 		$scope.sellers = sellers;
+		$scope.loadingSellers = false;
 	});
 
 	

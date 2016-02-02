@@ -29,6 +29,7 @@
 				<i class="large material-icons">add_circle</i>
 			</a>
 		</section>		
+		<h5 ng-show="loadingCustomers" style="text-align: center;">LOADING...</h5>	
 		<ul class="collection with-header">				
 			<li class="collection-item" ng-repeat="customer in customers | filter: query">						
 				<a ng-href="#/Channel/{{channelId}}/Pdv/{{customer.id}}/Seller">

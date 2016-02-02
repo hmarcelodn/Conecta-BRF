@@ -1,10 +1,17 @@
-brfPhoneGapApp.controller('executionController', function($scope, $route, questionService, moduleService, surveyService){
+brfPhoneGapApp.controller('executionController', function($scope, $route, $routeParams, questionService, moduleService, surveyService){
 	
 	moduleService.getModuleByName('Ejecución PDV').then(function(module){
 		surveyService.getPendingSurvey().then(function(pendingSurvey){
-			questionService.getQuestions(module, pendingSurvey).then(function(questions){
-				$scope.questions = questions;
-			});
+			if($routeParams.categoryId !== undefined){
+				questionService.getQuestions(module.moduleId, pendingSurvey.id, $routeParams.categoryId).then(function(questions){
+					$scope.questions = questions;
+				});
+			}
+			else{
+				questionService.getQuestions(module[0].moduleId, pendingSurvey, undefined, module[0].categoryType).then(function(questions){
+					$scope.questions = questions;
+				});
+			}
 		});
 	});	
 
