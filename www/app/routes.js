@@ -64,7 +64,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
-		.when('/Execution', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Execution/:categoryId?', {
 			templateUrl: 'app/views/execution.html',
 			controller: 'executionController',
 			access:{
@@ -111,7 +111,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}
 		})		
-		.when('/Observations', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Observations', {
 			templateUrl: 'app/views/observations.html',
 			controller: 'observationsController',
 			access:{
@@ -119,7 +119,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
-		.when('/NoBrf', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/NoBrf', {
 			templateUrl: 'app/views/nobrf.html',
 			controller: 'noBrfController',
 			access:{
@@ -127,7 +127,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
-		.when('/CategorySearch', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/CategorySearch/:modeId', {
 			templateUrl: 'app/views/categorySearch.html',
 			controller: 'categoryController',
 			access:{
@@ -135,7 +135,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
-		.when('/Prices', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Prices/:categoryId', {
 			templateUrl: 'app/views/prices.html',
 			controller: 'pricesController',
 			access: {

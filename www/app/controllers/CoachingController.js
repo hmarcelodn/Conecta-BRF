@@ -1,5 +1,6 @@
 brfPhoneGapApp.controller('coachingController', function($scope, $route, $routeParams, questionService, surveyService, moduleService){	
 
+	$scope.routeParams = $routeParams;
 
 	moduleService.getModuleByName('Coaching Supervisor').then(function(module){
 

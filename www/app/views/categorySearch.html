@@ -22,7 +22,7 @@
 			</li>					
 							   
 			<li class="collection-item" ng-repeat="category in categories">						
-				<a ng-href="{{(mode === 1) ? '#/Prices' : '#/Execution'}}">
+				<a ng-href="{{getRoute(category)}}">
 					{{category.name}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>

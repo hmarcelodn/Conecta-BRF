@@ -47,7 +47,7 @@
                     <img src="img/content/logo.png" style="padding-top:20px;margin-left:10px;"></img>
                 </li>            
                 <li style="color:#494849;border-bottom:1px solid #a3a3a3;" class="center-align">            
-                    <a ng-href="/">Hernán Matías Fernández</a>            
+                    <a ng-href="#/">Hernán Matías Fernández</a>            
                 </li>            
                 <li class="no-padding" ng-show="!isAuditModeEnabled()">            
                     <ul class="collapsible collapsible-accordion">
@@ -59,10 +59,10 @@
                           
                             <div class="collapsible-body">
                                 <ul>                                
-                                    <li><a href="#/Welcome">Nueva Auditoría</a></li>
-                                    <li><a href="#/Dashboard">Dashboard</a></li>
-                                    <li><a href="#/Synchronizer">Sincronizar</a></li>
-                                    <li><a href="#/Synchronizer">Enviar Datos</a></li>                                  
+                                    <li><a ng-href="#/Welcome">Nueva Auditoría</a></li>
+                                    <li><a ng-href="#/Dashboard">Dashboard</a></li>
+                                    <li><a ng-href="#/Synchronizer">Sincronizar</a></li>
+                                    <li><a ng-href="#/Synchronizer">Enviar Datos</a></li>                                  
                                 </ul>
                              </div>                      
                         </li>
@@ -83,19 +83,19 @@
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">find_in_page</i>
-                        <a ng-href="#/CategorySearch">Ejecución PDV</a>
+                        <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/CategorySearch/0">Ejecución PDV</a>
                     </div>
                 </li>                                
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">storage</i>
-                        <a ng-href="#/CategorySearch?mode=1">Toma de Precios</a>
+                        <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/CategorySearch/1">Toma de Precios</a>
                     </div>
                 </li>                
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">notifications_active</i>
-                        <a ng-href="#/NoBrf">Acá No Hay BRF</a>
+                        <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/NoBrf">Acá No Hay BRF</a>
                     </div>
                 </li>                
                 <li ng-show="false">
@@ -125,7 +125,7 @@
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">edit</i>
-                        <a ng-href="#/Observations">Observaciones</a>
+                        <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/Observations">Observaciones</a>
                     </div>
                 </li>                
                 <li ng-show="false">

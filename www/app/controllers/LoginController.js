@@ -1,9 +1,10 @@
 var BrfNameSpace = BrfNameSpace || {};
 
-brfPhoneGapApp.controller('loginController', function($scope, $route, $location, loginService, surveyService){
+brfPhoneGapApp.controller('loginController', function($scope, $route, $location, loginService, surveyService, $routeParams){
 	
 	$scope.username;
 	$scope.password;
+	$scope.routeParams = $routeParams;
 
 	//Already Authenticated
 	if(loginService.authenticated()){
