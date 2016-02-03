@@ -1,3 +1,3 @@
-brfPhoneGapApp.controller('syncOkController', function($scope, $route){
+brfPhoneGapApp.controller('syncOkController', function($scope){
 		
 });

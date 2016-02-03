@@ -1,4 +1,4 @@
-brfPhoneGapApp.controller('categoryController', function($scope, $route, $routeParams, categoryService){
+brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Category', function($scope, $routeParams, Category){
 
 	$scope.routeParams = $routeParams;
 
@@ -12,7 +12,7 @@ brfPhoneGapApp.controller('categoryController', function($scope, $route, $routeP
 		$scope.modeId = parseInt($routeParams.modeId);
 	}
 
-	categoryService.getCategories().then(function(categories){
+	Category.getCategories().then(function(categories){
 		$scope.categories = categories;
 	});
 
@@ -26,4 +26,4 @@ brfPhoneGapApp.controller('categoryController', function($scope, $route, $routeP
 		return route + 'Execution/' + category.categoryId;
 	};
 
-});
+}]);

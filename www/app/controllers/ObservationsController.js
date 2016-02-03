@@ -1,7 +1,7 @@
-brfPhoneGapApp.controller('observationsController', function($scope, surveyService){
+brfPhoneGapApp.controller('observationsController', ['$scope', 'Survey', function($scope, Survey){
 	
-	surveyService.getPendingSurvey().then(function(survey){
-		surveyService.getObservations(survey.id).then(function(observations){
+	Survey.getPendingSurvey().then(function(survey){
+		Survey.getObservations(survey.id).then(function(observations){
 			if(observations.length === 0){
 				$scope.observations = '';
 			}
@@ -15,11 +15,11 @@ brfPhoneGapApp.controller('observationsController', function($scope, surveyServi
 	$scope.observations;
 
 	$scope.observationsChanged = function(){
-		surveyService.getPendingSurvey().then(function(survey){
-			surveyService.setObservations(survey.id, $scope.observations).then(function(){
+		Survey.getPendingSurvey().then(function(survey){
+			Survey.setObservations(survey.id, $scope.observations).then(function(){
 				return;
 			});
 		});	
 	};
 
-});
+}]);

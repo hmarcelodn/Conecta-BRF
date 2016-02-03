@@ -1,4 +1,4 @@
-var brfPhoneGapApp = angular.module('brfPhoneGapApp', ['ngRoute']); //Boostrap
+var brfPhoneGapApp = angular.module('brfPhoneGapApp', ['ngRoute']);
 var db; //Database Global Variable
 
 /*

@@ -1,19 +1,20 @@
 var BrfNameSpace = BrfNameSpace || {};
 
-brfPhoneGapApp.controller('loginController', function($scope, $route, $location, loginService, surveyService, $routeParams){
+brfPhoneGapApp.controller('loginController', ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', 
+	function($scope, $route, $location, Login, Survey, $routeParams){
 	
 	$scope.username;
 	$scope.password;
 	$scope.routeParams = $routeParams;
 
 	//Already Authenticated
-	if(loginService.authenticated()){
+	if(Login.authenticated()){
 		$location.path("/Main");
 	}
 
 	$scope.login = function(event){
 		
-		loginService.validateUser($scope.username, $scope.password).then(function(response){
+		Login.validateUser($scope.username, $scope.password).then(function(response){
 	
 			if(typeof response.data === 'string'){
 				if(response.data.trim() === 'false'){
@@ -21,7 +22,7 @@ brfPhoneGapApp.controller('loginController', function($scope, $route, $location,
 				}
 			}
 			else if(typeof response.data === 'object'){
-				loginService.authenticate(response.data);
+				Login.authenticate(response.data);
 				$location.path("/Main");
 			}
 
@@ -29,22 +30,22 @@ brfPhoneGapApp.controller('loginController', function($scope, $route, $location,
 	};
 
 	$scope.logout = function(){
-		loginService.authenticate(undefined);
+		Login.authenticate(undefined);
 		$location.path("/");
 	};
 
 	$scope.authenticated = function(){
-		return loginService.authenticated();
+		return Login.authenticated();
 	};
 
 	$scope.isAuditModeEnabled = function(){
-		return surveyService.getAuditMode();
+		return Survey.getAuditMode();
 	};
 
 	$scope.getUserName = function(){
-		var token = loginService.getToken();
+		var token = Login.getToken();
 
 		return token.name;
 	};
 
-});
+}]);

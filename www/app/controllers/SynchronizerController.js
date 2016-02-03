@@ -1,4 +1,4 @@
-brfPhoneGapApp.controller('synchronizerController', ['channelService', function($scope, $route, channelService){
+brfPhoneGapApp.controller('synchronizerController', ['$scope', function($scope){
 
 
 }]);

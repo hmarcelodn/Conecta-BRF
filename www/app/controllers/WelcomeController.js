@@ -1,4 +1,4 @@
-brfPhoneGapApp.controller('welcomeController', function($scope, $route, surveyService, loginService){
+brfPhoneGapApp.controller('welcomeController', function($scope){
 	
 
 });

@@ -1,7 +1,7 @@
-brfPhoneGapApp.controller('channelsController', function($scope, $route, $routeParams,channelService){
+brfPhoneGapApp.controller('channelsController', ['$scope', '$route', '$routeParams', 'Channel', function($scope, $route, $routeParams, Channel){
 		
-	channelService.getChannels().then(function(channels){
+	Channel.getChannels().then(function(channels){
 		$scope.channels = channels;
 	});
 
-});
+}]);

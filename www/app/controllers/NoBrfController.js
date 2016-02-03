@@ -1,7 +1,7 @@
-brfPhoneGapApp.controller('noBrfController', function($scope, surveyService){
+brfPhoneGapApp.controller('noBrfController', ['$scope', 'Survey', function($scope, Survey){
 
-	surveyService.getPendingSurvey().then(function(survey){
-		surveyService.getNoBrf(survey.id).then(function(noBrfs){
+	Survey.getPendingSurvey().then(function(survey){
+		Survey.getNoBrf(survey.id).then(function(noBrfs){
 			if(noBrfs.length === 0){
 				$scope.noBrfStatus = false;
 			}
@@ -13,11 +13,11 @@ brfPhoneGapApp.controller('noBrfController', function($scope, surveyService){
 	});	
 
 	$scope.noBrfChanged = function(){
-		surveyService.getPendingSurvey().then(function(survey){
-			surveyService.setNoBrf(survey.id, $scope.noBrfStatus).then(function(){
+		Survey.getPendingSurvey().then(function(survey){
+			Survey.setNoBrf(survey.id, $scope.noBrfStatus).then(function(){
 				return;
 			});
 		});		
 	};
 
-});
+}]);

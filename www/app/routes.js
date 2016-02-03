@@ -147,7 +147,10 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			redirecTo: '/'
 		})
 }]).
-run(function($rootScope, $location, loginService, surveyService){
+run(function($rootScope, $location, loginService, surveyService, Database){
+
+	Database.init();
+
 	$rootScope.$on('$viewContentLoaded', function(event){
 		$('.collapsible').collapsible();
 		$('select').material_select();

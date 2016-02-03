@@ -1,11 +1,11 @@
-brfPhoneGapApp.controller('formController', function($scope, $route, $routeParams, customerService){
+brfPhoneGapApp.controller('formController', ['$scope', '$route', '$routeParams', 'Customer' , function($scope, $route, $routeParams, Customer){
 	
 	$scope.channelId = $routeParams.channelId;
 	$scope.loadingCustomers = true;
 
-	customerService.getCustomers().then(function(customers){
+	Customer.getCustomers().then(function(customers){
 		$scope.customers = customers;
 		$scope.loadingCustomers = false;
 	});	
 
-});
+}]);
