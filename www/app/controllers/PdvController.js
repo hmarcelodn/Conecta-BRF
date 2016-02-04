@@ -1,4 +1,5 @@
-brfPhoneGapApp.controller('pdvController', ['$scope', '$route', '$location', '$routeParams', 'Customer', function($scope, $route, $location, $routeParams, Customer){
+brfPhoneGapApp.controller('pdvController', ['$scope', '$route', '$location', '$routeParams', 'Customer', 
+	function($scope, $route, $location, $routeParams, Customer){
 	
 	Customer.getCustomerTypes().then(function(customerTypes){
 		$scope.customerTypes = customerTypes;

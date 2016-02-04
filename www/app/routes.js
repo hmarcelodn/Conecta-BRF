@@ -127,7 +127,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/CategorySearch/:modeId', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/:slug', {
 			templateUrl: 'app/views/categorySearch.html',
 			controller: 'categoryController',
 			access:{
@@ -147,7 +147,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			redirectTo: '/'
 		})
 }]).
-run(function($rootScope, $location, loginService, surveyService, Database){
+run(function($rootScope, $location, Login, Survey, Database){
 
 	Database.init();
 
@@ -158,16 +158,16 @@ run(function($rootScope, $location, loginService, surveyService, Database){
 
 	$rootScope.$on('$routeChangeStart', function(currRoute, prevRoute){
 		if (prevRoute.access != undefined) {
-            if (!prevRoute.access.isFreeAccess && !loginService.authenticated()) {
+            if (!prevRoute.access.isFreeAccess && !Login.authenticated()) {
                 $location.path('/');
             }
         }
 
         if(prevRoute.access != undefined){
-        	 if(!prevRoute.access.audit && surveyService.getAuditMode()){
-        	 	$location.path('/Channel/' + surveyService.getAuditChannel() + 
-        	 				   '/Pdv/' + surveyService.getAuditPdv() + 
-        	 				   '/Seller/' + surveyService.getAuditSeller() + 
+        	 if(!prevRoute.access.audit && Survey.getAuditMode()){
+        	 	$location.path('/Channel/' + Survey.getAuditChannel() + 
+        	 				   '/Pdv/' + Survey.getAuditPdv() + 
+        	 				   '/Seller/' + Survey.getAuditSeller() + 
         	 				   '/coaching_sp');
         	 }
         }

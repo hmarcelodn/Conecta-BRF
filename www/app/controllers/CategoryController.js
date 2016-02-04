@@ -1,29 +1,22 @@
 brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Category', function($scope, $routeParams, Category){
 
 	$scope.routeParams = $routeParams;
+	$scope.nextModule;
 
-	if($routeParams.modeId === "0"){
-		$scope.categoryTitle = 'EJECUCIÓN PDV';
-		$scope.modeId = 0;
-	}
-
-	if($routeParams.modeId === "1"){
-		$scope.categoryTitle = 'TOMA DE PRECIOS';
-		$scope.modeId = parseInt($routeParams.modeId);
+	switch($routeParams.slug){
+		case 'ejecucion_pdv':
+			$scope.categoryTitle = 'EJECUCIÓN PDV';
+			$scope.slug = $routeParams.slug;
+			$scope.nextModule = 'Execution';
+			break;
+		case 'toma_precios':
+			$scope.categoryTitle = 'TOMA DE PRECIOS';
+			$scope.slug = $routeParams.slug;
+			$scope.nextModule = 'Prices';
+			break;
 	}
 
 	Category.getCategories().then(function(categories){
 		$scope.categories = categories;
 	});
-
-	$scope.getRoute = function(category){
-		var route = '#/Channel/' + $scope.routeParams.channelId + '/Pdv/' + $scope.routeParams.pdvId + '/Seller/' + $scope.routeParams.sellerId + '/';
-
-		if($scope.modeId === 1){
-			return route + 'Prices/' + category.categoryId;
-		}
-
-		return route + 'Execution/' + category.categoryId;
-	};
-
 }]);

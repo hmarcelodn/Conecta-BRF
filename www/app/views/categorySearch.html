@@ -13,7 +13,7 @@
 		<ul class="collection with-header">										
 							   
 			<li class="collection-item" ng-repeat="category in categories">						
-				<a ng-href="{{getRoute(category)}}">
+				<a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/{{nextModule}}/{{category.categoryId}}">
 					{{category.name}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>

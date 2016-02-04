@@ -1,4 +1,5 @@
-brfPhoneGapApp.controller('formController', ['$scope', '$route', '$routeParams', 'Customer' , function($scope, $route, $routeParams, Customer){
+brfPhoneGapApp.controller('formController', ['$scope', '$route', '$routeParams', 'Customer' , 
+	function($scope, $route, $routeParams, Customer){
 	
 	$scope.channelId = $routeParams.channelId;
 	$scope.loadingCustomers = true;

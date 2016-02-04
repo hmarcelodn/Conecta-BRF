@@ -2,12 +2,11 @@ brfPhoneGapApp.controller('noBrfController', ['$scope', 'Survey', function($scop
 
 	Survey.getPendingSurvey().then(function(survey){
 		Survey.getNoBrf(survey.id).then(function(noBrfs){
-			if(noBrfs.length === 0){
+			if(noBrfs === undefined){
 				$scope.noBrfStatus = false;
 			}
 			else{
-				console.log(noBrfs[0].noBrf);
-				$scope.noBrfStatus = (noBrfs[0].noBrf === 'true');
+				$scope.noBrfStatus = (noBrfs.noBrf === 'true');
 			}
 		});
 	});	

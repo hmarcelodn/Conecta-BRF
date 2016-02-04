@@ -1,3 +1,8 @@
+var auditModeKey = 'audit-mode';
+var channelKeyId = 'channel-id';
+var pdvKeyId = 'pdv-id';
+var sellerKeyId = 'seller-id';
+
 brfPhoneGapApp.factory('Survey', ['$http', 'Database', function($http, Database){
 	var self = this;
 
@@ -90,34 +95,50 @@ brfPhoneGapApp.factory('Survey', ['$http', 'Database', function($http, Database)
 	self.setNoBrf = function(surveyId, noBrfResult){
 		return Database.query('UPDATE SurveyNoBrfResults SET noBrf = ? WHERE surveyId = ?', [noBrfResult, surveyId])
 			.then(function (result){
-				return Database.query('INSERT INTO SurveyNoBrfResults(surveyId, noBrf) VALUES(?, ?)', [surveyId, noBrfResult])
-					.then(function (result){
-						return true;
-					});
+				if(result.rowsAffected === 0){
+					return Database.query('INSERT INTO SurveyNoBrfResults(surveyId, noBrf) VALUES(?, ?)', [surveyId, noBrfResult])
+						.then(function (result){
+							return true;
+						});					
+				}
+
+				return true;
 			});
 	};
 
 	self.setObservations = function(surveyId, observations){
 		return Database.query('UPDATE SurveyObservationResults SET observations = ? WHERE surveyId = ?', [observations, surveyId])
 			.then(function (result){
-				return Database.query('INSERT INTO SurveyObservationResults(surveyId, observations) VALUES(?, ?)', [surveyId, observations])
-					.then(function (result){
-						return true;
-					});
+				if(result.rowsAffected === 0){
+					return Database.query('INSERT INTO SurveyObservationResults(surveyId, observations) VALUES(?, ?)', [surveyId, observations])
+						.then(function (result){
+							return true;
+						});
+				}
+
+				return true;
 			});
 	};
 
 	self.getNoBrf = function(surveyId){
 		return Database.query('SELECT noBrf FROM SurveyNoBrfResults WHERE surveyId = ?',[surveyId])
 			.then(function (result){
-				return Database.fetch(result);
+				if(result.rows.length > 0){
+					return Database.fetch(result);					
+				}
+
+				return undefined;
 			});
 	};
 
-	self.getObservations = function(){
+	self.getObservations = function(surveyId){
 		return Database.query('SELECT observations FROM SurveyObservationResults WHERE surveyId = ?', [surveyId])
 			.then(function (result){
-				return Database.fetch(result);
+				if(result.rows.length > 0){
+					return Database.fetch(result);					
+				}
+
+				return undefined;
 			});		
 	};
 

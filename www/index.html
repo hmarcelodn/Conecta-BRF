@@ -68,14 +68,14 @@
                                 </ul>
                              </div>                      
                         </li>
-                        <li ng-show="!isAuditModeEnabled()" style="min-height:65px;">
-                            <div class="valign-wrapper">
-                                <!--<i class="material-icons" style="color:#e53935">lock_open</i> -->
-                                <a ng-controller="loginController" ng-click="logout()">Cerrar Sesión</a>
-                            </div>
-                        </li>   
                      </ul>            
                 </li>          
+
+                <li ng-show="!isAuditModeEnabled()">
+                    <div class="valign-wrapper">
+                        <a ng-controller="loginController" ng-click="logout()">Cerrar Sesión</a>
+                    </div>
+                </li>   
 
                 <li ng-if="isAuditModeEnabled()" ng-repeat="module in modules">
                     <div class="valign-wrapper">
@@ -146,21 +146,13 @@
         <script type="text/javascript" src="app/controllers/QuestionsController.js"></script>
 
         <!-- Angulart Services -->
-        <script type="text/javascript" src="app/services/ChannelService.js"></script>
         <script type="text/javascript" src="app/services/Channel.js"></script>
-        <script type="text/javascript" src="app/services/CategoryService.js"></script>
         <script type="text/javascript" src="app/services/Category.js"></script>
-        <script type="text/javascript" src="app/services/CustomerService.js"></script>
         <script type="text/javascript" src="app/services/Customer.js"></script>
-        <script type="text/javascript" src="app/services/ModuleService.js"></script>
         <script type="text/javascript" src="app/services/Module.js"></script>
-        <script type="text/javascript" src="app/services/QuestionService.js"></script>
         <script type="text/javascript" src="app/services/Question.js"></script>
-        <script type="text/javascript" src="app/services/SellerService.js"></script>
         <script type="text/javascript" src="app/services/Seller.js"></script>
-        <script type="text/javascript" src="app/services/LoginService.js"></script>
         <script type="text/javascript" src="app/services/Login.js"></script>
-        <script type="text/javascript" src="app/services/SurveyService.js"></script>
         <script type="text/javascript" src="app/services/Survey.js"></script>
         <script type="text/javascript" src="app/services/Config.js"></script>        
         <script type="text/javascript" src="app/services/Database.js"></script>

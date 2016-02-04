@@ -31,9 +31,8 @@ brfPhoneGapApp.factory('Category', ['$http', 'Database', function($http, Databas
 	};
 
 	self.getCategories = function () {
-		return Database.query('SELECT id, categoryId, type, name FROM Category')
+		return Database.query('SELECT * FROM Category')
 			.then(function (result) {
-				console.log(result);
 				return Database.fetchAll(result);
 			});	
 	};

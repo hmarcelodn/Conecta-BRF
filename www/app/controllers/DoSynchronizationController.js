@@ -1,4 +1,5 @@
-brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database){
+brfPhoneGapApp.controller('doSynchronizationController', 
+	function($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database){
 	
 	// 0 - Waiting
 	// 1 - Running

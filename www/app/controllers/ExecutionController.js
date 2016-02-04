@@ -9,7 +9,7 @@ brfPhoneGapApp.controller('executionController', ['$scope', '$route', '$routePar
 				});
 			}
 			else{
-				Question.getQuestions(module[0].moduleId, pendingSurvey, undefined, module[0].categoryType).then(function(questions){
+				Question.getQuestions(module.moduleId, pendingSurvey, undefined, module.categoryType).then(function(questions){
 					$scope.questions = questions;
 				});
 			}

@@ -2,12 +2,11 @@ brfPhoneGapApp.controller('observationsController', ['$scope', 'Survey', functio
 	
 	Survey.getPendingSurvey().then(function(survey){
 		Survey.getObservations(survey.id).then(function(observations){
-			if(observations.length === 0){
+			if(observations === undefined){
 				$scope.observations = '';
 			}
 			else{
-				console.log(observations);
-				$scope.observations = observations[0].observations;
+				$scope.observations = observations.observations;
 			}
 		});
 	});	

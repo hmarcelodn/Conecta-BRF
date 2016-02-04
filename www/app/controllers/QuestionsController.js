@@ -1,4 +1,4 @@
-brfPhoneGapApp.controller('questionsController', function($scope, surveyService){
+brfPhoneGapApp.controller('questionsController', [ '$scope', 'Survey', function($scope, Survey){
 
 	$scope.binaryAction = function(question, answer){		
 
@@ -6,8 +6,8 @@ brfPhoneGapApp.controller('questionsController', function($scope, surveyService)
 			value: answer 
 		};
 
-		surveyService.getPendingSurvey().then(function(survey){
-			surveyService.setQuestionAnswer(survey.id, question.id, JSON.stringify(result)).then(function(){
+		Survey.getPendingSurvey().then(function(survey){
+			Survey.setQuestionAnswer(survey.id, question.id, JSON.stringify(result)).then(function(){
 				question.JSONData = result;
 			});
 		});
@@ -15,24 +15,24 @@ brfPhoneGapApp.controller('questionsController', function($scope, surveyService)
 	};
 
 	$scope.openAction = function(question){
-		surveyService.getPendingSurvey().then(function(survey){
-			surveyService.setQuestionAnswer(survey.id, question.id, JSON.stringify(question.JSONData)).then(function(){
+		Survey.getPendingSurvey().then(function(survey){
+			Survey.setQuestionAnswer(survey.id, question.id, JSON.stringify(question.JSONData)).then(function(){
 				return;
 			});
 		});			
 	};
 
 	$scope.priceAction = function(question){
-		surveyService.getPendingSurvey().then(function(survey){
-			surveyService.setQuestionAnswer(survey.id, question.id, JSON.stringify(question.JSONData)).then(function(){
+		Survey.getPendingSurvey().then(function(survey){
+			Survey.setQuestionAnswer(survey.id, question.id, JSON.stringify(question.JSONData)).then(function(){
 				return;
 			});
 		});
 	};
 
 	$scope.multipleAction = function(question){
-		surveyService.getPendingSurvey().then(function(survey){
-			surveyService.setQuestionAnswer(survey.id, question.id, JSON.stringify(question.config.answer_config.selected)).then(function(){
+		Survey.getPendingSurvey().then(function(survey){
+			Survey.setQuestionAnswer(survey.id, question.id, JSON.stringify(question.config.answer_config.selected)).then(function(){
 				return;
 			});
 		});
@@ -42,4 +42,4 @@ brfPhoneGapApp.controller('questionsController', function($scope, surveyService)
 		return new Array(n);
 	};
 
-});
+}]);

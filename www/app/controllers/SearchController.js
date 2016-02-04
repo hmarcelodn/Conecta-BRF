@@ -1,4 +1,5 @@
-brfPhoneGapApp.controller('searchController', ['$scope', '$route', '$routeParams', 'Seller', function($scope, $route, $routeParams, Seller){	
+brfPhoneGapApp.controller('searchController', ['$scope', '$route', '$routeParams', 'Seller', 
+	function($scope, $route, $routeParams, Seller){	
 
 	$scope.pdvId = $routeParams.pdvId;
 	$scope.channelId = $routeParams.channelId;
