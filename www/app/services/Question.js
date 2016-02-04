@@ -62,6 +62,7 @@ brfPhoneGapApp.factory('Question', ['$http', 'Database', function($http, Databas
 					var questions = [];
 
 					var renderJSONData = function(JSONData, answerType){
+
 						var result;
 
 						if(JSONData === null){
