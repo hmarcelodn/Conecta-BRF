@@ -56,7 +56,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}	
 		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Coaching',{
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/coaching_sp',{
 			templateUrl: 'app/views/coaching.html',
 			controller: 'coachingController',
 			access:{
@@ -111,7 +111,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}
 		})		
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Observations', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/observaciones', {
 			templateUrl: 'app/views/observations.html',
 			controller: 'observationsController',
 			access:{
@@ -119,8 +119,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/NoBrf', {
-			templateUrl: 'app/views/nobrf.html',
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/no_brf', {
+			templateUrl: 'app/views/noBrf.html',
 			controller: 'noBrfController',
 			access:{
 				isFreeAccess: false,
@@ -144,7 +144,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			}
 		})
 		.otherwise({
-			redirecTo: '/'
+			redirectTo: '/'
 		})
 }]).
 run(function($rootScope, $location, loginService, surveyService, Database){
@@ -168,7 +168,7 @@ run(function($rootScope, $location, loginService, surveyService, Database){
         	 	$location.path('/Channel/' + surveyService.getAuditChannel() + 
         	 				   '/Pdv/' + surveyService.getAuditPdv() + 
         	 				   '/Seller/' + surveyService.getAuditSeller() + 
-        	 				   '/Coaching');
+        	 				   '/coaching_sp');
         	 }
         }
         else{

@@ -1,8 +1,5 @@
-brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route, channelService, 
-	customerService, sellerService, moduleService, categoryService, questionService, surveyService, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database){
+brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database){
 	
-
-	console.log(Database);
 	// 0 - Waiting
 	// 1 - Running
 	// 2 - Success
@@ -117,13 +114,14 @@ brfPhoneGapApp.controller('doSynchronizationController', function($scope, $route
 			$scope.syncModules = 1;
 
 			Module.synchronizeModules().then(function(modules){
+
 				var promises = [];
 
 				angular.forEach(modules.data.modules, function(value, key){
 
-					var moduleId = value.id;				
+					var moduleId = value.id;
 
-					promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type));				
+					promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.color, value.icon, value.slug));				
 
 					angular.forEach(value.ids_channels, function(value, key){
 						promises.push(Module.setModuleChannels(moduleId, value));					

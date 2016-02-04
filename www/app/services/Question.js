@@ -34,6 +34,8 @@ brfPhoneGapApp.factory('Question', ['$http', 'Database', function($http, Databas
 	};
 
 	self.getQuestions = function(moduleId, surveyId, categoryId, categoryType){
+
+		console.log("eee");
 		var query;			
 
 		if(categoryType === 0){
@@ -57,8 +59,6 @@ brfPhoneGapApp.factory('Question', ['$http', 'Database', function($http, Databas
 
 		return Database.query(query, [surveyId, moduleId])
 			.then(function (res){		
-
-				console.log(res);
 
 					var questions = [];
 
@@ -106,7 +106,6 @@ brfPhoneGapApp.factory('Question', ['$http', 'Database', function($http, Databas
 					};
 
 	               for(var i = 0; i < res.rows.length; i++){
-
 	                    questions.push(
 	                    	{ 
 	                    		id: res.rows.item(i).questionId, 
@@ -115,9 +114,13 @@ brfPhoneGapApp.factory('Question', ['$http', 'Database', function($http, Databas
 	                    		title: res.rows.item(i).title,
 	                    		data: res.rows.item(i).data,
 	                    		helper: res.rows.item(i).helper,
-	                    		config: renderJSONConfig(res.rows.item(i).JSONData, res.rows.item(i).answer, JSON.parse(res.rows.item(i).config)),
+	                    		config: renderJSONConfig(
+	                    					res.rows.item(i).JSONData, 
+	                    					res.rows.item(i).answer, JSON.parse(res.rows.item(i).config)
+	                    		),
 	                    		styling: JSON.parse(res.rows.item(i).styling),
-	                    		JSONData: renderJSONData(res.rows.item(i).JSONData, res.rows.item(i).answer)
+	                    		JSONData: renderJSONData(res.rows.item(i).JSONData, 
+	                    								 res.rows.item(i).answer)
 	                    	}
 	                    );
 	                }

@@ -1,5 +1,5 @@
-brfPhoneGapApp.controller('coachingController', [ '$scope', '$route', '$routeParams', 'Question', 'Survey', 'Module' ,
-	function($scope, $route, $routeParams, Question, Survey, Module){	
+brfPhoneGapApp.controller('coachingController', [ '$scope', '$route', '$routeParams', 'Question', 'Survey', 'Module', '$rootScope',
+	function($scope, $route, $routeParams, Question, Survey, Module, $rootScope){	
 
 	$scope.routeParams = $routeParams;
 
@@ -18,8 +18,10 @@ brfPhoneGapApp.controller('coachingController', [ '$scope', '$route', '$routePar
 					});	
 				}
 				else{
-					Question.getQuestions(module[0].moduleId, pendingSurvey.id, undefined, module[0].categoryType).then(function(questions){
+					console.log(pendingSurvey);
+					Question.getQuestions(module.moduleId, pendingSurvey.id, undefined, module.categoryType).then(function(questions){
 						$scope.questions = questions;
+						$rootScope.$emit('auditModeEnabled'); //Communicates upwards an audit started
 					});
 				}			
 

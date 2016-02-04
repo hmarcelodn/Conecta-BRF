@@ -74,7 +74,8 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'modName', type: 'text' },
                     { name: 'categoryType', type: 'integer' },
                     { name: 'color', type: 'text' },
-                    { name: 'icon', type: 'text' }
+                    { name: 'icon', type: 'text' },
+                    { name: 'slug', type: 'text' }
                 ]
             },
             {
@@ -159,7 +160,7 @@ brfPhoneGapApp.factory('Config', function(){
                 ]
             },
             {
-                name: "SurveyQuestionResults",
+                name: "SurveyQuestionsResults",
                 columns: 
                 [
                     {name: 'id', type: 'integer primary key'},

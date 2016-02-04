@@ -1,0 +1,129 @@
+<article class="col s12" ng-repeat="question in content">
+	<article class="card col s12">				
+
+		<!-- Help -->	
+		<div class="col s12  right-align" style="height:25px;">
+			<a ng-href="#/Help">
+				<i class="material-icons" style="margin-top:5px;margin-right:-15px;color:#2ba0c9;font-size:22px;">
+					help_outline
+				</i>
+			</a>
+		</div>
+
+		<!-- Plain Content -->
+		<div ng-if="question.render === 'plain'" class="card-conten">
+			<p>{{question.data}}</p>
+		</div>
+
+		<!-- Image Content -->
+		<div ng-if="question.render === 'image'" 
+			 class="card-image waves-effect waves-block waves-light" 
+			 style="margin-top:25px;margin-bottom: 8px;">
+			<img class="activator" src="img/content/thumb_office.jpg"></img>
+		</div>
+												
+		<div ng-if="question === 'image'" 
+			 class="col s12 right-align" 
+			 style="height:25px;">
+			<a ng-href="#/Help">
+				<i class="material-icons" 
+				   style="z-index:10;position:relative;top:-70px;left:10px;color:#2ba0c9;font-size:22px;background-color:white;padding-left:5px;padding-bottom:5px;">
+				   help_outline
+				</i>
+			</a>
+		</div>
+
+		<div ng-if="question.render === 'image'" class="card-reveal">
+			<a href="#modal1" class="modal-trigger">
+				<i class="material-icons left">photo_library</i>
+			</a>					
+			<span class="card-title grey-text text-darken-4">
+				<i class="material-icons right">close</i>
+			</span>
+			<br/>
+			<p>{{question.data}}</p>
+		</div>
+
+		<!-- Content Bis Content -->
+		<h5 ng-if="question.render === 'complete_bis'" 
+			ng-style="{'font-size': question.styling.css.size_title, 'color': question.styling.css.color_title }">
+			{{question.title}}
+		</h5>
+
+		<!-- Title Content-->
+		<h5 ng-if="question.render === 'title'" 
+			style="font-size:18px;">
+			{{question.title}}
+		</h5>
+
+		<!-- Binary Action -->
+		<div ng-if="question.answer === 'binary'" 
+			 ng-show="question.JSONData.value === undefined"
+			 class="card-action center-align">
+			<a href ng-click="binaryAction(question, true)">CUMPLE</a>
+			<a href ng-click="binaryAction(question, false)">NO CUMPLE</a>
+		</div>
+
+		<div ng-if="question.answer === 'binary'" 
+			 ng-show="(question.JSONData.value !== undefined && question.JSONData.value === true)"
+			 class="card-action right-align">
+			<i class="material-icons left" style="position:relative;left:-20px;top:-5px;color:#54922a;">check_circle</i>
+			<strong style="color:#54922a;">SI CUMPLE</strong>
+		</div>
+
+		<div ng-if="question.answer === 'binary'" 
+			 ng-show="(question.JSONData.value !== undefined && question.JSONData.value === false)"
+			 class="card-action right-align">
+			<i class="material-icons left" style="position:relative;left:-20px;top:-5px;color:#cd372f;">cancel</i>
+			<strong style="color:#cd372f;">NO CUMPLE</strong>
+		</div>
+
+		<!-- Open Action -->
+
+		<div ng-if="question.answer === 'open'" 
+		     class="card-action" 
+		     style="margin-left:-20px;overflow:auto;">		
+			<div>
+				<input type="text" style="width:100%;padding:0;margin:0;" 
+					   placeholder="Cantidad" 
+					   ng-change="openAction(question)" 
+					   ng-model="question.JSONData.value"/>
+			</div>					
+		</div>
+
+		<!-- Price Action -->
+
+		<div ng-if="question.answer === 'price'" 
+		     class="card-action" 
+		     style="margin-left:-20px;overflow:auto;">
+			<span ng-style="{ 'float': 'left', 'display': 'block', 'background-color': question.styling.css.bg_data, 'padding':'3px 5px', 'color':question.styling.css.color_data}">
+				{{question.data}}
+			</span>				  
+			
+			<div style="float:right;">
+				<input type="text" style="width:60px;padding:0;margin:0;" 
+					   placeholder="Precio" 
+					   ng-change="priceAction(question)"
+					   ng-model="question.JSONData.value" />
+			</div>
+		</div>
+
+		<!-- Multiple Action -->
+
+		<form ng-if="question.answer === 'multiple'" class="card-action">
+			<p>
+				<span style="padding-right:10px;" 
+					  ng-repeat="n in range(question.config.answer_config.labels.length) track by $index">
+					<input type="checkbox" class="filled-in" 
+						   id="{{question.id}}-{{$index}}" 
+						   ng-model="question.config.answer_config.selected[$index]" 
+						   ng-click="multipleAction(question)" />
+					<label for="{{question.id}}-{{$index}}">
+						{{question.config.answer_config.labels[$index]}}
+					</label>
+				</span>
+			</p>
+		</form>
+				
+	</article>
+</article>

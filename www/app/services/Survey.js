@@ -11,7 +11,11 @@ brfPhoneGapApp.factory('Survey', ['$http', 'Database', function($http, Database)
 	self.getPendingSurvey = function(){
 		return Database.query('SELECT id, survey, syncStatus FROM Survey WHERE syncStatus = 0 LIMIT 0,1')
 			.then(function (result){
-				return Database.fetch(result);
+				if(result.rows.length > 0){
+					return Database.fetch(result);
+				}
+				
+				return undefined;
 			});
 	};
 

@@ -24,10 +24,9 @@
 		
 <main style="margin-top:-30px;">		  
 	<section class="row col s12">			
-		<h5 ng-show="loadingSellers" style="text-align: center;">LOADING...</h5>	
 		<ul class="collection with-header">								   
 			<li class="collection-item" ng-repeat="seller in sellers | filter: query">						
-				<a ng-href="#/Channel/{{channelId}}/Pdv/{{pdvId}}/Seller/{{seller.id}}/Coaching">
+				<a ng-href="#/Channel/{{channelId}}/Pdv/{{pdvId}}/Seller/{{seller.id}}/coaching_sp">
 					{{seller.name}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>

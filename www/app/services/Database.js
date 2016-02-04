@@ -45,6 +45,7 @@ brfPhoneGapApp.factory('Database', ['$q', 'Config', function($q, Config){
             transaction.executeSql(query, bindings, function(transaction, result) {
                 deferred.resolve(result);
             }, function(transaction, error) {
+                console.log("Database Error:" + error.message);
                 deferred.reject(error);
             });
         });

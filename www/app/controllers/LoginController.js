@@ -1,7 +1,7 @@
 var BrfNameSpace = BrfNameSpace || {};
 
-brfPhoneGapApp.controller('loginController', ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', 
-	function($scope, $route, $location, Login, Survey, $routeParams){
+brfPhoneGapApp.controller('loginController', ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module',
+	function($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module){
 	
 	$scope.username;
 	$scope.password;
@@ -11,6 +11,13 @@ brfPhoneGapApp.controller('loginController', ['$scope', '$route', '$location', '
 	if(Login.authenticated()){
 		$location.path("/Main");
 	}
+
+	/*Audit Mode Started*/		
+	$rootScope.$on('auditModeEnabled', function (event, data) {
+	  	Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role).then(function(modules){
+			$scope.modules = modules;
+		});
+	});	
 
 	$scope.login = function(event){
 		
@@ -43,6 +50,10 @@ brfPhoneGapApp.controller('loginController', ['$scope', '$route', '$location', '
 	};
 
 	$scope.getUserName = function(){
+		if(!Login.authenticated()){
+			return "";
+		}
+
 		var token = Login.getToken();
 
 		return token.name;

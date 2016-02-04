@@ -32,6 +32,7 @@
 
         <!-- Import MaterializeCss -->
         <link rel="stylesheet" type="text/css" href="css/bin/materialize.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
 
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -43,7 +44,7 @@
 
             <!-- No Audit Menu -->      
                             
-            <ul id="slide-out" class="side-nav">      
+            <ul id="slide-out" class="side-nav">     
                 <li style="background-color:#e53935;background-image:url('img/gui/bg.jpg');">
                     <img src="img/content/logo.png" style="padding-top:20px;margin-left:10px;"></img>
                 </li>            
@@ -54,7 +55,7 @@
                     <ul class="collapsible collapsible-accordion">
                         <li>                    
                             <a class="collapsible-header" style="margin-left:-5px;">
-                                <i class="material-icons" style="color:#E53935">stars</i>
+                                <!--<i class="material-icons" style="color:#E53935">stars</i>-->
                                 Proceso de Ventas
                             </a>
                           
@@ -63,81 +64,27 @@
                                     <li><a ng-href="#/Welcome">Nueva Auditoría</a></li>
                                     <li ng-if="false"><a ng-href="#/Dashboard">Dashboard</a></li>
                                     <li><a ng-href="#/Synchronizer">Sincronizar</a></li>
-                                    <li><a ng-href="#/Synchronizer">Enviar Datos</a></li>                                  
+                                    <li ng-if="false"><a ng-href="#/Synchronizer">Enviar Datos</a></li>                                  
                                 </ul>
                              </div>                      
                         </li>
+                        <li ng-show="!isAuditModeEnabled()" style="min-height:65px;">
+                            <div class="valign-wrapper">
+                                <!--<i class="material-icons" style="color:#e53935">lock_open</i> -->
+                                <a ng-controller="loginController" ng-click="logout()">Cerrar Sesión</a>
+                            </div>
+                        </li>   
                      </ul>            
-                </li>            
-                <li ng-show="!isAuditModeEnabled()">
+                </li>          
+
+                <li ng-if="isAuditModeEnabled()" ng-repeat="module in modules">
                     <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">lock_open</i>
-                        <a ng-controller="loginController" ng-click="logout()">Cerrar Sesión</a>
+                        <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/{{module.slug}}">{{module.modName}}</a>
                     </div>
-                </li>    
+                </li>                                                      
+
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#">account_circle</i>
-                        <a ng-href="#/Coaching">Coaching Supervisor</a>
-                    </div>
-                </li>                
-                <li ng-show="isAuditModeEnabled()">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">find_in_page</i>
-                        <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/CategorySearch/0">Ejecución PDV</a>
-                    </div>
-                </li>                                
-                <li ng-show="isAuditModeEnabled()">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">storage</i>
-                        <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/CategorySearch/1">Toma de Precios</a>
-                    </div>
-                </li>                
-                <li ng-show="isAuditModeEnabled()">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">notifications_active</i>
-                        <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/NoBrf">Acá No Hay BRF</a>
-                    </div>
-                </li>                
-                <li ng-show="false">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">beenhere</i>
-                        <a href="cat_select.php?mode=3">Mix Prioritario</a>
-                    </div>
-                </li>                
-                <li ng-show="false">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">map</i>
-                        <a href="cat_select.php?mode=4">Planograma</a>
-                    </div>
-                </li>                
-                <li ng-show="false">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">layers</i>
-                        <a href="cat_select.php?mode=6">Exhibiciones Adicionales</a>
-                    </div>
-                </li>                
-                <li ng-show="false">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">local_convenience_store</i>
-                        <a href="cat_select.php?mode=7">POP</a>
-                    </div>
-                </li>                
-                <li ng-show="isAuditModeEnabled()">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">edit</i>
-                        <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/Observations">Observaciones</a>
-                    </div>
-                </li>                
-                <li ng-show="false">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">center_focus_strong</i>
-                        <a href="cat_select.php?mode=2">Cobertura</a>
-                    </div>
-                </li>                
-                <li ng-show="isAuditModeEnabled()">
-                    <div class="valign-wrapper">
-                        <i class="material-icons" style="color:#e53935">cancel</i>
                         <a ng-controller="surveyController" ng-click="closeAudit()" href="#/Welcome">Cerrar Auditoría</a>
                     </div>
                 </li>                     
@@ -229,7 +176,15 @@
             app.initialize();
 
             $(document).ready(function(){
-                $(".button-collapse").sideNav();
+                //$(".button-collapse").sideNav();
+
+                $(".button-collapse").sideNav({
+                      menuWidth: 300, // Default is 240
+                      edge: 'left', // Choose the horizontal origin
+                      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                    }
+                  );
+
                 $('.modal-trigger').leanModal();    
                 $('.button-collapse').sideNav('show');
             });
