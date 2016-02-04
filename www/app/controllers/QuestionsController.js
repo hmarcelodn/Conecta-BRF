@@ -14,6 +14,14 @@ brfPhoneGapApp.controller('questionsController', [ '$scope', 'Survey', function(
 
 	};
 
+	$scope.undoBinaryAction = function(question){
+		Survey.getPendingSurvey().then(function(survey){
+			Survey.deleteQuestionAnswer(survey.id, question.id).then(function(){
+				question.JSONData = undefined;
+			});
+		});
+	};
+
 	$scope.openAction = function(question){
 		Survey.getPendingSurvey().then(function(survey){
 			Survey.setQuestionAnswer(survey.id, question.id, JSON.stringify(question.JSONData)).then(function(){

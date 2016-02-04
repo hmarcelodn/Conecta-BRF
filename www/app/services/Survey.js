@@ -92,6 +92,13 @@ brfPhoneGapApp.factory('Survey', ['$http', 'Database', function($http, Database)
 			});
 	};
 
+	self.deleteQuestionAnswer = function(surveyId, id){
+		return Database.query('DELETE FROM SurveyQuestionsResults WHERE questionId = ? AND surveyId = ?', [id, surveyId])
+			.then(function (result){
+				return true;
+			});
+	};
+
 	self.setNoBrf = function(surveyId, noBrfResult){
 		return Database.query('UPDATE SurveyNoBrfResults SET noBrf = ? WHERE surveyId = ?', [noBrfResult, surveyId])
 			.then(function (result){

@@ -68,14 +68,14 @@
 			 ng-show="(question.JSONData.value !== undefined && question.JSONData.value === true)"
 			 class="card-action right-align">
 			<i class="material-icons left" style="position:relative;left:-20px;top:-5px;color:#54922a;">check_circle</i>
-			<strong style="color:#54922a;">SI CUMPLE</strong>
+			<a href ng-click="undoBinaryAction(question)"><strong style="color:#54922a;">SI CUMPLE</strong></a>
 		</div>
 
 		<div ng-if="question.answer === 'binary'" 
 			 ng-show="(question.JSONData.value !== undefined && question.JSONData.value === false)"
 			 class="card-action right-align">
 			<i class="material-icons left" style="position:relative;left:-20px;top:-5px;color:#cd372f;">cancel</i>
-			<strong style="color:#cd372f;">NO CUMPLE</strong>
+			<a href ng-click="undoBinaryAction(question)"><strong style="color:#cd372f;">NO CUMPLE</strong></a>
 		</div>
 
 		<!-- Open Action -->
