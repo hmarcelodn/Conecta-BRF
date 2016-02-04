@@ -1,0 +1,29 @@
+{
+  "name": "conectabrf",
+  "version": "1.0.0",
+  "description": "Conecta BRF Application",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "bower": "^1.7.7",
+    "uglify-js": "^2.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hmarcelodn/BrfApp.git"
+  },
+  "keywords": [
+    "conectabrf",
+    "brf",
+    "conecta"
+  ],
+  "author": "Hugo Marcelo Del Negro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hmarcelodn/BrfApp/issues"
+  },
+  "homepage": "https://github.com/hmarcelodn/BrfApp#readme"
+}
