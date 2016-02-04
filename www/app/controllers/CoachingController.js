@@ -5,31 +5,23 @@ brfPhoneGapApp.controller('coachingController', [ '$scope', '$route', '$routePar
 
 	Module.getModuleByName('Coaching Supervisor').then(function(module){
 
-		/* Recursive Method */
-		var getQuestions = function(){
-			Survey.getPendingSurvey().then(function(pendingSurvey){
-				if(pendingSurvey === undefined){
-					Survey.setSurvey(new Date().getTime().toString()).then(function(){
-						Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId);
-						getQuestions();
-					})
-					.catch(function(error){
-						Survey.disableAuditMode();
-					});	
-				}
-				else{
-					console.log(pendingSurvey);
-					Question.getQuestions(module.moduleId, pendingSurvey.id, undefined, module.categoryType).then(function(questions){
-						$scope.questions = questions;
-						$rootScope.$emit('auditModeEnabled'); //Communicates upwards an audit started
-					});
-				}			
+		//if($scope.routeParams.default === 'defaultModule'){
+			console.log("Emit Default Module Loaded Event");
+			$rootScope.$emit('defaultModuleLoaded');			
+		//}
 
-			});
-		};
-
-		/* Call Recursive Method */
-		getQuestions();
+		Survey.getPendingSurvey().then(function (pendingSurvey){
+			if(pendingSurvey !== undefined){
+				Question.getQuestions(module.moduleId, pendingSurvey.id, undefined, module.categoryType).then(function(questions){
+					$scope.questions = questions;
+				});
+			}
+			else{
+				Question.getQuestions(module.moduleId, 0, undefined, module.categoryType).then(function(questions){
+					$scope.questions = questions;
+				});
+			}
+		});
 
 	});
 

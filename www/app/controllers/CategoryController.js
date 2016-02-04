@@ -1,4 +1,5 @@
-brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Category', function($scope, $routeParams, Category){
+brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Category', '$rootScope', 
+	function($scope, $routeParams, Category, $rootScope){
 
 	$scope.routeParams = $routeParams;
 	$scope.nextModule;
@@ -14,6 +15,11 @@ brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Cate
 			$scope.slug = $routeParams.slug;
 			$scope.nextModule = 'Prices';
 			break;
+	}
+
+	if($scope.routeParams.default === 'defaultModule'){
+		console.log("defaultModuleLoaded");
+		$rootScope.$emit('defaultModuleLoaded');			
 	}
 
 	Category.getCategories().then(function(categories){

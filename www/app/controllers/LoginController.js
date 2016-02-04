@@ -12,10 +12,27 @@ brfPhoneGapApp.controller('loginController', ['$scope', '$route', '$location', '
 		$location.path("/Main");
 	}
 
-	/*Audit Mode Started*/		
-	$rootScope.$on('auditModeEnabled', function (event, data) {
+	$scope.loadModules = function(){
 	  	Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role).then(function(modules){
 			$scope.modules = modules;
+		});
+	};
+
+	/*Audit Mode Started*/		
+	$rootScope.$on('defaultModuleLoaded', function (event, data) {
+
+		console.log("Default Module Loaded Event Received!");
+
+		Survey.getPendingSurvey().then(function(pendingSurvey){
+			if(pendingSurvey === undefined){
+				Survey.setSurvey(new Date().getTime().toString()).then(function(){
+					Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId);
+					$scope.loadModules();
+				});
+			}
+			else{
+				$scope.loadModules();
+			}
 		});
 	});	
 
@@ -25,7 +42,8 @@ brfPhoneGapApp.controller('loginController', ['$scope', '$route', '$location', '
 	
 			if(typeof response.data === 'string'){
 				if(response.data.trim() === 'false'){
-					console.log("login failed!");
+					$scope.username = '';
+					$scope.password = '';
 				}
 			}
 			else if(typeof response.data === 'object'){

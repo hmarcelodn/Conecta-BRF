@@ -35,7 +35,6 @@ brfPhoneGapApp.factory('Question', ['$http', 'Database', function($http, Databas
 
 	self.getQuestions = function(moduleId, surveyId, categoryId, categoryType){
 
-		console.log("eee");
 		var query;			
 
 		if(categoryType === 0){

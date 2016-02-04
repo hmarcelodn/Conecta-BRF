@@ -56,7 +56,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}	
 		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/coaching_sp',{
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/coaching_sp/:default?',{
 			templateUrl: 'app/views/coaching.html',
 			controller: 'coachingController',
 			access:{
@@ -111,7 +111,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}
 		})		
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/observaciones', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/observaciones/:default?', {
 			templateUrl: 'app/views/observations.html',
 			controller: 'observationsController',
 			access:{
@@ -119,17 +119,9 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/no_brf', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/no_brf/:default?', {
 			templateUrl: 'app/views/noBrf.html',
 			controller: 'noBrfController',
-			access:{
-				isFreeAccess: false,
-				audit: true
-			}
-		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/:slug', {
-			templateUrl: 'app/views/categorySearch.html',
-			controller: 'categoryController',
 			access:{
 				isFreeAccess: false,
 				audit: true
@@ -139,6 +131,14 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			templateUrl: 'app/views/prices.html',
 			controller: 'pricesController',
 			access: {
+				isFreeAccess: false,
+				audit: true
+			}
+		})
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/:slug/:default?', {
+			templateUrl: 'app/views/categorySearch.html',
+			controller: 'categoryController',
+			access:{
 				isFreeAccess: false,
 				audit: true
 			}

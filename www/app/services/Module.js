@@ -46,5 +46,18 @@ brfPhoneGapApp.factory('Module', ['$http', 'Database', function($http, Database)
 			});
 	};
 
+	self.getDefaultModules = function(channelId, roleId){
+		var query = 'SELECT DISTINCT mod.id, mod.moduleId, mod.behavior, mod.modName, mod.categoryType, mod.color, mod.icon, mod.slug FROM Module mod' +
+						' INNER JOIN ModuleChannels modcha ON modcha.moduleId = mod.moduleId' +
+						' INNER JOIN ModuleUserRoles modur ON modur.moduleId = mod.moduleId' +
+						' WHERE modcha.channelId = ?' +
+						' AND modur.roleId = ? LIMIT 0,1';
+
+		return Database.query(query, [channelId, roleId])
+			.then(function (result){
+				return Database.fetch(result);
+			});
+	};
+
 	return self;
 }]);
