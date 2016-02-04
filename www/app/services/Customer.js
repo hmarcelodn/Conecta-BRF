@@ -24,7 +24,7 @@ brfPhoneGapApp.factory('Customer', ['$http', 'Database', function($http, Databas
 	};
 
 	self.getCustomers = function (){
-		return Database.query('SELECT customerId, address FROM Customer')
+		return Database.query('SELECT customerId, address FROM Customer LIMIT 0, 10')
 			.then(function (result){
 				return Database.fetchAll(result);
 			});

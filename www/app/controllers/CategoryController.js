@@ -1,8 +1,9 @@
-brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Category', '$rootScope', 
-	function($scope, $routeParams, Category, $rootScope){
+brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Category', '$rootScope', 'Module', 
+	function($scope, $routeParams, Category, $rootScope, Module){
 
 	$scope.routeParams = $routeParams;
 	$scope.nextModule;
+	$scope.currentModuleName;
 
 	switch($routeParams.slug){
 		case 'ejecucion_pdv':
@@ -22,7 +23,9 @@ brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Cate
 		$rootScope.$emit('defaultModuleLoaded');			
 	}
 
-	Category.getCategories().then(function(categories){
-		$scope.categories = categories;
+	Module.getModuleBySlug($scope.slug).then(function (module){
+		Category.getCategories(module.categoryType, $scope.routeParams.channelId).then(function(categories){
+			$scope.categories = categories;
+		});
 	});
 }]);

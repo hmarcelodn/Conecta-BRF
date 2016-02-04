@@ -30,8 +30,14 @@ brfPhoneGapApp.factory('Category', ['$http', 'Database', function($http, Databas
 			});
 	};
 
-	self.getCategories = function () {
-		return Database.query('SELECT * FROM Category')
+	self.getCategories = function (typeId, channelId) {
+
+		var query = 'SELECT * FROM Category cat' + 
+					' INNER JOIN CategoryChannels catchan ON catchan.categoryId = cat.categoryId' +
+					' WHERE cat.type = ?' +
+					' AND catchan.channelId = ?';
+
+		return Database.query(query, [typeId, channelId])
 			.then(function (result) {
 				return Database.fetchAll(result);
 			});	

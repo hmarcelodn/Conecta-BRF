@@ -33,6 +33,13 @@ brfPhoneGapApp.factory('Module', ['$http', 'Database', function($http, Database)
 			});		
 	};
 
+	self.getModuleBySlug = function(slug){
+		return Database.query('SELECT id, moduleId, behavior, modName, categoryType, color, icon, slug FROM Module WHERE slug = ?', [slug])
+			.then(function (result){
+				return Database.fetch(result);
+			});		
+	};	
+
 	self.getModules = function(channelId, roleId){
 		var query = 'SELECT DISTINCT mod.id, mod.moduleId, mod.behavior, mod.modName, mod.categoryType, mod.color, mod.icon, mod.slug FROM Module mod' +
 						' INNER JOIN ModuleChannels modcha ON modcha.moduleId = mod.moduleId' +
