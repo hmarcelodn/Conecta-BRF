@@ -5,10 +5,8 @@ brfPhoneGapApp.controller('coachingController', [ '$scope', '$route', '$routePar
 
 	Module.getModuleByName('Coaching Supervisor').then(function(module){
 
-		//if($scope.routeParams.default === 'defaultModule'){
-			console.log("Emit Default Module Loaded Event");
-			$rootScope.$emit('defaultModuleLoaded');			
-		//}
+		console.log("Emit Default Module Loaded Event");
+		$rootScope.$emit('defaultModuleLoaded');			
 
 		Survey.getPendingSurvey().then(function (pendingSurvey){
 			if(pendingSurvey !== undefined){

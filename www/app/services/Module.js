@@ -66,5 +66,12 @@ brfPhoneGapApp.factory('Module', ['$http', 'Database', function($http, Database)
 			});
 	};
 
+	self.getModuleById = function(moduleId){
+		return Database.query('SELECT * FROM Module WHERE moduleId = ?', [moduleId])
+			.then(function (result){
+				return Database.fetch(result);
+			});
+	};
+
 	return self;
 }]);
