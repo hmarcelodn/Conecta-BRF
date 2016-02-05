@@ -127,14 +127,6 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Prices/:categoryId', {
-			templateUrl: 'app/views/prices.html',
-			controller: 'pricesController',
-			access: {
-				isFreeAccess: false,
-				audit: true
-			}
-		})
 		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/:slug/:default?', {
 			templateUrl: 'app/views/categorySearch.html',
 			controller: 'categoryController',
@@ -142,7 +134,23 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				isFreeAccess: false,
 				audit: true
 			}
+		})	
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Module/:moduleId/Category/:categoryId/CategoryType/:categoryType', {
+			templateUrl: 'app/views/questions.html',
+			controller: 'questionsController',
+			access: {
+				isFreeAccess: false,
+				audit: true
+			}
 		})
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Module/:moduleId', {
+			templateUrl: 'app/views/questions.html',
+			controller: 'questionsController',
+			access: {
+				isFreeAccess: false,
+				audit: true
+			}
+		})			
 		.otherwise({
 			redirectTo: '/'
 		})

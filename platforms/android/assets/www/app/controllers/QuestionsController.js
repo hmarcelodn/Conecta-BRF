@@ -1,4 +1,5 @@
-brfPhoneGapApp.controller('questionsController', [ '$scope', 'Survey', function($scope, Survey){
+brfPhoneGapApp.controller('questionsController', [ '$scope', 'Survey', '$routeParams', 'Question', 'Category', 'Module',
+	function($scope, Survey, $routeParams, Question, Category, Module){
 
 	$scope.binaryAction = function(question, answer){		
 
@@ -49,5 +50,25 @@ brfPhoneGapApp.controller('questionsController', [ '$scope', 'Survey', function(
 	$scope.range = function(n){
 		return new Array(n);
 	};
+
+	if($routeParams.categoryId !== undefined){
+		Survey.getPendingSurvey().then(function(pendingSurvey){
+
+			Category.getCategoryById($routeParams.categoryId)
+				.then(function (category){
+					$scope.currentCategory = category;
+			});
+
+			Module.getModuleById($routeParams.moduleId)
+				.then(function (module){
+					$scope.currentModule = module;
+				});
+			
+			Question.getQuestions($routeParams.moduleId, pendingSurvey.id, $routeParams.categoryId, $routeParams.categoryType)
+				.then(function(questions){
+					$scope.questions = questions;
+			});
+		});
+	}
 
 }]);

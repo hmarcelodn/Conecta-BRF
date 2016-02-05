@@ -43,6 +43,13 @@ brfPhoneGapApp.factory('Category', ['$http', 'Database', function($http, Databas
 			});	
 	};
 
+	self.getCategoryById = function (categoryId){
+		return Database.query('SELECT * FROM Category WHERE CategoryId = ?', [categoryId])
+			.then(function (result){
+				return Database.fetch(result);
+			});
+	};
+
 	return self;
 
 }]);

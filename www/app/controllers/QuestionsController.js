@@ -70,5 +70,16 @@ brfPhoneGapApp.controller('questionsController', [ '$scope', 'Survey', '$routePa
 			});
 		});
 	}
+	else{
+		Module.getModuleById($routeParams.moduleId)
+			.then(function (module){
+				$scope.currentModule = module;
+				
+				Question.getQuestions($routeParams.moduleId, 0, undefined, module.categoryType)
+						.then(function(questions){
+					$scope.questions = questions;
+				});	
+		});			
+	}
 
 }]);

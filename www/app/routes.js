@@ -56,6 +56,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}	
 		})
+		/*
 		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/coaching_sp/:default?',{
 			templateUrl: 'app/views/coaching.html',
 			controller: 'coachingController',
@@ -72,6 +73,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
+		*/
 		.when('/',{
 			templateUrl: 'app/views/login.html',
 			controller: 'loginController',
@@ -127,15 +129,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/:slug/:default?', {
-			templateUrl: 'app/views/categorySearch.html',
-			controller: 'categoryController',
-			access:{
-				isFreeAccess: false,
-				audit: true
-			}
-		})	
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Module/:moduleId/Category/:categoryId/CategoryType/:categoryType', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Module/:moduleId', {
 			templateUrl: 'app/views/questions.html',
 			controller: 'questionsController',
 			access: {
@@ -143,10 +137,18 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Module/:moduleId', {
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Module/:moduleId/Category/:categoryId/CategoryType/:categoryType', {
 			templateUrl: 'app/views/questions.html',
 			controller: 'questionsController',
 			access: {
+				isFreeAccess: false,
+				audit: true
+			}
+		})		
+		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/:slug/:default?', {
+			templateUrl: 'app/views/categorySearch.html',
+			controller: 'categoryController',
+			access:{
 				isFreeAccess: false,
 				audit: true
 			}
@@ -176,7 +178,7 @@ run(function($rootScope, $location, Login, Survey, Database){
         	 	$location.path('/Channel/' + Survey.getAuditChannel() + 
         	 				   '/Pdv/' + Survey.getAuditPdv() + 
         	 				   '/Seller/' + Survey.getAuditSeller() + 
-        	 				   '/coaching_sp');
+        	 				   '/coaching_sp/defaultModule');
         	 }
         }
         else{
