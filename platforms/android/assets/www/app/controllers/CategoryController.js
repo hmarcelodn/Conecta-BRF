@@ -1,5 +1,5 @@
-brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Category', '$rootScope', 'Module', 
-	function($scope, $routeParams, Category, $rootScope, Module){
+brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Category', '$rootScope', 'Module', '$location',
+	function($scope, $routeParams, Category, $rootScope, Module, $location){
 
 	$scope.routeParams = $routeParams;
 	$scope.currentModule;
@@ -13,7 +13,15 @@ brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Cate
 		$scope.currentModule = module;
 
 		Category.getCategories(module.categoryType, $scope.routeParams.channelId).then(function(categories){
-			$scope.categories = categories;
+			if(categories.length > 0){
+				$scope.categories = categories;
+			}
+			else{
+				$location.path('/Channel/' + $scope.routeParams.channelId + 
+							   '/Pdv/' + $scope.routeParams.pdvId + 
+							   '/Seller/' + $scope.routeParams.sellerId + 
+							   '/Module/' + module.moduleId);
+			}			
 		});
 	});
 }]);

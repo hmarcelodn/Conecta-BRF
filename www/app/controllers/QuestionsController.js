@@ -73,12 +73,21 @@ brfPhoneGapApp.controller('questionsController', [ '$scope', 'Survey', '$routePa
 	else{
 		Module.getModuleById($routeParams.moduleId)
 			.then(function (module){
-				$scope.currentModule = module;
+			$scope.currentModule = module;
 				
-				Question.getQuestions($routeParams.moduleId, 0, undefined, module.categoryType)
-						.then(function(questions){
-					$scope.questions = questions;
-				});	
+			Survey.getPendingSurvey().then(function (pendingSurvey){
+				if(pendingSurvey !== undefined){
+					Question.getQuestions(module.moduleId, pendingSurvey.id, undefined, module.categoryType).then(function(questions){
+						$scope.questions = questions;
+					});
+				}
+				else{
+					Question.getQuestions($routeParams.moduleId, 0, undefined, module.categoryType).then(function(questions){
+						$scope.questions = questions;
+					});
+				}
+			});
+
 		});			
 	}
 
