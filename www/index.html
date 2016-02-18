@@ -55,7 +55,7 @@
                     <ul class="collapsible collapsible-accordion">
                         <li>                    
                             <a class="collapsible-header" style="margin-left:-5px;">
-                                <!--<i class="material-icons" style="color:#E53935">stars</i>-->
+                                <i class="material-icons" style="color:#E53935">stars</i>
                                 Proceso de Ventas
                             </a>
                           
@@ -79,12 +79,14 @@
 
                 <li ng-if="isAuditModeEnabled()" ng-repeat="module in modules">
                     <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">{{module.icon}}</i>
                         <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/{{module.slug}}">{{module.modName}}</a>
                     </div>
                 </li>                                                      
 
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">cancel</i>
                         <a ng-controller="surveyController" ng-click="closeAudit()" href="#/Welcome">Cerrar Auditoría</a>
                     </div>
                 </li>                     

@@ -122,7 +122,7 @@ brfPhoneGapApp.controller('doSynchronizationController',
 
 					var moduleId = value.id;
 
-					promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.color, value.icon, value.slug));				
+					promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.style.color, value.style.icon, value.slug));				
 
 					angular.forEach(value.ids_channels, function(value, key){
 						promises.push(Module.setModuleChannels(moduleId, value));					
