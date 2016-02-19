@@ -21,8 +21,6 @@ brfPhoneGapApp.controller('loginController', ['$scope', '$route', '$location', '
 	/*Audit Mode Started*/		
 	$rootScope.$on('defaultModuleLoaded', function (event, data) {
 
-		console.log("Default Module Loaded Event Received!");
-
 		Survey.getPendingSurvey().then(function(pendingSurvey){
 			if(pendingSurvey === undefined){
 				Survey.setSurvey(new Date().getTime().toString()).then(function(){

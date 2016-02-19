@@ -56,24 +56,6 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}	
 		})
-		/*
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/coaching_sp/:default?',{
-			templateUrl: 'app/views/coaching.html',
-			controller: 'coachingController',
-			access:{
-				isFreeAccess: false,
-				audit: true
-			}
-		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Execution/:categoryId?', {
-			templateUrl: 'app/views/execution.html',
-			controller: 'executionController',
-			access:{
-				isFreeAccess: false,
-				audit: true
-			}
-		})
-		*/
 		.when('/',{
 			templateUrl: 'app/views/login.html',
 			controller: 'loginController',
