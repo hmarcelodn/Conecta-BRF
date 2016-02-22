@@ -1,22 +1,35 @@
-brfPhoneGapApp.controller('noBrfController', ['$scope', 'Survey', function($scope, Survey){
+(function() {
+'use strict';
 
-	Survey.getPendingSurvey().then(function(survey){
-		Survey.getNoBrf(survey.id).then(function(noBrfs){
-			if(noBrfs === undefined){
-				$scope.noBrfStatus = false;
-			}
-			else{
-				$scope.noBrfStatus = (noBrfs.noBrf === 'true');
-			}
-		});
-	});	
+    angular
+        .module('brfPhoneGapApp')
+        .controller('NoBrfController', NoBrfController);
 
-	$scope.noBrfChanged = function(){
-		Survey.getPendingSurvey().then(function(survey){
-			Survey.setNoBrf(survey.id, $scope.noBrfStatus).then(function(){
-				return;
-			});
-		});		
-	};
+    NoBrfController.$inject = ['$scope', 'Survey'];
+    function NoBrfController($scope, Survey) {
+        var vm = this;
+        
+        activate();
 
-}]);
+        function activate() { 
+            Survey.getPendingSurvey().then(function(survey){
+                Survey.getNoBrf(survey.id).then(function(noBrfs){
+                    if(noBrfs === undefined){
+                        $scope.noBrfStatus = false;
+                    }
+                    else{
+                        $scope.noBrfStatus = (noBrfs.noBrf === 'true');
+                    }
+                });
+            });	
+
+            $scope.noBrfChanged = function(){
+                Survey.getPendingSurvey().then(function(survey){
+                    Survey.setNoBrf(survey.id, $scope.noBrfStatus).then(function(){
+                        return;
+                    });
+                });		
+            };            
+        }
+    }
+})();

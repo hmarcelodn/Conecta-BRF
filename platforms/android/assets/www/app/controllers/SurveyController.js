@@ -1,12 +1,26 @@
-brfPhoneGapApp.controller('surveyController', ['$scope', '$route', '$location', 'Survey', 
-	function($scope, $route, $location, Survey){
-	
-	$scope.closeAudit = function(){		
-		Survey.disableAuditMode();
+(function() {
+'use strict';
+
+    angular
+        .module('brfPhoneGapApp')
+        .controller('SurveyController', SurveyController);
+
+    SurveyController.$inject = ['$scope', '$route', '$location', 'Survey'];
+    function SurveyController($scope, $route, $location, Survey) {
+        var vm = this;        
+        
+        var closeAudit = function(){
+     		Survey.disableAuditMode();
 		
-		Survey.closeSurvey().then(function(){						
-			$location.path('/Welcome');
-		});
-	};
-	
-}]);
+            Survey.closeSurvey().then(function(){						
+                $location.path('/Welcome');
+            });       
+        }
+
+        activate();
+
+        function activate() { }
+        
+        vm.closeAudit = closeAudit;
+    }
+})();

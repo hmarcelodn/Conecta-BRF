@@ -1,247 +1,259 @@
-brfPhoneGapApp.controller('doSynchronizationController', 
-	function($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database){
-	
-	// 0 - Waiting
-	// 1 - Running
-	// 2 - Success
-	$scope.syncChannels = 0;
-	$scope.syncCustomers = 0;
-	$scope.syncCustomersType = 0;
-	$scope.syncSellers = 0;
-	$scope.syncModules = 0;
-	$scope.syncCategories = 0;
-	$scope.syncCategoriesImg = 0;
-	$scope.syncQuestions = 0;
+(function() {
+'use strict';
 
+    angular
+        .module('brfPhoneGapApp')
+        .controller('DoSynchronizationController', DoSynchronizationController);
 
-		Database.dropAll().then(function(){
+    DoSynchronizationController.$inject = ['$scope', '$route', '$q', '$location', 'Category', 'Channel', 'Customer', 'Module', 'Question', 'Seller', 'Database'];
+    function DoSynchronizationController($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database) {
+        var vm = this;
+        
+        activate();
 
-			Database.init();
-			
-			var deferred = $q.defer();
-			$scope.syncChannels = 1;
-			
-			Channel.synchronizeChannels().then(function(channels){
+        function activate() { 
+            // 0 - Waiting
+            // 1 - Running
+            // 2 - Success
+            $scope.syncChannels = 0;
+            $scope.syncCustomers = 0;
+            $scope.syncCustomersType = 0;
+            $scope.syncSellers = 0;
+            $scope.syncModules = 0;
+            $scope.syncCategories = 0;
+            $scope.syncCategoriesImg = 0;
+            $scope.syncQuestions = 0;
 
-				var promises = [];
+            Database.dropAll().then(function(){
 
-				angular.forEach(channels.data.channels, function(value, key){
-					promises.push(Channel.setChannel(value.id, value.name));				
-				});
+                Database.init();
+                
+                var deferred = $q.defer();
+                $scope.syncChannels = 1;
+                
+                Channel.synchronizeChannels().then(function(channels){
 
-				$q.all(promises).then(function(){
-					$scope.syncChannels = 2;	
-					deferred.resolve();		
-				});
-			})
-			.catch(function(error){			
-				deferred.reject(error);
-			});
+                    var promises = [];
 
-			return deferred.promise;
-		})			
-		.then(function(){
+                    angular.forEach(channels.data.channels, function(value, key){
+                        promises.push(Channel.setChannel(value.id, value.name));				
+                    });
 
-			var deferred = $q.defer();
-			$scope.syncCustomers = 1;
+                    $q.all(promises).then(function(){
+                        $scope.syncChannels = 2;	
+                        deferred.resolve();		
+                    });
+                })
+                .catch(function(error){			
+                    deferred.reject(error);
+                });
 
-			Customer.synchronizeCustomers().then(function(customers){
-				var promises = [];
+                return deferred.promise;
+            })			
+            .then(function(){
 
-				angular.forEach(customers.data.customers, function(value, key){
-					promises.push(Customer.setCustomer(value.id, value["company_name"], value.cuit, value.address, value.type_pdv));			
-				});
+                var deferred = $q.defer();
+                $scope.syncCustomers = 1;
 
-				$q.all(promises).then(function(){
-					$scope.syncCustomers = 2;
-					deferred.resolve();
-				});
-			})
-			.catch(function(error){			
-				deferred.reject(error);
-			});
+                Customer.synchronizeCustomers().then(function(customers){
+                    var promises = [];
 
-			return deferred.promise;
-		})		
-		.then(function(){
-		
-			var deferred = $q.defer();
-			$scope.syncCustomersType = 1;
+                    angular.forEach(customers.data.customers, function(value, key){
+                        promises.push(Customer.setCustomer(value.id, value["company_name"], value.cuit, value.address, value.type_pdv));			
+                    });
 
-			Customer.synchronizeCustomerTypes().then(function(customerTypes){
-				var promises = [];
+                    $q.all(promises).then(function(){
+                        $scope.syncCustomers = 2;
+                        deferred.resolve();
+                    });
+                })
+                .catch(function(error){			
+                    deferred.reject(error);
+                });
 
-				angular.forEach(customerTypes.data.customer_types, function(value, key){
-					promises.push(Customer.setCustomerType(value.id, value.name));								
-				});
+                return deferred.promise;
+            })		
+            .then(function(){
+            
+                var deferred = $q.defer();
+                $scope.syncCustomersType = 1;
 
-				$q.all(promises).then(function(){					
-					$scope.syncCustomersType = 2;	
-					deferred.resolve();			
-				});
-			})
-			.catch(function(error){			
-				deferred.reject(error);
-			});
+                Customer.synchronizeCustomerTypes().then(function(customerTypes){
+                    var promises = [];
 
-			return deferred.promise;
-		})		
-		.then(function(){
+                    angular.forEach(customerTypes.data.customer_types, function(value, key){
+                        promises.push(Customer.setCustomerType(value.id, value.name));								
+                    });
 
-			var deferred = $q.defer();			
-			$scope.syncSellers = 1;
-			
-			Seller.synchronizeSellers().then(function(sellers){
-				var promises = [];
+                    $q.all(promises).then(function(){					
+                        $scope.syncCustomersType = 2;	
+                        deferred.resolve();			
+                    });
+                })
+                .catch(function(error){			
+                    deferred.reject(error);
+                });
 
-				angular.forEach(sellers.data.sellers, function(value, key){
-					promises.push(Seller.setSeller(value.id, value.name));							
-				});
+                return deferred.promise;
+            })		
+            .then(function(){
 
-				$q.all(promises).then(function(){
-					$scope.syncSellers = 2;		
-					deferred.resolve();		
-				});
-			})
-			.catch(function(error){			
-				deferred.reject(error);
-			});
+                var deferred = $q.defer();			
+                $scope.syncSellers = 1;
+                
+                Seller.synchronizeSellers().then(function(sellers){
+                    var promises = [];
 
-			return deferred.promise;
-		})
-		.then(function(){
+                    angular.forEach(sellers.data.sellers, function(value, key){
+                        promises.push(Seller.setSeller(value.id, value.name));							
+                    });
 
-			var deferred = $q.defer();
-			$scope.syncModules = 1;
+                    $q.all(promises).then(function(){
+                        $scope.syncSellers = 2;		
+                        deferred.resolve();		
+                    });
+                })
+                .catch(function(error){			
+                    deferred.reject(error);
+                });
 
-			Module.synchronizeModules().then(function(modules){
+                return deferred.promise;
+            })
+            .then(function(){
 
-				var promises = [];
+                var deferred = $q.defer();
+                $scope.syncModules = 1;
 
-				angular.forEach(modules.data.modules, function(value, key){
+                Module.synchronizeModules().then(function(modules){
 
-					var moduleId = value.id;
+                    var promises = [];
 
-					promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.style.color, value.style.icon, value.slug));				
+                    angular.forEach(modules.data.modules, function(value, key){
 
-					angular.forEach(value.ids_channels, function(value, key){
-						promises.push(Module.setModuleChannels(moduleId, value));					
-					});		
+                        var moduleId = value.id;
 
-					angular.forEach(value.ids_user_roles, function(value, key){
-						promises.push(Module.setModuleRoles(moduleId, value));					
-					});
-				});
+                        promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.style.color, value.style.icon, value.slug));				
 
-				$q.all(promises).then(function(){
-					$scope.syncModules = 2;		
-					deferred.resolve();		
-				});
-			})
-			.catch(function(error){			
-				deferred.reject(error);
-			});
+                        angular.forEach(value.ids_channels, function(value, key){
+                            promises.push(Module.setModuleChannels(moduleId, value));					
+                        });		
 
-			return deferred.promise;
-		})
-		.then(function(categories){
+                        angular.forEach(value.ids_user_roles, function(value, key){
+                            promises.push(Module.setModuleRoles(moduleId, value));					
+                        });
+                    });
 
-			var deferred = $q.defer();
-			$scope.syncCategories = 1;
+                    $q.all(promises).then(function(){
+                        $scope.syncModules = 2;		
+                        deferred.resolve();		
+                    });
+                })
+                .catch(function(error){			
+                    deferred.reject(error);
+                });
 
-			Category.synchronizeCategories().then(function(categories){
-				var promises = [];
+                return deferred.promise;
+            })
+            .then(function(categories){
 
-				angular.forEach(categories.data.categories, function(value, key){
-					var categoryId = value.id;
+                var deferred = $q.defer();
+                $scope.syncCategories = 1;
 
-					promises.push(Category.setCategory(value.id, value.type, value.name));						
+                Category.synchronizeCategories().then(function(categories){
+                    var promises = [];
 
-					angular.forEach(value.id_channels, function(value, key){
-						promises.push(Category.setCategoryChannel(categoryId, value));					
-					});
-				});
+                    angular.forEach(categories.data.categories, function(value, key){
+                        var categoryId = value.id;
 
-				$q.all(promises).then(function(){
-					$scope.syncCategories = 2;		
-					deferred.resolve();		
-				});
-			})
-			.catch(function(error){			
-				deferred.reject(error);
-			});
+                        promises.push(Category.setCategory(value.id, value.type, value.name));						
 
-			return deferred.promise;
-		})		
-		.then(function(){
+                        angular.forEach(value.id_channels, function(value, key){
+                            promises.push(Category.setCategoryChannel(categoryId, value));					
+                        });
+                    });
 
-			var deferred = $q.defer();
-			$scope.syncCategoriesImg = 1;
+                    $q.all(promises).then(function(){
+                        $scope.syncCategories = 2;		
+                        deferred.resolve();		
+                    });
+                })
+                .catch(function(error){			
+                    deferred.reject(error);
+                });
 
-			Category.synchronizeCategoryImages().then(function(categoriesImages){
-				var promises = [];
+                return deferred.promise;
+            })		
+            .then(function(){
 
-				angular.forEach(categoriesImages.data.categories_images, function(value, key){
-					promises.push(Category.setCategoryImage(value.id, value.id_mod, value.id_cat, value.image, value.icon));							
-				});
+                var deferred = $q.defer();
+                $scope.syncCategoriesImg = 1;
 
-				$q.all(promises).then(function(){
-					$scope.syncCategoriesImg = 2;	
-					deferred.resolve();						
-				});
-			})
-			.catch(function(error){			
-				deferred.reject(error);
-			});
+                Category.synchronizeCategoryImages().then(function(categoriesImages){
+                    var promises = [];
 
-			return deferred.promise;
-		})
-		.then(function(){
+                    angular.forEach(categoriesImages.data.categories_images, function(value, key){
+                        promises.push(Category.setCategoryImage(value.id, value.id_mod, value.id_cat, value.image, value.icon));							
+                    });
 
-			var deferred = $q.defer();
-			$scope.syncQuestions = 1;
+                    $q.all(promises).then(function(){
+                        $scope.syncCategoriesImg = 2;	
+                        deferred.resolve();						
+                    });
+                })
+                .catch(function(error){			
+                    deferred.reject(error);
+                });
 
-			Question.synchronizeQuestions().then(function(questions){
-				var promises = [];
+                return deferred.promise;
+            })
+            .then(function(){
 
-				angular.forEach(questions.data.questions, function(value, key){
-					var questionId = value.id;
+                var deferred = $q.defer();
+                $scope.syncQuestions = 1;
 
-					promises.push(
-					Question.setQuestion({
-						questionId: value.id, 
-						categoryId: value.id_category, 
-						render: value.render, 
-						answer: value.answer, 
-						title: value.title, 
-						data: value.data, 
-						helper: value.helper, 
-						big: value.big, 
-						thumb: value.thumb, 
-						questionModuleId: value.id_question_mod,
-						config: (typeof value.config === 'object') ? JSON.stringify(value.config) : value.config,
-						styling: (typeof value.styling === 'object') ? JSON.stringify(value.styling) : value.styling
-					}));
-				
-					angular.forEach(value.pdv_filter, function(value, key){
-						promises.push(Question.setQuestionPdv(questionId, value));
-					});
-				});
+                Question.synchronizeQuestions().then(function(questions){
+                    var promises = [];
 
-				$q.all(promises).then(function(){
-					$scope.syncQuestions = 2;
-					deferred.resolve();
-					$location.path("/SyncOk");
-				});
-			})
-			.catch(function(error){			
-				deferred.reject(error);
-			});
-			
-			return deferred.promise;
-		})
-		.catch(function(error){
-			console.log(error);
-			$location.path("/SyncNok");
-		});	
-});
+                    angular.forEach(questions.data.questions, function(value, key){
+                        var questionId = value.id;
+
+                        promises.push(
+                        Question.setQuestion({
+                            questionId: value.id, 
+                            categoryId: value.id_category, 
+                            render: value.render, 
+                            answer: value.answer, 
+                            title: value.title, 
+                            data: value.data, 
+                            helper: value.helper, 
+                            big: value.big, 
+                            thumb: value.thumb, 
+                            questionModuleId: value.id_question_mod,
+                            config: (typeof value.config === 'object') ? JSON.stringify(value.config) : value.config,
+                            styling: (typeof value.styling === 'object') ? JSON.stringify(value.styling) : value.styling
+                        }));
+                    
+                        angular.forEach(value.pdv_filter, function(value, key){
+                            promises.push(Question.setQuestionPdv(questionId, value));
+                        });
+                    });
+
+                    $q.all(promises).then(function(){
+                        $scope.syncQuestions = 2;
+                        deferred.resolve();
+                        $location.path("/SyncOk");
+                    });
+                })
+                .catch(function(error){			
+                    deferred.reject(error);
+                });
+                
+                return deferred.promise;
+            })
+            .catch(function(error){
+                console.log(error);
+                $location.path("/SyncNok");
+            });	
+        }
+    }
+})();

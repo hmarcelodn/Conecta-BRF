@@ -3,11 +3,11 @@
 		<article class="col s12 m12 l12">				
 			<section class="row">					
 				<section class="row card-panel">							
-					<form class="col s12" ng-submit="login()">							
+					<form class="col s12" ng-submit="vm.login()">							
 						<h6 class="col s12">Credenciales Requeridas</h6>							
 							<article class="row">								
 								<p class="input-field col s12">
-									<input id="email" type="email" class="validate" ng-model="username">
+									<input id="email" type="email" class="validate" ng-model="vm.username">
 									<label class="active" for="email" data-error="Dato Inválido" data-success="Email Correcto">
 										Correo Electrónico
 									</label>
@@ -17,7 +17,7 @@
 								
 							<article class="row">								
 								<p class="input-field col s12">
-									<input id="password" type="password" class="validate" ng-model="password">
+									<input id="password" type="password" class="validate" ng-model="vm.password">
 									<label class="active" for="password">Password</label>
 								</p>
 									
@@ -28,7 +28,7 @@
 									<i class="material-icons left">lock_outline</i>
 									Ingresar
 								</button>
-							</p>							  
+							</p>		                            				  
 					</form>							
 				</section>						
 			</section>				

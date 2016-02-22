@@ -1,24 +1,36 @@
-brfPhoneGapApp.controller('observationsController', ['$scope', 'Survey', function($scope, Survey){
-	
-	Survey.getPendingSurvey().then(function(survey){
-		Survey.getObservations(survey.id).then(function(observations){
-			if(observations === undefined){
-				$scope.observations = '';
-			}
-			else{
-				$scope.observations = observations.observations;
-			}
-		});
-	});	
+(function() {
+'use strict';
 
-	$scope.observations;
+    angular
+        .module('brfPhoneGapApp')
+        .controller('ObservationsController', ObservationsController);
 
-	$scope.observationsChanged = function(){
-		Survey.getPendingSurvey().then(function(survey){
-			Survey.setObservations(survey.id, $scope.observations).then(function(){
-				return;
-			});
-		});	
-	};
+    ObservationsController.$inject = ['$scope', 'Survey'];
+    function ObservationsController($scope, Survey) {
+        var vm = this;
+        $scope.observations;
+        
+        activate();
 
-}]);
+        function activate() { 
+            Survey.getPendingSurvey().then(function(survey){
+                Survey.getObservations(survey.id).then(function(observations){
+                    if(observations === undefined){
+                        $scope.observations = '';
+                    }
+                    else{
+                        $scope.observations = observations.observations;
+                    }
+                });
+            });	
+
+            $scope.observationsChanged = function(){
+                Survey.getPendingSurvey().then(function(survey){
+                    Survey.setObservations(survey.id, $scope.observations).then(function(){
+                        return;
+                    });
+                });	
+            };            
+        }
+    }
+})();

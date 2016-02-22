@@ -1,3 +1,4 @@
+/*
 brfPhoneGapApp.controller('dashboardController', function($scope, $route){
 	$scope.visitedPDVs = 12;
 	$scope.obtainedCompliance = 89 + "%";
@@ -39,3 +40,4 @@ brfPhoneGapApp.controller('dashboardController', function($scope, $route){
 	};
 		
 });
+*/

@@ -30,7 +30,7 @@
 			</a>
 		</section>		
 		<ul class="collection with-header">				
-			<li class="collection-item" ng-repeat="customer in customers | filter: query">						
+			<li class="collection-item" ng-repeat="customer in vm.customers | filter: query">						
 				<a ng-href="#/Channel/{{channelId}}/Pdv/{{customer.customerId}}/Seller">
 					{{customer.address}}
 					<div class="secondary-content">

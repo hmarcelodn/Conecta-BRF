@@ -60,22 +60,22 @@
 		<div ng-if="question.answer === 'binary'" 
 			 ng-show="question.JSONData.value === undefined"
 			 class="card-action center-align">
-			<a href ng-click="binaryAction(question, true)">CUMPLE</a>
-			<a href ng-click="binaryAction(question, false)">NO CUMPLE</a>
+			<a href ng-click="vm.binaryAction(question, true)">CUMPLE</a>
+			<a href ng-click="vm.binaryAction(question, false)">NO CUMPLE</a>
 		</div>
 
 		<div ng-if="question.answer === 'binary'" 
 			 ng-show="(question.JSONData.value !== undefined && question.JSONData.value === true)"
 			 class="card-action right-align">
 			<i class="material-icons left" style="position:relative;left:-20px;top:-5px;color:#54922a;">check_circle</i>
-			<a href ng-click="undoBinaryAction(question)"><strong style="color:#54922a;">SI CUMPLE</strong></a>
+			<a href ng-click="vm.undoBinaryAction(question)"><strong style="color:#54922a;">SI CUMPLE</strong></a>
 		</div>
 
 		<div ng-if="question.answer === 'binary'" 
 			 ng-show="(question.JSONData.value !== undefined && question.JSONData.value === false)"
 			 class="card-action right-align">
 			<i class="material-icons left" style="position:relative;left:-20px;top:-5px;color:#cd372f;">cancel</i>
-			<a href ng-click="undoBinaryAction(question)"><strong style="color:#cd372f;">NO CUMPLE</strong></a>
+			<a href ng-click="vm.undoBinaryAction(question)"><strong style="color:#cd372f;">NO CUMPLE</strong></a>
 		</div>
 
 		<!-- Open Action -->
@@ -86,7 +86,7 @@
 			<div>
 				<input type="text" style="width:100%;padding:0;margin:0;" 
 					   placeholder="Cantidad" 
-					   ng-change="openAction(question)" 
+					   ng-change="vm.openAction(question)" 
 					   ng-model="question.JSONData.value"/>
 			</div>					
 		</div>
@@ -103,7 +103,7 @@
 			<div style="float:right;">
 				<input type="number" style="width:60px;padding:0;margin:0;" 
 					   placeholder="Precio" 
-					   ng-change="priceAction(question)"
+					   ng-change="vm.priceAction(question)"
 					   ng-model="question.JSONData.value" />
 			</div>
 		</div>
@@ -117,7 +117,7 @@
 					<input type="checkbox" class="filled-in" 
 						   id="{{question.id}}-{{$index}}" 
 						   ng-model="question.config.answer_config.selected[$index]" 
-						   ng-click="multipleAction(question)" />
+						   ng-click="vm.multipleAction(question)" />
 					<label for="{{question.id}}-{{$index}}">
 						{{question.config.answer_config.labels[$index]}}
 					</label>

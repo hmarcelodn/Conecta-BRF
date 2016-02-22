@@ -40,7 +40,7 @@
         <title>BRF APP</title>
     </head>
     <body ng-app="brfPhoneGapApp">                
-        <nav ng-controller="loginController" ng-show="authenticated()">    
+        <nav ng-controller="LoginController as vm" ng-show="authenticated()">    
 
             <!-- No Audit Menu -->      
                             
@@ -49,7 +49,7 @@
                     <img src="img/content/logo.png" style="padding-top:20px;margin-left:10px;"></img>
                 </li>            
                 <li style="color:#494849;border-bottom:1px solid #a3a3a3;" class="center-align">            
-                    <a ng-href="#/">{{getUserName()}}</a>            
+                    <a ng-href="#/">{{vm.loggedUserName}}</a>            
                 </li>            
                 <li class="no-padding" ng-show="!isAuditModeEnabled()">            
                     <ul class="collapsible collapsible-accordion">
@@ -73,21 +73,21 @@
 
                 <li ng-show="!isAuditModeEnabled()">
                     <div class="valign-wrapper">
-                        <a ng-controller="loginController" ng-click="logout()">Cerrar Sesión</a>
+                        <a ng-click="vm.logout()">Cerrar Sesión</a>
                     </div>
                 </li>   
 
                 <li ng-if="isAuditModeEnabled()" ng-repeat="module in modules">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">{{module.icon}}</i>
-                        <a ng-href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/{{module.slug}}">{{module.modName}}</a>
+                        <a ng-href="#/Channel/{{vm.routeParams.channelId}}/Pdv/{{vm.routeParams.pdvId}}/Seller/{{vm.routeParams.sellerId}}/{{module.slug}}">{{module.modName}}</a>
                     </div>
                 </li>                                                      
 
                 <li ng-show="isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">cancel</i>
-                        <a ng-controller="surveyController" ng-click="closeAudit()" href="#/Welcome">Cerrar Auditoría</a>
+                        <a ng-controller="SurveyController as vm" ng-click="vm.closeAudit()" ng-href="#/Welcome">Cerrar Auditoría</a>
                     </div>
                 </li>                     
             </ul>                        
@@ -111,12 +111,12 @@
         </footer>
 
         <!-- Vendor -->        
-        <script type="text/javascript" src="js/dist/scripts/vendor.min.js"></script>
+        <script type="text/javascript" src="dist/scripts/vendor.min.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="app/app.js"></script>
-        <script type="text/javascript" src="js/dist/scripts/bundle.min.js"></script>
+        <script type="text/javascript" src="dist/scripts/bundle.min.js"></script>
 
-        <!--
+<!--
         <script type="text/javascript" src="app/routes.js"></script>
         <script type="text/javascript" src="app/controllers/HomeController.js"></script>
         <script type="text/javascript" src="app/controllers/DashboardController.js"></script>
@@ -152,9 +152,8 @@
 
         <script type="text/javascript" src="app/directives/QuestionsDirective.js"></script>
 
-        <script type="text/javascript" src="js/session.js"></script>
-    -->
-
+        <script type="text/javascript" src="js/session.js"></script>-->
+        
         <!-- Initializer -->
         <script type="text/javascript">
             app.initialize();

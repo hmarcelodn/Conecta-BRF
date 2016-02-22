@@ -1,71 +1,81 @@
-brfPhoneGapApp.factory('Database', ['$q', 'Config', function($q, Config){
+(function() {
+'use strict';
 
-	var self = this;
-	self.db = null;
+    angular
+        .module('brfPhoneGapApp')
+        .factory('Database', Database);
 
-	self.init = function(){
+    Database.$inject = ['$q', 'Config'];
+    function Database($q, Config) {
 
-		self.db = window.openDatabase(Config.DB_CONFIG.name, '1.0', 'database', 2000);
+        var self = this;
+        self.db = null;
 
-		angular.forEach(Config.DB_CONFIG.tables, function(table){
-			var  columns = [];
+        self.init = function(){
 
-            angular.forEach(table.columns, function(column) {
-                columns.push(column.name + ' ' + column.type);
+            self.db = window.openDatabase(Config.DB_CONFIG.name, '1.0', 'database', 2000);
+
+            angular.forEach(Config.DB_CONFIG.tables, function(table){
+                var  columns = [];
+
+                angular.forEach(table.columns, function(column) {
+                    columns.push(column.name + ' ' + column.type);
+                });
+
+                var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
+                self.query(query);
+                console.log('Table ' + table.name + ' initialized');
+            });
+        };
+
+        self.dropAll = function(){
+            var deferred = $q.defer();
+            var promises = [];
+
+            angular.forEach(Config.DB_CONFIG.tables, function(table){
+                var query = 'DROP TABLE IF EXISTS ' + table.name;
+                promises.push(self.query(query));
+                console.log('Table ' + table.name + ' has been drop');
+
+                $q.all(promises).then(function(){
+                    deferred.resolve();
+                });
             });
 
-            var query = 'CREATE TABLE IF NOT EXISTS ' + table.name + ' (' + columns.join(',') + ')';
-            self.query(query);
-            console.log('Table ' + table.name + ' initialized');
-		});
-	};
+            return deferred.promise;
+        };
 
-	self.dropAll = function(){
-        var deferred = $q.defer();
-        var promises = [];
+        self.query = function(query, bindings) {
+            bindings = typeof bindings !== 'undefined' ? bindings : [];
+            var deferred = $q.defer();
 
-		angular.forEach(Config.DB_CONFIG.tables, function(table){
-			var query = 'DROP TABLE IF EXISTS ' + table.name;
-			promises.push(self.query(query));
-			console.log('Table ' + table.name + ' has been drop');
-
-            $q.all(promises).then(function(){
-                deferred.resolve();
+            self.db.transaction(function(transaction) {
+                transaction.executeSql(query, bindings, function(transaction, result) {
+                    deferred.resolve(result);
+                }, function(transaction, error) {
+                    console.log("Database Error:" + error.message);
+                    deferred.reject(error);
+                });
             });
-		});
 
-        return deferred.promise;
-	};
+            return deferred.promise;
+        };
 
-	self.query = function(query, bindings) {
-        bindings = typeof bindings !== 'undefined' ? bindings : [];
-        var deferred = $q.defer();
+        self.fetchAll = function(result) {
+            var output = [];
 
-        self.db.transaction(function(transaction) {
-            transaction.executeSql(query, bindings, function(transaction, result) {
-                deferred.resolve(result);
-            }, function(transaction, error) {
-                console.log("Database Error:" + error.message);
-                deferred.reject(error);
-            });
-        });
+            for (var i = 0; i < result.rows.length; i++) {
+                output.push(result.rows.item(i));
+            }
+            
+            return output;
+        };
 
-        return deferred.promise;
-    };
+        self.fetch = function(result) {
+            return result.rows.item(0);
+        };
 
-    self.fetchAll = function(result) {
-        var output = [];
+        return self;        
 
-        for (var i = 0; i < result.rows.length; i++) {
-            output.push(result.rows.item(i));
-        }
-        
-        return output;
-    };
-
-    self.fetch = function(result) {
-        return result.rows.item(0);
-    };
-
-    return self;
-}]);
+    }
+})();

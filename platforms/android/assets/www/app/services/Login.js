@@ -1,22 +1,31 @@
-brfPhoneGapApp.factory('Login', ['$http', 'Database', function($http, Database){
-	var self = this;
+(function() {
+'use strict';
 
-	self.validateUser = function (user, password){
-		return $http.get('http://ws.brf-horizonte.com/validate/user/?token=560a100abad225d5afdf4fc6e5334917&email=' + user + '&pass='+ password);
-	};
+    angular
+        .module('brfPhoneGapApp')
+        .factory('Login', Login);
 
-	self.authenticated = function (){
-		return (BrfNameSpace.Session.getInstance().get() != undefined);
-	};
+    Login.$inject = ['$http', 'Database'];
+    function Login($http, Database) {
+        var self = this;
 
-	self.authenticate = function (data) {
-		BrfNameSpace.Session.getInstance().set(data);
-		return;
-	};
+        self.validateUser = function (user, password){
+            return $http.get('http://ws.brf-horizonte.com/validate/user/?token=560a100abad225d5afdf4fc6e5334917&email=' + user + '&pass='+ password);
+        };
 
-	self.getToken = function (argument) {
-		return BrfNameSpace.Session.getInstance().get();
-	};
+        self.authenticated = function (){
+            return (BrfNameSpace.Session.getInstance().get() != undefined);
+        };
 
-	return self;
-}]);
+        self.authenticate = function (data) {
+            BrfNameSpace.Session.getInstance().set(data);
+            return;
+        };
+
+        self.getToken = function (argument) {
+            return BrfNameSpace.Session.getInstance().get();
+        };
+
+        return self;
+    }
+})();

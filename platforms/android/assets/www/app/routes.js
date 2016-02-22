@@ -2,7 +2,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 	$routeProvider
 		.when('/Main', {
 			templateUrl: 'app/views/main.html',
-			controller: 'mainController',
+			controller: 'MainController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: false
@@ -18,7 +19,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/Welcome', {
 			templateUrl: 'app/views/welcome.html',
-			controller: 'welcomeController',
+			controller: 'WelcomeController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: false
@@ -26,7 +28,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/Channel', {
 			templateUrl: 'app/views/channels.html',
-			controller: 'channelsController',
+			controller: 'ChannelsController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: false
@@ -34,7 +37,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/Channel/:channelId/Pdv', {
 			templateUrl: 'app/views/form.html',
-			controller: 'formController',
+			controller: 'FormController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: false
@@ -42,7 +46,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/Channel/:channelId/AddPdv', {
 			templateUrl: 'app/views/new-pdv.html',
-			controller: 'pdvController',
+			controller: 'PdvController',
 			access:{
 				isFreeAccess: false,
 				audit: false
@@ -50,40 +54,23 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/Channel/:channelId/Pdv/:pdvId/Seller', {
 			templateUrl: 'app/views/search.html',
-			controller: 'searchController',
+			controller: 'SearchController',
 			access:{
 				isFreeAccess: false,
 				audit: false
 			}	
 		})
-		/*
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/coaching_sp/:default?',{
-			templateUrl: 'app/views/coaching.html',
-			controller: 'coachingController',
-			access:{
-				isFreeAccess: false,
-				audit: true
-			}
-		})
-		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Execution/:categoryId?', {
-			templateUrl: 'app/views/execution.html',
-			controller: 'executionController',
-			access:{
-				isFreeAccess: false,
-				audit: true
-			}
-		})
-		*/
 		.when('/',{
 			templateUrl: 'app/views/login.html',
-			controller: 'loginController',
+			controller: 'LoginController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: true				
 			}
 		})
 		.when('/Synchronizer', {
 			templateUrl: 'app/views/synchronizer.html',
-			controller: 'synchronizerController',
+			controller: 'SynchronizerController',
 			access:{
 				isFreeAccess: false,
 				audit: false
@@ -91,7 +78,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/DoSynchronization', {
 			templateUrl: 'app/views/doSynchronization.html',
-			controller: 'doSynchronizationController',
+			controller: 'DoSynchronizationController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: false
@@ -99,7 +87,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/SyncOk', {
 			templateUrl: 'app/views/syncOk.html',
-			controller: 'syncOkController',
+			controller: 'SyncOkController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: false
@@ -107,7 +96,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/SyncNok', {
 			templateUrl: 'app/views/syncNok.html',
-			controller: 'syncNokController',
+			controller: 'SyncNokController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: false
@@ -115,7 +105,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})		
 		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/observaciones/:default?', {
 			templateUrl: 'app/views/observations.html',
-			controller: 'observationsController',
+			controller: 'ObservationsController',
 			access:{
 				isFreeAccess: false,
 				audit: true
@@ -123,7 +113,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/no_brf/:default?', {
 			templateUrl: 'app/views/noBrf.html',
-			controller: 'noBrfController',
+			controller: 'NoBrfController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: true
@@ -131,7 +122,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Module/:moduleId', {
 			templateUrl: 'app/views/questions.html',
-			controller: 'questionsController',
+			controller: 'QuestionsController',
+            controllerAs: 'vm',
 			access: {
 				isFreeAccess: false,
 				audit: true
@@ -139,7 +131,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Module/:moduleId/Category/:categoryId/CategoryType/:categoryType', {
 			templateUrl: 'app/views/questions.html',
-			controller: 'questionsController',
+			controller: 'QuestionsController',
+            controllerAs: 'vm',
 			access: {
 				isFreeAccess: false,
 				audit: true
@@ -147,7 +140,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})		
 		.when('/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/:slug/:default?', {
 			templateUrl: 'app/views/categorySearch.html',
-			controller: 'categoryController',
+			controller: 'CategoryController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: true

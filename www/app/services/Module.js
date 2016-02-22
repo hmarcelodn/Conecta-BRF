@@ -1,77 +1,86 @@
-brfPhoneGapApp.factory('Module', ['$http', 'Database', function($http, Database){
-	var self = this;
+(function() {
+'use strict';
 
-	self.synchronizeModules = function(){
-		return $http.get('http://ws.brf-horizonte.com/get/modules/?token=560a100abad225d5afdf4fc6e5334917');
-	};
+    angular
+        .module('brfPhoneGapApp')
+        .factory('Module', Module);
 
-	self.setModule = function (moduleId, behavior, modName, categoryType, color, icon, slug){
-		Database.query('INSERT INTO Module(moduleId, behavior, modName, categoryType, color, icon, slug) VALUES(?, ?, ?, ?, ?, ?, ?)', [moduleId, behavior, modName, categoryType, color, icon, slug])
-			.then(function (result){
-				return true;
-			});
-	};
+    Module.$inject = ['$http', 'Database'];
+    function Module($http, Database) {
+        var self = this;
 
-	self.setModuleChannels = function(moduleId, channelId){
-		Database.query('INSERT INTO ModuleChannels(moduleId, channelId) VALUES(?, ?)', [moduleId, channelId])
-			.then(function (result){
-				return true;
-			});
-	};
+        self.synchronizeModules = function(){
+            return $http.get('http://ws.brf-horizonte.com/get/modules/?token=560a100abad225d5afdf4fc6e5334917');
+        };
 
-	self.setModuleRoles = function(moduleId, roleId){
-		Database.query('INSERT INTO ModuleUserRoles(moduleId, roleId) VALUES(?, ?)', [moduleId, roleId])
-			.then(function (result){
-				return true;
-			});
-	};
+        self.setModule = function (moduleId, behavior, modName, categoryType, color, icon, slug){
+            Database.query('INSERT INTO Module(moduleId, behavior, modName, categoryType, color, icon, slug) VALUES(?, ?, ?, ?, ?, ?, ?)', [moduleId, behavior, modName, categoryType, color, icon, slug])
+                .then(function (result){
+                    return true;
+                });
+        };
 
-	self.getModuleByName = function(moduleName){
-		return Database.query('SELECT id, moduleId, behavior, modName, categoryType, color, icon FROM Module WHERE modName = ?', [moduleName])
-			.then(function (result){
-				return Database.fetch(result);
-			});		
-	};
+        self.setModuleChannels = function(moduleId, channelId){
+            Database.query('INSERT INTO ModuleChannels(moduleId, channelId) VALUES(?, ?)', [moduleId, channelId])
+                .then(function (result){
+                    return true;
+                });
+        };
 
-	self.getModuleBySlug = function(slug){
-		return Database.query('SELECT id, moduleId, behavior, modName, categoryType, color, icon, slug FROM Module WHERE slug = ?', [slug])
-			.then(function (result){
-				return Database.fetch(result);
-			});		
-	};	
+        self.setModuleRoles = function(moduleId, roleId){
+            Database.query('INSERT INTO ModuleUserRoles(moduleId, roleId) VALUES(?, ?)', [moduleId, roleId])
+                .then(function (result){
+                    return true;
+                });
+        };
 
-	self.getModules = function(channelId, roleId){
-		var query = 'SELECT DISTINCT mod.id, mod.moduleId, mod.behavior, mod.modName, mod.categoryType, mod.color, mod.icon, mod.slug FROM Module mod' +
-						' INNER JOIN ModuleChannels modcha ON modcha.moduleId = mod.moduleId' +
-						' INNER JOIN ModuleUserRoles modur ON modur.moduleId = mod.moduleId' +
-						' WHERE modcha.channelId = ?' +
-						' AND modur.roleId = ?';
+        self.getModuleByName = function(moduleName){
+            return Database.query('SELECT id, moduleId, behavior, modName, categoryType, color, icon FROM Module WHERE modName = ?', [moduleName])
+                .then(function (result){
+                    return Database.fetch(result);
+                });		
+        };
 
-		return Database.query(query, [channelId, roleId])
-			.then(function (result){
-				return Database.fetchAll(result);
-			});
-	};
+        self.getModuleBySlug = function(slug){
+            return Database.query('SELECT id, moduleId, behavior, modName, categoryType, color, icon, slug FROM Module WHERE slug = ?', [slug])
+                .then(function (result){
+                    return Database.fetch(result);
+                });		
+        };	
 
-	self.getDefaultModules = function(channelId, roleId){
-		var query = 'SELECT DISTINCT mod.id, mod.moduleId, mod.behavior, mod.modName, mod.categoryType, mod.color, mod.icon, mod.slug FROM Module mod' +
-						' INNER JOIN ModuleChannels modcha ON modcha.moduleId = mod.moduleId' +
-						' INNER JOIN ModuleUserRoles modur ON modur.moduleId = mod.moduleId' +
-						' WHERE modcha.channelId = ?' +
-						' AND modur.roleId = ? LIMIT 0,1';
+        self.getModules = function(channelId, roleId){
+            var query = 'SELECT DISTINCT mod.id, mod.moduleId, mod.behavior, mod.modName, mod.categoryType, mod.color, mod.icon, mod.slug FROM Module mod' +
+                            ' INNER JOIN ModuleChannels modcha ON modcha.moduleId = mod.moduleId' +
+                            ' INNER JOIN ModuleUserRoles modur ON modur.moduleId = mod.moduleId' +
+                            ' WHERE modcha.channelId = ?' +
+                            ' AND modur.roleId = ?';
 
-		return Database.query(query, [channelId, roleId])
-			.then(function (result){
-				return Database.fetch(result);
-			});
-	};
+            return Database.query(query, [channelId, roleId])
+                .then(function (result){
+                    return Database.fetchAll(result);
+                });
+        };
 
-	self.getModuleById = function(moduleId){
-		return Database.query('SELECT * FROM Module WHERE moduleId = ?', [moduleId])
-			.then(function (result){
-				return Database.fetch(result);
-			});
-	};
+        self.getDefaultModules = function(channelId, roleId){
+            var query = 'SELECT DISTINCT mod.id, mod.moduleId, mod.behavior, mod.modName, mod.categoryType, mod.color, mod.icon, mod.slug FROM Module mod' +
+                            ' INNER JOIN ModuleChannels modcha ON modcha.moduleId = mod.moduleId' +
+                            ' INNER JOIN ModuleUserRoles modur ON modur.moduleId = mod.moduleId' +
+                            ' WHERE modcha.channelId = ?' +
+                            ' AND modur.roleId = ? LIMIT 0,1';
 
-	return self;
-}]);
+            return Database.query(query, [channelId, roleId])
+                .then(function (result){
+                    return Database.fetch(result);
+                });
+        };
+
+        self.getModuleById = function(moduleId){
+            return Database.query('SELECT * FROM Module WHERE moduleId = ?', [moduleId])
+                .then(function (result){
+                    return Database.fetch(result);
+                });
+        };
+
+        return self;
+    }
+})();

@@ -3,151 +3,160 @@ var channelKeyId = 'channel-id';
 var pdvKeyId = 'pdv-id';
 var sellerKeyId = 'seller-id';
 
-brfPhoneGapApp.factory('Survey', ['$http', 'Database', function($http, Database){
-	var self = this;
+(function() {
+'use strict';
 
-	self.setSurvey = function(survey){
-		return Database.query('INSERT INTO Survey(survey, syncStatus) VALUES (?, ?)', [survey, 0])
-			.then(function (result){
-				return true;
-			});
-	};
+    angular
+        .module('brfPhoneGapApp')
+        .factory('Survey', Survey);
 
-	self.getPendingSurvey = function(){
-		return Database.query('SELECT id, survey, syncStatus FROM Survey WHERE syncStatus = 0 LIMIT 0,1')
-			.then(function (result){
-				if(result.rows.length > 0){
-					return Database.fetch(result);
-				}
-				
-				return undefined;
-			});
-	};
+    Survey.$inject = ['$http', 'Database'];
+    function Survey($http, Database) {
+        var self = this;
 
-	self.closeSurvey = function(){
-		return Database.query('UPDATE Survey SET syncStatus = 1 WHERE syncStatus = 0')
-			.then(function (result){
-				return true;
-			});
-	};
+        self.setSurvey = function(survey){
+            return Database.query('INSERT INTO Survey(survey, syncStatus) VALUES (?, ?)', [survey, 0])
+                .then(function (result){
+                    return true;
+                });
+        };
 
-	self.enableAuditMode = function(channelId, pdvId, sellerId){
-		window.localStorage.setItem(auditModeKey, true);
-		window.localStorage.setItem(channelKeyId, channelId);
-		window.localStorage.setItem(pdvKeyId, pdvId);
-		window.localStorage.setItem(sellerKeyId, sellerId);		
-	};
+        self.getPendingSurvey = function(){
+            return Database.query('SELECT id, survey, syncStatus FROM Survey WHERE syncStatus = 0 LIMIT 0,1')
+                .then(function (result){
+                    if(result.rows.length > 0){
+                        return Database.fetch(result);
+                    }
+                    
+                    return undefined;
+                });
+        };
 
-	self.disableAuditMode = function(){
-		window.localStorage.setItem(auditModeKey, false);
-		window.localStorage.setItem(channelKeyId, 0);
-		window.localStorage.setItem(pdvKeyId, 0);
-		window.localStorage.setItem(sellerKeyId, 0);
-	};
+        self.closeSurvey = function(){
+            return Database.query('UPDATE Survey SET syncStatus = 1 WHERE syncStatus = 0')
+                .then(function (result){
+                    return true;
+                });
+        };
 
-	self.getAuditMode = function(){
-		if(window.localStorage.getItem(auditModeKey) === undefined){
-			window.localStorage.setItem(auditModeKey, false);
-		}
+        self.enableAuditMode = function(channelId, pdvId, sellerId){
+            window.localStorage.setItem(auditModeKey, true);
+            window.localStorage.setItem(channelKeyId, channelId);
+            window.localStorage.setItem(pdvKeyId, pdvId);
+            window.localStorage.setItem(sellerKeyId, sellerId);		
+        };
 
-		return (window.localStorage.getItem(auditModeKey) === 'true');
-	};
+        self.disableAuditMode = function(){
+            window.localStorage.setItem(auditModeKey, false);
+            window.localStorage.setItem(channelKeyId, 0);
+            window.localStorage.setItem(pdvKeyId, 0);
+            window.localStorage.setItem(sellerKeyId, 0);
+        };
 
-	self.getAuditChannel = function(){
-		if(window.localStorage.getItem(channelKeyId) === undefined){
-			window.localStorage.setItem(channelKeyId, 0);
-		}
+        self.getAuditMode = function(){
+            if(window.localStorage.getItem(auditModeKey) === undefined){
+                window.localStorage.setItem(auditModeKey, false);
+            }
 
-		return window.localStorage.getItem(channelKeyId);
-	};
+            return (window.localStorage.getItem(auditModeKey) === 'true');
+        };
 
-	self.getAuditPdv = function(){
-		if(window.localStorage.getItem(pdvKeyId) === undefined){
-			window.localStorage.setItem(pdvKeyId, 0);
-		}
+        self.getAuditChannel = function(){
+            if(window.localStorage.getItem(channelKeyId) === undefined){
+                window.localStorage.setItem(channelKeyId, 0);
+            }
 
-		return window.localStorage.getItem(pdvKeyId);
-	};
+            return window.localStorage.getItem(channelKeyId);
+        };
 
-	self.getAuditSeller = function(){
-		if(window.localStorage.getItem(sellerKeyId) === undefined){
-			window.localStorage.setItem(sellerKeyId, 0);
-		}
+        self.getAuditPdv = function(){
+            if(window.localStorage.getItem(pdvKeyId) === undefined){
+                window.localStorage.setItem(pdvKeyId, 0);
+            }
 
-		return window.localStorage.getItem(sellerKeyId);
-	};
+            return window.localStorage.getItem(pdvKeyId);
+        };
 
-	self.setQuestionAnswer = function(surveyId, id, data){
-		return Database.query('UPDATE SurveyQuestionsResults SET JSONData = ? WHERE questionId = ? AND surveyId = ?', [data, id, surveyId])
-			.then(function (result){
-				if(result.rowsAffected === 0){
-					return Database.query('INSERT INTO SurveyQuestionsResults(surveyId, questionId, JSONData) VALUES (?, ?, ?)', [surveyId, id, data])
-						.then(function (result){
-							return true;
-						});
-				}
-				else{
-					return true;
-				}				
-			});
-	};
+        self.getAuditSeller = function(){
+            if(window.localStorage.getItem(sellerKeyId) === undefined){
+                window.localStorage.setItem(sellerKeyId, 0);
+            }
 
-	self.deleteQuestionAnswer = function(surveyId, id){
-		return Database.query('DELETE FROM SurveyQuestionsResults WHERE questionId = ? AND surveyId = ?', [id, surveyId])
-			.then(function (result){
-				return true;
-			});
-	};
+            return window.localStorage.getItem(sellerKeyId);
+        };
 
-	self.setNoBrf = function(surveyId, noBrfResult){
-		return Database.query('UPDATE SurveyNoBrfResults SET noBrf = ? WHERE surveyId = ?', [noBrfResult, surveyId])
-			.then(function (result){
-				if(result.rowsAffected === 0){
-					return Database.query('INSERT INTO SurveyNoBrfResults(surveyId, noBrf) VALUES(?, ?)', [surveyId, noBrfResult])
-						.then(function (result){
-							return true;
-						});					
-				}
+        self.setQuestionAnswer = function(surveyId, id, data){
+            return Database.query('UPDATE SurveyQuestionsResults SET JSONData = ? WHERE questionId = ? AND surveyId = ?', [data, id, surveyId])
+                .then(function (result){
+                    if(result.rowsAffected === 0){
+                        return Database.query('INSERT INTO SurveyQuestionsResults(surveyId, questionId, JSONData) VALUES (?, ?, ?)', [surveyId, id, data])
+                            .then(function (result){
+                                return true;
+                            });
+                    }
+                    else{
+                        return true;
+                    }				
+                });
+        };
 
-				return true;
-			});
-	};
+        self.deleteQuestionAnswer = function(surveyId, id){
+            return Database.query('DELETE FROM SurveyQuestionsResults WHERE questionId = ? AND surveyId = ?', [id, surveyId])
+                .then(function (result){
+                    return true;
+                });
+        };
 
-	self.setObservations = function(surveyId, observations){
-		return Database.query('UPDATE SurveyObservationResults SET observations = ? WHERE surveyId = ?', [observations, surveyId])
-			.then(function (result){
-				if(result.rowsAffected === 0){
-					return Database.query('INSERT INTO SurveyObservationResults(surveyId, observations) VALUES(?, ?)', [surveyId, observations])
-						.then(function (result){
-							return true;
-						});
-				}
+        self.setNoBrf = function(surveyId, noBrfResult){
+            return Database.query('UPDATE SurveyNoBrfResults SET noBrf = ? WHERE surveyId = ?', [noBrfResult, surveyId])
+                .then(function (result){
+                    if(result.rowsAffected === 0){
+                        return Database.query('INSERT INTO SurveyNoBrfResults(surveyId, noBrf) VALUES(?, ?)', [surveyId, noBrfResult])
+                            .then(function (result){
+                                return true;
+                            });					
+                    }
 
-				return true;
-			});
-	};
+                    return true;
+                });
+        };
 
-	self.getNoBrf = function(surveyId){
-		return Database.query('SELECT noBrf FROM SurveyNoBrfResults WHERE surveyId = ?',[surveyId])
-			.then(function (result){
-				if(result.rows.length > 0){
-					return Database.fetch(result);					
-				}
+        self.setObservations = function(surveyId, observations){
+            return Database.query('UPDATE SurveyObservationResults SET observations = ? WHERE surveyId = ?', [observations, surveyId])
+                .then(function (result){
+                    if(result.rowsAffected === 0){
+                        return Database.query('INSERT INTO SurveyObservationResults(surveyId, observations) VALUES(?, ?)', [surveyId, observations])
+                            .then(function (result){
+                                return true;
+                            });
+                    }
 
-				return undefined;
-			});
-	};
+                    return true;
+                });
+        };
 
-	self.getObservations = function(surveyId){
-		return Database.query('SELECT observations FROM SurveyObservationResults WHERE surveyId = ?', [surveyId])
-			.then(function (result){
-				if(result.rows.length > 0){
-					return Database.fetch(result);					
-				}
+        self.getNoBrf = function(surveyId){
+            return Database.query('SELECT noBrf FROM SurveyNoBrfResults WHERE surveyId = ?',[surveyId])
+                .then(function (result){
+                    if(result.rows.length > 0){
+                        return Database.fetch(result);					
+                    }
 
-				return undefined;
-			});		
-	};
+                    return undefined;
+                });
+        };
 
-	return self;
-}]);
+        self.getObservations = function(surveyId){
+            return Database.query('SELECT observations FROM SurveyObservationResults WHERE surveyId = ?', [surveyId])
+                .then(function (result){
+                    if(result.rows.length > 0){
+                        return Database.fetch(result);					
+                    }
+
+                    return undefined;
+                });		
+        };
+
+        return self;
+    }
+})();

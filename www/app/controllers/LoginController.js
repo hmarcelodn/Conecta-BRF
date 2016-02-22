@@ -1,79 +1,90 @@
-var BrfNameSpace = BrfNameSpace || {};
+(function() {
+    'use strict';
 
-brfPhoneGapApp.controller('loginController', ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module',
-	function($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module){
-	
-	$scope.username;
-	$scope.password;
-	$scope.routeParams = $routeParams;
+    angular
+        .module('brfPhoneGapApp')
+        .controller('LoginController', LoginController);
 
-	//Already Authenticated
-	if(Login.authenticated()){
-		$location.path("/Main");
-	}
+    LoginController.$inject = ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module'];
+    function LoginController($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module) {
+        var vm = this;
+        vm.username;
+	    vm.password;
+	    vm.routeParams;
+        vm.loggedUserName;
 
-	$scope.loadModules = function(){
-	  	Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role).then(function(modules){
-			$scope.modules = modules;
-		});
-	};
+        function activate() { 
+            if(Login.authenticated()){
+                $location.path("/Main");
+            }
+            
+            vm.loggedUserName = vm.getUserName();
+            vm.routeParams = $routeParams;
+        }       
+        
+        var loadModules = function (){
+            Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role).then(function(modules){
+                $scope.modules = modules;
+            });
+        };        
+        
+        var login = function (){            
+            Login.validateUser(vm.username, vm.password).then(function(response){        
+                if(typeof response.data === 'string'){
+                    if(response.data.trim() === 'false'){
+                        vm.username = '';
+                        vm.password = '';
+                    }
+                }
+                else if(typeof response.data === 'object'){
+                    Login.authenticate(response.data);
+                    $location.path("/Main");
+                }
+            });            
+        };
+        
+        var logout = function(){
+            Login.authenticate(undefined);
+            $location.path("/");   
+        };       
+        
+        var getUserName = function(){
+            if(!Login.authenticated()){
+                return "";
+            }
 
-	/*Audit Mode Started*/		
-	$rootScope.$on('defaultModuleLoaded', function (event, data) {
-z
+            var token = Login.getToken();
 
-		Survey.getPendingSurvey().then(function(pendingSurvey){
-			if(pendingSurvey === undefined){
-				Survey.setSurvey(new Date().getTime().toString()).then(function(){
-					Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId);
-					$scope.loadModules();
-				});
-			}
-			else{
-				$scope.loadModules();
-			}
-		});
-	});	
-
-	$scope.login = function(event){
-		
-		Login.validateUser($scope.username, $scope.password).then(function(response){
-	
-			if(typeof response.data === 'string'){
-				if(response.data.trim() === 'false'){
-					$scope.username = '';
-					$scope.password = '';
-				}
-			}
-			else if(typeof response.data === 'object'){
-				Login.authenticate(response.data);
-				$location.path("/Main");
-			}
-
-		});
-	};
-
-	$scope.logout = function(){
-		Login.authenticate(undefined);
-		$location.path("/");
-	};
-
-	$scope.authenticated = function(){
-		return Login.authenticated();
-	};
-
-	$scope.isAuditModeEnabled = function(){
-		return Survey.getAuditMode();
-	};
-
-	$scope.getUserName = function(){
-		if(!Login.authenticated()){
-			return "";
-		}
-
-		var token = Login.getToken();
-
-		return token.name;
-	};
-
-}]);
+            return token.name;
+        };  
+        
+        $rootScope.$on('defaultModuleLoaded', function (event, data) {
+            Survey.getPendingSurvey().then(function(pendingSurvey){
+                if(pendingSurvey === undefined){
+                    Survey.setSurvey(new Date().getTime().toString()).then(function(){
+                        Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId);
+                        vm.loadModules();
+                    });
+                }
+                else{
+                    vm.loadModules();
+                }
+            });
+        });	        
+        
+        $scope.authenticated = function(){
+            return Login.authenticated();
+        };
+        
+        $scope.isAuditModeEnabled = function (){
+            return Survey.getAuditMode();
+        };
+        
+        vm.loadModules = loadModules;
+        vm.login = login;
+        vm.logout = logout;
+        vm.getUserName = getUserName;
+        
+        activate();     
+    }
+})();

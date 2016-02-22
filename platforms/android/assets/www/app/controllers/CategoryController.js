@@ -1,27 +1,41 @@
-brfPhoneGapApp.controller('categoryController', ['$scope', '$routeParams', 'Category', '$rootScope', 'Module', '$location',
-	function($scope, $routeParams, Category, $rootScope, Module, $location){
+(function() {
+'use strict';
 
-	$scope.routeParams = $routeParams;
-	$scope.currentModule;
+    angular
+        .module('brfPhoneGapApp')
+        .controller('CategoryController', CategoryController);
 
-	if($scope.routeParams.default === 'defaultModule'){
-		console.log("defaultModuleLoaded");
-		$rootScope.$emit('defaultModuleLoaded');			
-	}
+    CategoryController.$inject = ['$scope', '$routeParams', 'Category', '$rootScope', 'Module', '$location'];
+    function CategoryController($scope, $routeParams, Category, $rootScope, Module, $location) {
+        var vm = this;        
+        vm.routeParams = $routeParams;
+        vm.currentModule;
+        
+        activate();
 
-	Module.getModuleBySlug($scope.routeParams.slug).then(function (module){
-		$scope.currentModule = module;
+        function activate() { 
+            console.log("activate");
 
-		Category.getCategories(module.categoryType, $scope.routeParams.channelId).then(function(categories){
-			if(categories.length > 0){
-				$scope.categories = categories;
-			}
-			else{
-				$location.path('/Channel/' + $scope.routeParams.channelId + 
-							   '/Pdv/' + $scope.routeParams.pdvId + 
-							   '/Seller/' + $scope.routeParams.sellerId + 
-							   '/Module/' + module.moduleId);
-			}			
-		});
-	});
-}]);
+            if(vm.routeParams.default === 'defaultModule'){
+                console.log("defaultModuleLoaded");
+                $rootScope.$emit('defaultModuleLoaded');			
+            }            
+            
+            Module.getModuleBySlug(vm.routeParams.slug).then(function (module){
+                vm.currentModule = module;
+
+                Category.getCategories(module.categoryType, vm.routeParams.channelId).then(function(categories){
+                    if(categories.length > 0){
+                        $scope.categories = categories;
+                    }
+                    else{
+                        $location.path('/Channel/' + vm.routeParams.channelId + 
+                                    '/Pdv/' + vm.routeParams.pdvId + 
+                                    '/Seller/' + vm.routeParams.sellerId + 
+                                    '/Module/' + module.moduleId);
+                    }			
+                });
+            });            
+        }
+    }
+})();

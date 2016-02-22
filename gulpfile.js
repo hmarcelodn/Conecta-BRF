@@ -4,20 +4,15 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var shell = require('gulp-shell');
 
-var jsFiles = ['www/app/app.js',
-			   'www/js/index.js',
-			   'www/js/session.js',
-			   'www/app/routes.js',
-			   'www/app/controllers/*.js', 
-			   'www/app/directives/*.js', 
-			   'www/app/services/*.js'],
-	jsDest = 'www/js/dist/scripts';
+var jsFiles = ['www/app/**/*.js',
+			   'www/js/*.js'],
+	jsDest = 'www/dist/scripts';
 
 var vendorJsFiles = ['www/bower_components/angular/angular.min.js',
 					 'www/bower_components/angular-route/angular-route.js', 
 					 'www/bower_components/jquery/dist/jquery.min.js', 
 					 'www/bower_components/Materialize/bin/materialize.js'],
-	vendorJsDest = 'www/js/dist/scripts';
+	vendorJsDest = 'www/dist/scripts';
 
 // Concatenate & Minify
 gulp.task('bundle-vendor', function(){
