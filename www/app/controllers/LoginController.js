@@ -5,8 +5,8 @@
         .module('brfPhoneGapApp')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module'];
-    function LoginController($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module) {
+    LoginController.$inject = ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module', 'Customer'];
+    function LoginController($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module, Customer) {
         var vm = this;
         vm.username;
 	    vm.password;
@@ -58,13 +58,17 @@
             return token.name;
         };  
         
-        $rootScope.$on('defaultModuleLoaded', function (event, data) {
+        $rootScope.$on('defaultModuleLoaded', function (event, data) {            
+            
             Survey.getPendingSurvey().then(function(pendingSurvey){
-                if(pendingSurvey === undefined){
-                    Survey.setSurvey(new Date().getTime().toString()).then(function(){
-                        Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId);
-                        vm.loadModules();
-                    });
+                if(pendingSurvey === undefined){          
+                    Customer.getPdvTypeByCustomerId(vm.routeParams.pdvId).then(function (customerPdvType) {
+                        Survey.setSurvey(new Date().getTime().toString(), vm.routeParams.channelId, customerPdvType.pdvType, vm.routeParams.sellerId, Login.getToken().id)
+                            .then(function(){
+                                Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId);
+                                vm.loadModules();
+                        });                        
+                    });                              
                 }
                 else{
                     vm.loadModules();

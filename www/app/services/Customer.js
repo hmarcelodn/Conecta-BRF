@@ -44,14 +44,21 @@
                 });
         };        
         
+        var getPdvTypeByCustomerId = function (customerId) {
+            return Database.query('SELECT pdvType FROM Customer')
+                .then(function (result) {
+                   return Database.fetch(result); 
+                });
+        };
+        
         var service = {
             synchronizeCustomers:synchronizeCustomers,
             synchronizeCustomerTypes: synchronizeCustomerTypes,
             setCustomer: setCustomer,
             setCustomerType: setCustomerType,
             getCustomers: getCustomers,
-            getCustomerTypes: getCustomerTypes
-            
+            getCustomerTypes: getCustomerTypes,
+            getPdvTypeByCustomerId: getPdvTypeByCustomerId
         };
         
         return service;

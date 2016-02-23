@@ -68,7 +68,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				isFreeAccess: true				
 			}
 		})
-		.when('/Synchronizer', {
+		.when('/Synchronizer/:syncModeId', {
 			templateUrl: 'app/views/synchronizer.html',
 			controller: 'SynchronizerController',
 			access:{
@@ -85,6 +85,15 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}
 		})
+        .when('/SendSynchronization',{
+			templateUrl: 'app/views/sendSynchronization.html',
+			controller: 'SendSynchronizationController',
+            controllerAs: 'vm',
+			access:{
+				isFreeAccess: false,
+				audit: false
+			}            
+        })
 		.when('/SyncOk', {
 			templateUrl: 'app/views/syncOk.html',
 			controller: 'SyncOkController',

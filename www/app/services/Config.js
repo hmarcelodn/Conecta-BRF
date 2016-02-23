@@ -138,7 +138,11 @@ brfPhoneGapApp.factory('Config', function(){
                 [
                     { name: 'id', type: 'integer primary key'},
                     { name: 'survey', type: 'text' },
-                    { name: 'syncStatus', type: 'integer' }
+                    { name: 'syncStatus', type: 'integer' },
+                    { name: 'channelId', type: 'integer' },
+                    { name: 'pdvId', type: 'integer' },
+                    { name: 'sellerId', type: 'integer' },
+                    { name: 'userId', type: 'integer' }
                 ]
             },
             {

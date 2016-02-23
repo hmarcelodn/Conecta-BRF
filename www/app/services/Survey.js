@@ -14,8 +14,8 @@ var sellerKeyId = 'seller-id';
     function Survey($http, Database) {
         var self = this;
 
-        self.setSurvey = function(survey){
-            return Database.query('INSERT INTO Survey(survey, syncStatus) VALUES (?, ?)', [survey, 0])
+        self.setSurvey = function(survey, channelId, pdvId, sellerId, userId){
+            return Database.query('INSERT INTO Survey(survey, syncStatus, channelId, pdvId, sellerId, userId) VALUES (?, ?, ?, ?, ?, ?)', [survey, 0, channelId, pdvId, sellerId, userId])
                 .then(function (result){
                     return true;
                 });
@@ -155,6 +155,59 @@ var sellerKeyId = 'seller-id';
 
                     return undefined;
                 });		
+        };
+        
+        self.getClosedSurveys = function(){
+            return Database.query('SELECT survey, syncStatus, channelId, pdvId, sellerId, userId, id FROM Survey WHERE syncStatus = 1')
+                .then(function(result){
+                    return Database.fetchAll(result);                                
+            }); 
+        };
+        
+        self.getClosedSurveysNoBrf = function(){
+            return Database.query('SELECT sur.survey, nobrf.noBrf FROM SurveyNoBrfResults nobrf INNER JOIN Survey sur ON sur.id = nobrf.surveyId WHERE sur.syncStatus = 1')
+                .then(function(result){
+                    return Database.fetchAll(result);
+                });     
+        };       
+
+        self.informSurvey = function(survey){
+            var req = {
+                method: "POST",
+                url: "http://ws.brf-horizonte.com/set/survey/?token=560a100abad225d5afdf4fc6e5334917",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                data: survey
+            };
+            
+            return $http(req);
+        };
+        
+        self.informNoBrfSurvey = function(survey){           
+            var req = {
+                method: "POST",
+                url: "http://ws.brf-horizonte.com/set/survey/no-brf/?token=560a100abad225d5afdf4fc6e5334917",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                data: survey
+            };
+            
+            return $http(req);             
+        };
+        
+        self.informSurveyQuestions = function(survey){            
+            var req = {
+                method: "POST",
+                url: "http://ws.brf-horizonte.com/set/survey/questions/?token=560a100abad225d5afdf4fc6e5334917",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                data: survey
+            };
+            
+            return $http(req);            
         };
 
         return self;
