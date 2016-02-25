@@ -14,7 +14,6 @@
         activate();
 
         function activate() { 
-            console.log("activate");
 
             if(vm.routeParams.default === 'defaultModule'){
                 console.log("defaultModuleLoaded");

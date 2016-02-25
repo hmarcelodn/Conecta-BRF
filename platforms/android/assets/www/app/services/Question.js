@@ -136,6 +136,13 @@
                         return questions;					
                 });
         };
+        
+        self.getQuestionsBySurveyId = function(surveyId){
+            return Database.query('SELECT questionId, JSONData AS [value] FROM SurveyQuestionsResults WHERE surveyId = ?', [surveyId])
+                .then(function(result){
+                    return Database.fetchAll(result);
+                });
+        };
 
         return self;
     }

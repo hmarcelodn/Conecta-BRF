@@ -121,7 +121,22 @@
 					  <div class="indeterminate"></div>
 					</div>	
 				</div>					
-			</li>																						
-		</ul>				
+			</li>		
+            
+			<li class="collection-item">
+				<div>
+					IMAGENES
+					<div class="secondary-content" ng-show="syncImages == 0 || syncImages == 2">
+						<i ng-class="syncImages == 0 ? 'material-icons blue-text' : 'material-icons green-text'">
+						   {{syncQuestions == 0 ? 'access_time' : 'check'}}
+						</i>
+					</div>
+					<div class="progress" ng-show="syncImages == 1">
+					  <div class="indeterminate"></div>
+					</div>	
+				</div>					
+			</li>            
+            																				
+		</ul>			
 	</section>
 </main>

@@ -5,25 +5,19 @@
         .module('brfPhoneGapApp')
         .controller('SynchronizerController', SynchronizerController);
 
-    SynchronizerController.$inject = ['$routeParams', '$location'];
-    function SynchronizerController($routeParams, $location) {
+    SynchronizerController.$inject = ['$routeParams', '$location', '$scope'];
+    function SynchronizerController($routeParams, $location, $scope) {
         var vm = this;
-        vm.syncRoute = '';
-        
-        var navigateToSync = function(){
-            $location.path(vm.syncRoute);
-        };
-        
-        vm.navigateToSync = navigateToSync;
+        $scope.syncRoute;
 
         activate();
 
         function activate() { 
-            if($routeParams.syncModeId === 0){
-                vm.syncRoute = '/DoSynchronization';
+            if(parseInt($routeParams.syncModeId) === 1){
+                $scope.syncRoute = '#/DoSynchronization';
             }
-            else{
-                vm.syncRoute = '/SendSynchronization';
+            else{                
+                $scope.syncRoute = '#/SendSynchronization';
             }
         }
     }

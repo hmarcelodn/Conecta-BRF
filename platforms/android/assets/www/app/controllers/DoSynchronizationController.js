@@ -5,13 +5,14 @@
         .module('brfPhoneGapApp')
         .controller('DoSynchronizationController', DoSynchronizationController);
 
-    DoSynchronizationController.$inject = ['$scope', '$route', '$q', '$location', 'Category', 'Channel', 'Customer', 'Module', 'Question', 'Seller', 'Database'];
-    function DoSynchronizationController($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database) {
+    DoSynchronizationController.$inject = ['$scope', '$route', '$q', '$location', 'Category', 'Channel', 'Customer', 'Module', 'Question', 'Seller', 'Database', 'Image'];
+    function DoSynchronizationController($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database, Image) {
         var vm = this;
         
         activate();
 
-        function activate() { 
+        function activate() {             
+            
             // 0 - Waiting
             // 1 - Running
             // 2 - Success
@@ -23,6 +24,7 @@
             $scope.syncCategories = 0;
             $scope.syncCategoriesImg = 0;
             $scope.syncQuestions = 0;
+            $scope.syncImages = 0;
 
             Database.dropAll().then(function(){
 
@@ -240,8 +242,7 @@
 
                     $q.all(promises).then(function(){
                         $scope.syncQuestions = 2;
-                        deferred.resolve();
-                        $location.path("/SyncOk");
+                        deferred.resolve();                        
                     });
                 })
                 .catch(function(error){			
@@ -249,6 +250,64 @@
                 });
                 
                 return deferred.promise;
+            })
+            .then(function() {
+                var deferred = $q.defer();
+                var fileTransfer = new FileTransfer();
+                $scope.syncImages = 1;
+                
+                Image.getAllImages().then(function (urls) {
+
+                    var promises = [];                   
+                    
+                    var download = function (url) {
+                        var downloadDeferred = $q.defer();
+                        
+                        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
+                            var fileTransfer = new FileTransfer();
+                            fileTransfer.download(
+                                encodeURI(url),
+                                cordova.file.externalApplicationStorageDirectory + 'BRF/Images/' + url.split('/').pop(),
+                                function (entry) {
+                                    console.log('Success');
+                                    downloadDeferred.resolve();
+                                },
+                                function (error) {
+                                    console.log('Error');
+                                    downloadDeferred.reject(error);
+                                }
+                            )
+                        });
+                        
+                        return downloadDeferred.promise;                        
+                    };
+                    
+                    angular.forEach(urls.data.images, function (value, key) {
+                        console.log(value);
+                        
+                        if(value.thumb !== undefined){
+                            promises.push(download(value.thumb));                           
+                        }
+                        
+                        if(value.big !== undefined){
+                            promises.push(download(value.big));                            
+                        }
+                    });
+                    
+                    $q.all(promises).then(function () {
+                       $scope.syncImages = 2;
+                       deferred.resolve();
+                    });
+
+                })
+                .catch(function (error) {
+                    deferred.reject(error);
+                });
+                
+                return deferred.promise;
+            })
+            .then(function () {
+                $location.path('/SyncOk');
             })
             .catch(function(error){
                 console.log(error);
