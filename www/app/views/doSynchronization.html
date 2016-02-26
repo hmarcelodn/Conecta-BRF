@@ -69,6 +69,20 @@
 
 			<li class="collection-item">
 				<div>
+					AUDITORIAS
+					<div class="secondary-content" ng-show="syncMainModules == 0 || syncMainModules == 2">
+						<i ng-class="syncMainModules == 0 ? 'material-icons blue-text' : 'material-icons green-text'">
+						   {{syncMainModules == 0 ? 'access_time' : 'check'}}
+						</i>
+					</div>
+					<div class="progress" ng-show="syncMainModules == 1">
+					  <div class="indeterminate"></div>
+					</div>	
+				</div>					
+			</li>
+
+			<li class="collection-item">
+				<div>
 					MODULOS
 					<div class="secondary-content" ng-show="syncModules == 0 || syncModules == 2">
 						<i ng-class="syncModules == 0 ? 'material-icons blue-text' : 'material-icons green-text'">

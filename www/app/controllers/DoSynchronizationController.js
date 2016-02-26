@@ -25,6 +25,7 @@
             $scope.syncCustomers = 0;
             $scope.syncCustomersType = 0;
             $scope.syncSellers = 0;
+            $scope.syncMainModules = 0;
             $scope.syncModules = 0;
             $scope.syncCategories = 0;
             $scope.syncCategoriesImg = 0;
@@ -126,6 +127,32 @@
 
                 return deferred.promise;
             })
+            .then(function () {
+                
+                var deferred = $q.defer();
+                $scope.syncMainModules = 1;
+                
+                Module.synchronizeMainModules().then(function (mainModules) {
+                    var promises = [];
+                    
+                    angular.forEach(mainModules.data.main_modules, function (value, key) {
+                        promises.push
+                        (
+                          Module.setMainModule(value.id, value.mod_name, value.icon, value.map_label)  
+                        );
+                    });
+                    
+                    $q.all(promises).then(function () {
+                       $scope.syncMainModules = 2;
+                       deferred.resolve(); 
+                    });
+                })
+                .catch(function (error) {
+                    deferred.reject(error);
+                });
+                
+                return deferred.promise;
+            })
             .then(function(){
 
                 var deferred = $q.defer();
@@ -139,7 +166,7 @@
 
                         var moduleId = value.id;
 
-                        promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.style.color, value.style.icon, value.slug));				
+                        promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.style.color, value.style.icon, value.slug, value.id_main_mod));				
 
                         angular.forEach(value.ids_channels, function(value, key){
                             promises.push(Module.setModuleChannels(moduleId, value));					

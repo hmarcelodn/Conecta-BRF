@@ -13,8 +13,19 @@
             return $http.get('http://ws.brf-horizonte.com/get/modules/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
-        self.setModule = function (moduleId, behavior, modName, categoryType, color, icon, slug){
-            Database.query('INSERT INTO Module(moduleId, behavior, modName, categoryType, color, icon, slug) VALUES(?, ?, ?, ?, ?, ?, ?)', [moduleId, behavior, modName, categoryType, color, icon, slug])
+        self.synchronizeMainModules = function(){
+            return $http.get('http://ws.brf-horizonte.com/get/modules/main/?token=560a100abad225d5afdf4fc6e5334917');  
+        };
+        
+        self.setMainModule = function(id, modName, icon, mapLabel){
+            Database.query('INSERT INTO MainModule(id, mod_name, icon, map_label) VALUES (?, ?, ?, ?)', [id, modName, icon, mapLabel])
+                .then(function(result){
+                   return true; 
+                });
+        };
+
+        self.setModule = function (moduleId, behavior, modName, categoryType, color, icon, slug, mainModuleId){
+            Database.query('INSERT INTO Module(moduleId, behavior, modName, categoryType, color, icon, slug, idMainMod) VALUES(?, ?, ?, ?, ?, ?, ?, ?)', [moduleId, behavior, modName, categoryType, color, icon, slug, mainModuleId])
                 .then(function (result){
                     return true;
                 });
