@@ -5,11 +5,12 @@
         .module('brfPhoneGapApp')
         .controller('PdvController', PdvController);
 
-    PdvController.$inject = ['$scope', '$route', '$location', '$routeParams', 'Customer'];
-    function PdvController($scope, $route, $location, $routeParams, Customer) {
+    PdvController.$inject = ['$scope', '$route', '$location', '$routeParams', 'Customer', 'Survey'];
+    function PdvController($scope, $route, $location, $routeParams, Customer, Survey) {
         var vm = this;
-        $scope.customerTypes = [];
+        vm.lastPdvId;
         
+        $scope.customerTypes = [];        
         $scope.companyName;
     	$scope.identifier;
 	    $scope.address;               
@@ -26,6 +27,8 @@
                 $scope.customerTypes = customerTypes;
                 $scope.selectedCustomerType = $scope.customerTypes[0];
             });
+            
+            vm.lastPdvId = Survey.getLastAuditPdv();
         }
         
         vm.addPdv = addPdv;

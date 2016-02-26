@@ -2,6 +2,9 @@ var auditModeKey = 'audit-mode';
 var channelKeyId = 'channel-id';
 var pdvKeyId = 'pdv-id';
 var sellerKeyId = 'seller-id';
+var lastChannelKeyId = 'last-channel-id';
+var lastSellerKeyId = 'last-seller-id';
+var lastPdvKeyId = 'last-pdv-id';
 
 (function() {
 'use strict';
@@ -44,6 +47,9 @@ var sellerKeyId = 'seller-id';
             window.localStorage.setItem(channelKeyId, channelId);
             window.localStorage.setItem(pdvKeyId, pdvId);
             window.localStorage.setItem(sellerKeyId, sellerId);		
+            window.localStorage.setItem(lastChannelKeyId, channelId);
+            window.localStorage.setItem(lastSellerKeyId, sellerId);
+            window.localStorage.setItem(lastPdvKeyId, pdvId);
         };
 
         self.disableAuditMode = function(){
@@ -68,6 +74,10 @@ var sellerKeyId = 'seller-id';
 
             return window.localStorage.getItem(channelKeyId);
         };
+        
+        self.getLastAuditChannel = function(){
+            return window.localStorage.getItem(lastChannelKeyId);  
+        };
 
         self.getAuditPdv = function(){
             if(window.localStorage.getItem(pdvKeyId) === undefined){
@@ -77,12 +87,20 @@ var sellerKeyId = 'seller-id';
             return window.localStorage.getItem(pdvKeyId);
         };
 
+        self.getLastAuditPdv = function(){
+            return window.localStorage.getItem(lastPdvKeyId);  
+        };
+
         self.getAuditSeller = function(){
             if(window.localStorage.getItem(sellerKeyId) === undefined){
                 window.localStorage.setItem(sellerKeyId, 0);
             }
 
             return window.localStorage.getItem(sellerKeyId);
+        };
+        
+        self.getLastAuditSeller = function(){
+            return window.localStorage.getItem(lastSellerKeyId);  
         };
 
         self.setQuestionAnswer = function(surveyId, id, data){

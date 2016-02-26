@@ -5,9 +5,10 @@
         .module('brfPhoneGapApp')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ['$scope', '$route', '$routeParams', 'Seller', 'Module', 'Login'];
-    function SearchController($scope, $route, $routeParams, Seller, Module, Login) {
+    SearchController.$inject = ['$scope', '$route', '$routeParams', 'Seller', 'Module', 'Login', 'Survey'];
+    function SearchController($scope, $route, $routeParams, Seller, Module, Login, Survey) {
         var vm = this;
+        vm.lastSellerId;
         
         $scope.pdvId = $routeParams.pdvId;
         $scope.channelId = $routeParams.channelId;	
@@ -23,7 +24,9 @@
 
             Seller.getSellers().then(function(sellers){
                 $scope.sellers = sellers;		
-            });	
+            });	            
+            
+            vm.lastSellerId = Survey.getLastAuditSeller();
         }
     }
 })();
