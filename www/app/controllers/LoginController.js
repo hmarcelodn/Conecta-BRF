@@ -11,21 +11,14 @@
         vm.username;
 	    vm.password;
 	    vm.routeParams;
-        vm.loggedUserName;
-        vm.mainModules = [];
+        $scope.loggedUserName;
+        $scope.mainModules = [];
 
-        function activate() { 
-            if(Login.authenticated()){
-                $location.path("/Main");
-            }
-            
-            vm.loggedUserName = vm.getUserName();
-            vm.routeParams = $routeParams;
-            
+        var loadMainModules = function () {
             Module.getMainModules().then(function (mainModules) {
-                vm.mainModules = mainModules;
-            });
-        }       
+                $scope.mainModules = mainModules;
+            });          
+        };  
         
         var loadModules = function (){
             Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId()).then(function(modules){
@@ -62,6 +55,19 @@
 
             return token.name;
         };  
+
+        function activate() { 
+            if(Login.authenticated()){
+                $location.path("/Main");
+            }
+            
+            $scope.loggedUserName = vm.getUserName();
+            vm.routeParams = $routeParams;
+            
+            Module.getMainModules().then(function (mainModules) {
+                loadMainModules();
+            });
+        }             
         
         $rootScope.$on('defaultModuleLoaded', function (event, data) {            
             
@@ -79,7 +85,12 @@
                     vm.loadModules();
                 }
             });
-        });	        
+        });	     
+        
+        $rootScope.$on('synchronizationSuccessfulyFinished', function (event, data) {
+            console.log('Received Event synchronizationSuccessfulyFinished');
+            loadMainModules();
+        });   
         
         $scope.authenticated = function(){
             return Login.authenticated();

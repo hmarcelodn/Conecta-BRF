@@ -5,6 +5,7 @@ var sellerKeyId = 'seller-id';
 var lastChannelKeyId = 'last-channel-id';
 var lastSellerKeyId = 'last-seller-id';
 var lastPdvKeyId = 'last-pdv-id';
+var auditIdKey = 'audit-id';
 
 (function() {
 'use strict';
@@ -42,7 +43,7 @@ var lastPdvKeyId = 'last-pdv-id';
                 });
         };
 
-        self.enableAuditMode = function(channelId, pdvId, sellerId){
+        self.enableAuditMode = function(channelId, pdvId, sellerId, auditId){
             window.localStorage.setItem(auditModeKey, true);
             window.localStorage.setItem(channelKeyId, channelId);
             window.localStorage.setItem(pdvKeyId, pdvId);
@@ -50,6 +51,7 @@ var lastPdvKeyId = 'last-pdv-id';
             window.localStorage.setItem(lastChannelKeyId, channelId);
             window.localStorage.setItem(lastSellerKeyId, sellerId);
             window.localStorage.setItem(lastPdvKeyId, pdvId);
+            window.localStorage.setItem(auditIdKey, auditId);
         };
 
         self.disableAuditMode = function(){
@@ -57,6 +59,15 @@ var lastPdvKeyId = 'last-pdv-id';
             window.localStorage.setItem(channelKeyId, 0);
             window.localStorage.setItem(pdvKeyId, 0);
             window.localStorage.setItem(sellerKeyId, 0);
+            window.localStorage.setItem(auditIdKey, 0);
+        };
+
+        self.getAuditId = function(){
+            if(window.localStorage.getItem(auditIdKey) === undefined){
+                window.localStorage.setItem(auditIdKey, 0);
+            }
+
+            return window.localStorage.getItem(auditIdKey);         
         };
 
         self.getAuditMode = function(){

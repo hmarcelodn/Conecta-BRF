@@ -13,6 +13,7 @@
         $scope.pdvId = $routeParams.pdvId;
         $scope.channelId = $routeParams.channelId;	
         $scope.defaultModuleSlug;
+        vm.auditId;
     
         activate();
 
@@ -26,7 +27,8 @@
                 $scope.sellers = sellers;		
             });	            
             
-            vm.lastSellerId = Survey.getLastAuditSeller();
+            vm.lastSellerId = Survey.getLastAuditSeller() === null ? undefined : Survey.getLastAuditSeller() ;
+            vm.auditId = $routeParams.auditId;
         }
     }
 })();

@@ -5,9 +5,10 @@
         .module('brfPhoneGapApp')
         .controller('WelcomeController', WelcomeController);
 
-    WelcomeController.$inject = [];
-    function WelcomeController() {
+    WelcomeController.$inject = ['$routeParams'];
+    function WelcomeController($routeParams) {
         var vm = this;
+        vm.auditId = $routeParams.auditId;
         
         activate();
 

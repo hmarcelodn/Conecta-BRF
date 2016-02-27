@@ -5,8 +5,8 @@
         .module('brfPhoneGapApp')
         .controller('DoSynchronizationController', DoSynchronizationController);
 
-    DoSynchronizationController.$inject = ['$scope', '$route', '$q', '$location', 'Category', 'Channel', 'Customer', 'Module', 'Question', 'Seller', 'Database', 'Image'];
-    function DoSynchronizationController($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database, Image) {
+    DoSynchronizationController.$inject = ['$scope', '$route', '$q', '$location', 'Category', 'Channel', 'Customer', 'Module', 'Question', 'Seller', 'Database', 'Image', '$rootScope'];
+    function DoSynchronizationController($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database, Image, $rootScope) {
         var vm = this;
         vm.devicePath = undefined;
         
@@ -358,6 +358,7 @@
                 return deferred.promise;
             })
             .then(function () {
+                $rootScope.$emit('synchronizationSuccessfulyFinished');
                 $location.path('/SyncOk');
             })
             .catch(function(error){

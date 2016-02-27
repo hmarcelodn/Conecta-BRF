@@ -11,19 +11,17 @@
         vm.username;
 	    vm.password;
 	    vm.routeParams;
-        vm.loggedUserName;
+        $scope.loggedUserName;
+        $scope.mainModules = [];
 
-        function activate() { 
-            if(Login.authenticated()){
-                $location.path("/Main");
-            }
-            
-            vm.loggedUserName = vm.getUserName();
-            vm.routeParams = $routeParams;
-        }       
+        var loadMainModules = function () {
+            Module.getMainModules().then(function (mainModules) {
+                $scope.mainModules = mainModules;
+            });          
+        };  
         
         var loadModules = function (){
-            Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role).then(function(modules){
+            Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId()).then(function(modules){
                 $scope.modules = modules;
             });
         };        
@@ -57,6 +55,19 @@
 
             return token.name;
         };  
+
+        function activate() { 
+            if(Login.authenticated()){
+                $location.path("/Main");
+            }
+            
+            $scope.loggedUserName = vm.getUserName();
+            vm.routeParams = $routeParams;
+            
+            Module.getMainModules().then(function (mainModules) {
+                loadMainModules();
+            });
+        }             
         
         $rootScope.$on('defaultModuleLoaded', function (event, data) {            
             
@@ -65,7 +76,7 @@
                     Customer.getPdvTypeByCustomerId(vm.routeParams.pdvId).then(function (customerPdvType) {
                         Survey.setSurvey(new Date().getTime().toString(), vm.routeParams.channelId, customerPdvType.pdvType, vm.routeParams.sellerId, Login.getToken().id)
                             .then(function(){
-                                Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId);
+                                Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId, $routeParams.auditId);
                                 vm.loadModules();
                         });                        
                     });                              
@@ -74,7 +85,12 @@
                     vm.loadModules();
                 }
             });
-        });	        
+        });	     
+        
+        $rootScope.$on('synchronizationSuccessfulyFinished', function (event, data) {
+            console.log('Received Event synchronizationSuccessfulyFinished');
+            loadMainModules();
+        });   
         
         $scope.authenticated = function(){
             return Login.authenticated();

@@ -28,7 +28,7 @@
                 $scope.selectedCustomerType = $scope.customerTypes[0];
             });
             
-            vm.lastPdvId = Survey.getLastAuditPdv();
+            vm.lastPdvId = Survey.getLastAuditPdv() === null ? undefined : Survey.getLastAuditPdv();
         }
         
         vm.addPdv = addPdv;

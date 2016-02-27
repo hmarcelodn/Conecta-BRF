@@ -28,7 +28,8 @@
                         $scope.categories = categories;
                     }
                     else{
-                        $location.path('/Channel/' + vm.routeParams.channelId + 
+                        $location.path('/Audit/' + vm.routeParams.auditId + 
+                                    '/Channel/' + vm.routeParams.channelId + 
                                     '/Pdv/' + vm.routeParams.pdvId + 
                                     '/Seller/' + vm.routeParams.sellerId + 
                                     '/Module/' + module.moduleId);

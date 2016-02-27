@@ -26,7 +26,7 @@
 	<section class="row col s12">			
 		<ul class="collection with-header">								   
 			<li class="collection-item" ng-repeat="seller in sellers | filter: query">						
-				<a ng-href="#/Channel/{{channelId}}/Pdv/{{pdvId}}/Seller/{{seller.id}}/{{defaultModuleSlug}}/defaultModule">
+				<a ng-href="#/Audit/{{vm.auditId}}/Channel/{{channelId}}/Pdv/{{pdvId}}/Seller/{{seller.id}}/{{defaultModuleSlug}}/defaultModule">
 					{{seller.name}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>
@@ -38,7 +38,7 @@
     <p class="center-align">
         <a class="waves-effect waves-light btn" 
            ng-show="vm.lastSellerId !== undefined"
-           ng-href="#/Channel/{{channelId}}/Pdv/{{pdvId}}/Seller/{{vm.lastSellerId}}/{{defaultModuleSlug}}/defaultModule">
+           ng-href="#/Audit/{{vm.auditId}}/Channel/{{channelId}}/Pdv/{{pdvId}}/Seller/{{vm.lastSellerId}}/{{defaultModuleSlug}}/defaultModule">
            EMPLEAR ULTIMO
         </a>
 	</p>    
