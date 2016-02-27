@@ -8,6 +8,11 @@
     DoSynchronizationController.$inject = ['$scope', '$route', '$q', '$location', 'Category', 'Channel', 'Customer', 'Module', 'Question', 'Seller', 'Database', 'Image'];
     function DoSynchronizationController($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database, Image) {
         var vm = this;
+        vm.devicePath = undefined;
+        
+        if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+            vm.devicePath = cordova.file.externalApplicationStorageDirectory;
+        }        
         
         activate();
 
@@ -20,6 +25,7 @@
             $scope.syncCustomers = 0;
             $scope.syncCustomersType = 0;
             $scope.syncSellers = 0;
+            $scope.syncMainModules = 0;
             $scope.syncModules = 0;
             $scope.syncCategories = 0;
             $scope.syncCategoriesImg = 0;
@@ -121,6 +127,32 @@
 
                 return deferred.promise;
             })
+            .then(function () {
+                
+                var deferred = $q.defer();
+                $scope.syncMainModules = 1;
+                
+                Module.synchronizeMainModules().then(function (mainModules) {
+                    var promises = [];
+                    
+                    angular.forEach(mainModules.data.main_modules, function (value, key) {
+                        promises.push
+                        (
+                          Module.setMainModule(value.id, value.mod_name, value.icon, value.map_label)  
+                        );
+                    });
+                    
+                    $q.all(promises).then(function () {
+                       $scope.syncMainModules = 2;
+                       deferred.resolve(); 
+                    });
+                })
+                .catch(function (error) {
+                    deferred.reject(error);
+                });
+                
+                return deferred.promise;
+            })
             .then(function(){
 
                 var deferred = $q.defer();
@@ -134,7 +166,7 @@
 
                         var moduleId = value.id;
 
-                        promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.style.color, value.style.icon, value.slug));				
+                        promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.style.color, value.style.icon, value.slug, value.id_main_mod));				
 
                         angular.forEach(value.ids_channels, function(value, key){
                             promises.push(Module.setModuleChannels(moduleId, value));					
@@ -199,7 +231,7 @@
                                     value.id, 
                                     value.id_mod, 
                                     value.id_cat, 
-                                    cordova.file.externalApplicationStorageDirectory + 'BRF/Images/' + value.image.split('/').pop(),
+                                    vm.devicePath === undefined ? value.image : cordova.file.externalApplicationStorageDirectory + 'BRF/Images/' + value.image.split('/').pop(),
                                     value.icon
                                 )
                             );							
@@ -236,8 +268,12 @@
                             title: value.title, 
                             data: value.data, 
                             helper: value.helper, 
-                            big: cordova.file.externalApplicationStorageDirectory + 'BRF/Images/' + value.big.split('/').pop(),
-                            thumb: cordova.file.externalApplicationStorageDirectory + 'BRF/Images/' + value.thumb.split('/').pop(), 
+                            big: vm.devicePath === undefined 
+                                ? value.big 
+                                : cordova.file.externalApplicationStorageDirectory + 'BRF/Images/' + value.big.split('/').pop(),
+                            thumb: vm.devicePath === undefined 
+                                ? value.thumb 
+                                : cordova.file.externalApplicationStorageDirectory + 'BRF/Images/' + value.thumb.split('/').pop(), 
                             questionModuleId: value.id_question_mod,
                             config: (typeof value.config === 'object') ? JSON.stringify(value.config) : value.config,
                             styling: (typeof value.styling === 'object') ? JSON.stringify(value.styling) : value.styling
@@ -261,8 +297,15 @@
             })
             .then(function() {
                 var deferred = $q.defer();
-                var fileTransfer = new FileTransfer();
                 $scope.syncImages = 1;
+                
+                if(vm.devicePath === undefined){
+                    $scope.syncImages = 2;
+                    deferred.resolve();
+                    return;
+                }
+                
+                var fileTransfer = new FileTransfer();                
                 
                 Image.getAllImages().then(function (urls) {
 

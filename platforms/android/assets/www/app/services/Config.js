@@ -75,7 +75,8 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'categoryType', type: 'integer' },
                     { name: 'color', type: 'text' },
                     { name: 'icon', type: 'text' },
-                    { name: 'slug', type: 'text' }
+                    { name: 'slug', type: 'text' },
+                    { name: 'idMainMod', type: 'integer' }
                 ]
             },
             {
@@ -171,6 +172,16 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'surveyId', type: 'integer' },
                     { name: 'questionId', type: 'integer' },
                     { name: 'JSONData', type: 'text' }
+                ]
+            },
+            {
+                name: "MainModule",
+                columns:
+                [
+                    { name: 'id', type: 'integer primary key' },
+                    { name: 'mod_name', type: 'text' },
+                    { name: 'icon', type: 'text' },
+                    { name: 'map_label', type: 'text' }                                                            
                 ]
             }                                                                                                                                                                                    
         ]

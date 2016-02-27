@@ -17,8 +17,8 @@
             return $http.get('http://ws.brf-horizonte.com/get/modules/main/?token=560a100abad225d5afdf4fc6e5334917');  
         };
         
-        self.setMainModule = function(id, modName, icon, mapLabel){
-            Database.query('INSERT INTO MainModule(id, mod_name, icon, map_label) VALUES (?, ?, ?, ?)', [id, modName, icon, mapLabel])
+        self.setMainModule = function(id, modName, icon, mapLabel, hasDashboard){
+            Database.query('INSERT INTO MainModule(id, mod_name, icon, map_label, has_dashboard) VALUES (?, ?, ?, ?, ?)', [id, modName, icon, mapLabel, hasDashboard])
                 .then(function(result){
                    return true; 
                 });
@@ -59,14 +59,15 @@
                 });		
         };	
 
-        self.getModules = function(channelId, roleId){
+        self.getModules = function(channelId, roleId, auditId){
             var query = 'SELECT DISTINCT mod.id, mod.moduleId, mod.behavior, mod.modName, mod.categoryType, mod.color, mod.icon, mod.slug FROM Module mod' +
                             ' INNER JOIN ModuleChannels modcha ON modcha.moduleId = mod.moduleId' +
                             ' INNER JOIN ModuleUserRoles modur ON modur.moduleId = mod.moduleId' +
                             ' WHERE modcha.channelId = ?' +
-                            ' AND modur.roleId = ?';
+                            ' AND modur.roleId = ?' + 
+                            ' AND mod.idMainMod = ?';
 
-            return Database.query(query, [channelId, roleId])
+            return Database.query(query, [channelId, roleId, auditId])
                 .then(function (result){
                     return Database.fetchAll(result);
                 });
@@ -89,6 +90,13 @@
             return Database.query('SELECT * FROM Module WHERE moduleId = ?', [moduleId])
                 .then(function (result){
                     return Database.fetch(result);
+                });
+        };
+        
+        self.getMainModules = function(){
+            return Database.query('SELECT * FROM MainModule')  
+                .then(function(result){
+                   return Database.fetchAll(result); 
                 });
         };
 

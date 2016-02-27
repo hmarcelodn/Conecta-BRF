@@ -12,7 +12,7 @@
 	<section class="row col s12">			
 		<ul class="collection with-header">				
 			<li class="collection-item" ng-repeat="channel in vm.channels">						
-				<a ng-href="#/Channel/{{channel.id}}/Pdv">
+				<a ng-href="#/Audit/{{vm.auditId}}/Channel/{{channel.id}}/Pdv">
 					{{channel.name}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>
@@ -22,6 +22,6 @@
 		</ul>
 	</article>
     <p class="center-align">
-        <a class="waves-effect waves-light btn" ng-show="vm.lastChannelId !== undefined" ng-href="#/Channel/{{vm.lastChannelId}}/Pdv">EMPLEAR ULTIMO</a>
+        <a class="waves-effect waves-light btn" ng-show="vm.lastChannelId !== undefined" ng-href="#/Audit/{{vm.auditId}}/Channel/{{vm.lastChannelId}}/Pdv">EMPLEAR ULTIMO</a>
 	</p>
 </main>

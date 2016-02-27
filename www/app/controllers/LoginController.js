@@ -12,6 +12,7 @@
 	    vm.password;
 	    vm.routeParams;
         vm.loggedUserName;
+        vm.mainModules = [];
 
         function activate() { 
             if(Login.authenticated()){
@@ -20,10 +21,14 @@
             
             vm.loggedUserName = vm.getUserName();
             vm.routeParams = $routeParams;
+            
+            Module.getMainModules().then(function (mainModules) {
+                vm.mainModules = mainModules;
+            });
         }       
         
         var loadModules = function (){
-            Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role).then(function(modules){
+            Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId()).then(function(modules){
                 $scope.modules = modules;
             });
         };        
@@ -65,7 +70,7 @@
                     Customer.getPdvTypeByCustomerId(vm.routeParams.pdvId).then(function (customerPdvType) {
                         Survey.setSurvey(new Date().getTime().toString(), vm.routeParams.channelId, customerPdvType.pdvType, vm.routeParams.sellerId, Login.getToken().id)
                             .then(function(){
-                                Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId);
+                                Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId, $routeParams.auditId);
                                 vm.loadModules();
                         });                        
                     });                              

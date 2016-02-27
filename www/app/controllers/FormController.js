@@ -11,13 +11,15 @@
         $scope.channelId;
         vm.customers = [];        
         vm.lastPdvId;
+        vm.auditId;
 
         function activate() { 
             $scope.channelId = $routeParams.channelId;
             
             Customer.getCustomers().then(function(customers){
                 vm.customers = customers;
-                vm.lastPdvId = Survey.getLastAuditPdv();
+                vm.lastPdvId = Survey.getLastAuditPdv() === null ? undefined : Survey.getLastAuditPdv();
+                vm.auditId = $routeParams.auditId;
             });	            
         }
         

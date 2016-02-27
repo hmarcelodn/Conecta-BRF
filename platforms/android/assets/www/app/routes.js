@@ -55,6 +55,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		.when('/Channel/:channelId/Pdv/:pdvId/Seller', {
 			templateUrl: 'app/views/search.html',
 			controller: 'SearchController',
+            controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: false

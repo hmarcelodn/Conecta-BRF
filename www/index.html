@@ -53,24 +53,25 @@
                 </li>            
                 <li class="no-padding" ng-show="!isAuditModeEnabled()">            
                     <ul class="collapsible collapsible-accordion">
-                        <li>                    
+                        <li ng-repeat="mainModule in vm.mainModules">                    
                             <a class="collapsible-header" style="margin-left:-5px;">
-                                <i class="material-icons" style="color:#E53935">stars</i>
-                                Proceso de Ventas
+                                <i class="material-icons" style="color:#E53935">{{mainModule.icon}}</i>
+                                {{mainModule.mod_name}}
                             </a>
                           
                             <div class="collapsible-body">
                                 <ul>                                
-                                    <li><a ng-href="#/Welcome">Nueva Auditoría</a></li>
-                                    <li><a ng-href="#/Dashboard">Dashboard</a></li>
-                                    <li><a ng-href="#/Synchronizer/1">Sincronizar</a></li>
-                                    <li><a ng-href="#/Synchronizer/2">Enviar Datos</a></li>                                  
+                                    <li><a ng-href="#/Audit/{{mainModule.id}}">{{mainModule.map_label}}</a></li>
+                                    <li><a ng-href="#/Dashboard/{{mainModule.id}}" ng-show="mainModule.has_dashboard === 1">Dashboard</a></li>                                
                                 </ul>
                              </div>                      
                         </li>
                      </ul>            
                 </li>          
 
+                <li><a ng-href="#/Synchronizer/1" ng-show="!isAuditModeEnabled()">Sincronizar</a></li>
+                <li><a ng-href="#/Synchronizer/2" ng-show="!isAuditModeEnabled()">Enviar Datos</a></li>  
+                
                 <li ng-show="!isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <a ng-click="vm.logout()">Cerrar Sesión</a>
@@ -80,7 +81,7 @@
                 <li ng-if="isAuditModeEnabled()" ng-repeat="module in modules">
                     <div class="valign-wrapper">
                         <i class="material-icons" style="color:#e53935">{{module.icon}}</i>
-                        <a ng-href="#/Channel/{{vm.routeParams.channelId}}/Pdv/{{vm.routeParams.pdvId}}/Seller/{{vm.routeParams.sellerId}}/{{module.slug}}">{{module.modName}}</a>
+                        <a ng-href="#/Audit/{{vm.routeParams.auditId}}/Channel/{{vm.routeParams.channelId}}/Pdv/{{vm.routeParams.pdvId}}/Seller/{{vm.routeParams.sellerId}}/{{module.slug}}">{{module.modName}}</a>
                     </div>
                 </li>                                                      
 

@@ -181,7 +181,8 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'id', type: 'integer primary key' },
                     { name: 'mod_name', type: 'text' },
                     { name: 'icon', type: 'text' },
-                    { name: 'map_label', type: 'text' }                                                            
+                    { name: 'map_label', type: 'text' },
+                    { name: 'has_dashboard', type: 'integer' }                                                        
                 ]
             }                                                                                                                                                                                    
         ]

@@ -25,13 +25,13 @@
 <main style="margin-top:-30px;">		  
 	<section class="row col s12">
 		<section class="fixed-action-btn" style="bottom:15px; right: 15px;">
-			<a class="btn-floating btn-large green modal-trigger" ng-href="#/Channel/{{channelId}}/AddPdv">
+			<a class="btn-floating btn-large green modal-trigger" ng-href="#/Audit/{{vm.auditId}}/Channel/{{channelId}}/AddPdv">
 				<i class="large material-icons">add_circle</i>
 			</a>
 		</section>		
 		<ul class="collection with-header">				
 			<li class="collection-item" ng-repeat="customer in vm.customers | filter: query">						
-				<a ng-href="#/Channel/{{channelId}}/Pdv/{{customer.customerId}}/Seller">
+				<a ng-href="#/Audit/{{vm.auditId}}/Channel/{{channelId}}/Pdv/{{customer.customerId}}/Seller">
 					{{customer.address}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>
@@ -43,7 +43,7 @@
     <p class="center-align">
         <a class="waves-effect waves-light btn"
            ng-show="vm.lastPdvId !== undefined"
-           ng-href="#/Channel/{{channelId}}/Pdv/{{vm.lastPdvId}}/Seller">
+           ng-href="#/Audit/{{vm.auditId}}/Channel/{{channelId}}/Pdv/{{vm.lastPdvId}}/Seller">
             EMPLEAR ULTIMO
          </a>
 	</p>

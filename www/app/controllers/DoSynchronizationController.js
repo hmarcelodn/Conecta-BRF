@@ -138,7 +138,7 @@
                     angular.forEach(mainModules.data.main_modules, function (value, key) {
                         promises.push
                         (
-                          Module.setMainModule(value.id, value.mod_name, value.icon, value.map_label)  
+                          Module.setMainModule(value.id, value.mod_name, value.icon, value.map_label, value.has_dashboard)  
                         );
                     });
                     

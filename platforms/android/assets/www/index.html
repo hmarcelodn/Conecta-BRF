@@ -62,15 +62,16 @@
                             <div class="collapsible-body">
                                 <ul>                                
                                     <li><a ng-href="#/Welcome">Nueva Auditoría</a></li>
-                                    <li><a ng-href="#/Dashboard">Dashboard</a></li>
-                                    <li><a ng-href="#/Synchronizer/1">Sincronizar</a></li>
-                                    <li><a ng-href="#/Synchronizer/2">Enviar Datos</a></li>                                  
+                                    <li><a ng-href="#/Dashboard">Dashboard</a></li>                                
                                 </ul>
                              </div>                      
                         </li>
                      </ul>            
                 </li>          
 
+                <li><a ng-href="#/Synchronizer/1">Sincronizar</a></li>
+                <li><a ng-href="#/Synchronizer/2">Enviar Datos</a></li>  
+                
                 <li ng-show="!isAuditModeEnabled()">
                     <div class="valign-wrapper">
                         <a ng-click="vm.logout()">Cerrar Sesión</a>
