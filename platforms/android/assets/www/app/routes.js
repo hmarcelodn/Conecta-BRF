@@ -166,6 +166,14 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true              
             }
         })
+        .when('/WebSQL', {
+            templateUrl: 'app/views/webSQL.html',
+            controller: 'WebSQLController',
+            controllerAs: 'vm',
+            access:{
+  				isFreeAccess: true             
+            }            
+        })
 		.otherwise({
 			redirectTo: '/'
 		})

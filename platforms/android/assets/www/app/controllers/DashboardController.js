@@ -8,8 +8,11 @@ brfPhoneGapApp.controller('dashboardController', function($scope, $route, Dashbo
     
     Survey.getVisitedCoachingPdvsCount(Login.getToken().id)
         .then(function (result) {
-            $scope.visitedPDVs = result;
+            console.log("Resultados:");
+            console.log(result);
+            $scope.visitedPDVs = (result === undefined ? 0 : result);
  
+             
              Dashboard.getDailyBase(Login.getToken().id)
                 .then(function (base) {
                     $scope.obtainedCompliance = Math.round((result / base.target_coaching) * 100);
@@ -17,14 +20,21 @@ brfPhoneGapApp.controller('dashboardController', function($scope, $route, Dashbo
                     $scope.target = base;
                 });           
         });
-    
-    console.log($routeParams.auditId);
+        
 	Survey.getAveragePerModule($routeParams.auditId)
         .then(function (values) {
+            
+            console.log("test 1");
+            console.log(values);
+                        
             angular.forEach(values, function (value, key) {
                 console.log($routeParams.auditId);
+                
                 Question.getAuditedQuestionsResume(value.id_mod, $routeParams.auditId)
                     .then(function (questionsResult1) {
+
+                        console.log("test 2");
+                        console.log(questionsResult1);                        
 
                         $scope.modules.push
                         ( {
