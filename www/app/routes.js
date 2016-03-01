@@ -9,7 +9,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}
 		})
-		.when('/Dashboard', {
+		.when('/Dashboard/:auditId', {
 			templateUrl: 'app/views/dashboard.html',
 			controller: 'dashboardController',
 			access:{
@@ -157,6 +157,15 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})			
+        .when('/Help/:questionId',{
+            templateUrl: 'app/views/help.html',
+            controller: 'HelpController',
+            controllerAs: 'vm',
+            access:{
+  				isFreeAccess: false,
+				audit: true              
+            }
+        })
 		.otherwise({
 			redirectTo: '/'
 		})

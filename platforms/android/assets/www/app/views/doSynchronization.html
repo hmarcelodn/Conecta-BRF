@@ -150,6 +150,34 @@
 					</div>	
 				</div>					
 			</li>            
+
+			<li class="collection-item">
+				<div>
+					DASHBOARD DATING
+					<div class="secondary-content" ng-show="syncDating == 0 || syncDating == 2">
+						<i ng-class="syncDating == 0 ? 'material-icons blue-text' : 'material-icons green-text'">
+						   {{syncQuestions == 0 ? 'access_time' : 'check'}}
+						</i>
+					</div>
+					<div class="progress" ng-show="syncDating == 1">
+					  <div class="indeterminate"></div>
+					</div>	
+				</div>					
+			</li> 
+
+			<li class="collection-item">
+				<div>
+					TARGETS
+					<div class="secondary-content" ng-show="syncTarget == 0 || syncTarget == 2">
+						<i ng-class="syncTarget == 0 ? 'material-icons blue-text' : 'material-icons green-text'">
+						   {{syncQuestions == 0 ? 'access_time' : 'check'}}
+						</i>
+					</div>
+					<div class="progress" ng-show="syncTarget == 1">
+					  <div class="indeterminate"></div>
+					</div>	
+				</div>					
+			</li> 
             																				
 		</ul>			
 	</section>

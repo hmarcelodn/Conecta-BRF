@@ -5,8 +5,8 @@
         .module('brfPhoneGapApp')
         .controller('SendSynchronizationController', SendSynchronizationController);
 
-    SendSynchronizationController.$inject = ['$scope', 'Survey', '$location', '$q', 'Question'];
-    function SendSynchronizationController($scope, Survey, $location, $q, Question) {
+    SendSynchronizationController.$inject = ['$scope', 'Survey', '$location', '$q', 'Question', 'Customer'];
+    function SendSynchronizationController($scope, Survey, $location, $q, Question, Customer) {
         var vm = this;
       
         $scope.syncSurveys = 0;
@@ -25,37 +25,42 @@
                var promises = [];
                
                angular.forEach(surveys, function (value, key) {
-                   promises.push(
-                        Survey.informSurvey(
-                            {
-                                "data":
-                                {
-                                    "main":
-                                    {
-                                        "id_user": value.userId,
-                                        "survey": value.survey,
-                                        "token": "560a100abad225d5afdf4fc6e5334917"
-                                    },
-                                    "config":
-                                    {
-                                        "id_channel": value.channelId,
-                                        "id_type_pdv": value.pdvId,
-                                        "id_seller": value.sellerId
-                                    },
-                                    "details":
-                                    {
-                                        "name": "",
-                                        "address": "",
-                                        "notes": ""
-                                    }                                    
-                                }
-                            }).then(function() {
-                            deferred.resolve();
-                        })
-                        .catch(function (error) {
-                            deferred.reject(error);
-                        })
-                   );
+                   
+                   Customer.getPdvById(value.pdvId).then(function (customer) {
+                        promises.push(
+                                Survey.informSurvey(
+                                    JSON.stringify
+                                    ({
+                                        "data":
+                                        {
+                                            "main":
+                                            {
+                                                "id_user": value.userId,
+                                                "survey": value.survey,
+                                                "token": "560a100abad225d5afdf4fc6e5334917"
+                                            },
+                                            "config":
+                                            {
+                                                "id_channel": value.channelId,
+                                                "id_type_pdv": value.pdvId,
+                                                "id_seller": value.sellerId
+                                            },
+                                            "details":
+                                            {
+                                                "name": customer.companyName,
+                                                "address": customer.address,
+                                                "notes": "Test Notes"
+                                            }                                    
+                                        }
+                                    })
+                                 ).then(function() {
+                                    deferred.resolve();
+                                })
+                                .catch(function (error) {
+                                    deferred.reject(error);
+                                })
+                        );                       
+                   });                  
                    
                    $q.all(promises).then(function() {
                        $scope.syncSurveys = 2;
@@ -68,29 +73,40 @@
             .then(function() {
                $scope.syncNoBrf = 1;
                var deferred = $q.defer();
-               var promises = [];
+               
                
                Survey.getClosedSurveysNoBrf().then(function (noBrfSurveys) {
-                   angular.forEach(noBrfSurveys, function(value, key) {
-                        promises.push
-                        (
-                            Survey.informNoBrfSurvey(
-                                {
-                                    "data":
-                                    {
-                                        "token": "560a100abad225d5afdf4fc6e5334917",
-                                        "id_user": value.userId,
-                                        "survey": value.survey                                        
-                                    }
-                                }
-                            )
-                        )
-                   });
                    
-                   $q.all(promises).then(function() {
-                      $scope.syncNoBrf = 2;
-                      deferred.resolve(); 
-                   });
+                   if(noBrfSurveys.length > 0){
+                        var promises = [];
+                       
+                        angular.forEach(noBrfSurveys, function(value, key) {
+                                promises.push
+                                (
+                                    Survey.informNoBrfSurvey(
+                                        JSON.stringify
+                                        ({
+                                            "data":
+                                            {
+                                                "token": "560a100abad225d5afdf4fc6e5334917",
+                                                "id_user": value.userId,
+                                                "survey": value.survey                                        
+                                            }
+                                        })
+                                    )
+                                )
+                        });
+                        
+                        $q.all(promises).then(function() {
+                            $scope.syncNoBrf = 2;
+                            deferred.resolve(); 
+                        });                       
+                   }
+                   else{
+                        $scope.syncNoBrf = 2;
+                        deferred.resolve();                     
+                   }
+                   
                });
                
                return deferred.promise;                                 
@@ -101,15 +117,14 @@
                var deferred = $q.defer();
                var promises = new Array();
                
-                Survey.getClosedSurveys().then(function (surveys) {
-                    
-                    console.log(surveys);
+                Survey.getClosedSurveys().then(function (surveys) {                    
                     
                    angular.forEach(surveys, function (value, key) {                                            
                      Question.getQuestionsBySurveyId(value.id).then(function (questions) {
                         promises.push(Survey.informSurveyQuestions
                         (
-                            {
+                            JSON.stringify
+                            ({
                                 "data":
                                 {
                                     "main":
@@ -122,7 +137,7 @@
                                         "questions": questions
                                     }
                                 }
-                            }
+                            })
                         ));            
                      });
                    });
@@ -134,6 +149,9 @@
                });
                
                return deferred.promise;                 
+            })
+            .then(function () {
+                $location.path('/SyncOk');
             })
             .catch(function (error) {
                 console.log(error);

@@ -19,7 +19,7 @@ var auditIdKey = 'audit-id';
         var self = this;
 
         self.setSurvey = function(survey, channelId, pdvId, sellerId, userId){
-            return Database.query('INSERT INTO Survey(survey, syncStatus, channelId, pdvId, sellerId, userId) VALUES (?, ?, ?, ?, ?, ?)', [survey, 0, channelId, pdvId, sellerId, userId])
+            return Database.query("INSERT INTO Survey(survey, syncStatus, channelId, pdvId, sellerId, userId, date, coaching_compliance) VALUES (?, ?, ?, ?, ?, ?, datetime(), 0)", [survey, 0, channelId, pdvId, sellerId, userId])
                 .then(function (result){
                     return true;
                 });
@@ -36,8 +36,8 @@ var auditIdKey = 'audit-id';
                 });
         };
 
-        self.closeSurvey = function(){
-            return Database.query('UPDATE Survey SET syncStatus = 1 WHERE syncStatus = 0')
+        self.closeSurvey = function(coachingCompliance){
+            return Database.query('UPDATE Survey SET syncStatus = 1, coaching_compliance = ? WHERE syncStatus = 0', [coachingCompliance])
                 .then(function (result){
                     return true;
                 });
@@ -194,13 +194,13 @@ var auditIdKey = 'audit-id';
         };
         
         self.getClosedSurveysNoBrf = function(){
-            return Database.query('SELECT sur.survey, nobrf.noBrf FROM SurveyNoBrfResults nobrf INNER JOIN Survey sur ON sur.id = nobrf.surveyId WHERE sur.syncStatus = 1')
+            return Database.query('SELECT sur.survey, nobrf.noBrf, sur.userId FROM SurveyNoBrfResults nobrf INNER JOIN Survey sur ON sur.id = nobrf.surveyId WHERE sur.syncStatus = 1')
                 .then(function(result){
                     return Database.fetchAll(result);
                 });     
         };       
 
-        self.informSurvey = function(survey){
+        self.informSurvey = function(survey){            
             var req = {
                 method: "POST",
                 url: "http://ws.brf-horizonte.com/set/survey/?token=560a100abad225d5afdf4fc6e5334917",
@@ -213,7 +213,8 @@ var auditIdKey = 'audit-id';
             return $http(req);
         };
         
-        self.informNoBrfSurvey = function(survey){           
+        self.informNoBrfSurvey = function(survey){     
+            console.log(survey);      
             var req = {
                 method: "POST",
                 url: "http://ws.brf-horizonte.com/set/survey/no-brf/?token=560a100abad225d5afdf4fc6e5334917",
@@ -237,6 +238,53 @@ var auditIdKey = 'audit-id';
             };
             
             return $http(req);            
+        };
+
+        self.getCoachingSurveyQuestionsCount = function(surveyId){
+            var query = 'SELECT q.* FROM Question q ' +
+                        'INNER JOIN SurveyQuestionsResults sq ON sq.questionId = q.questionId ' +
+                        'WHERE sq.surveyId = ? ' +
+                        'AND q.is_coaching = 1';
+            
+            return Database.query(query, [surveyId])
+                .then(function(result){
+                    return result.rows.length;
+                });  
+        };
+        
+        self.getVisitedCoachingPdvsCount = function(userId){
+            return Database.query('SELECT * FROM Survey WHERE userId = ? AND coaching_compliance = 1', [userId])
+                .then(function(result){
+                    return result.rows.length;
+                });
+        };
+
+        self.setAuditFinalValues = function(id_audit, id_mod, mod_name, value, icon, mainModuleId){
+            console.log('setAuditFinalValues');
+            console.log(mainModuleId);
+            return Database.query('INSERT INTO AuditFinalValues(id_audit, id_mod, mod_name, final_value, icon, id_mainmod) VALUES (?, ?, ?, ?, ?, ?)', [id_audit, id_mod, mod_name, value, icon, mainModuleId])
+                .then(function(){
+                    return true;
+                });
+        };
+        
+        self.getAuditFinalValues = function(){
+           return Database.query('SELECT * from AuditFinalValues')
+            .then(function(result){
+                return Database.fetchAll(result);    
+            });
+        };
+
+        self.getAveragePerModule = function(mainModuleId){
+            var query = ' SELECT SUM(final_value) / (SELECT COUNT(*) FROM Survey) AS [percent], afv.id_mod, afv.mod_name, afv.icon' + 
+                        ' FROM AuditFinalValues afv' + 
+                        ' WHERE afv.id_mainmod = ?' +
+                        ' GROUP BY afv.id_mod, afv.mod_name';  
+            
+            return Database.query(query, [mainModuleId])
+                .then(function(result){
+                    return Database.fetchAll(result);
+                });
         };
 
         return self;

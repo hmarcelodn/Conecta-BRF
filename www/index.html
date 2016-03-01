@@ -69,8 +69,22 @@
                      </ul>            
                 </li>          
 
-                <li><a ng-href="#/Synchronizer/1" ng-show="!isAuditModeEnabled()">Sincronizar</a></li>
-                <li><a ng-href="#/Synchronizer/2" ng-show="!isAuditModeEnabled()">Enviar Datos</a></li>  
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="collapsible-header" style="margin-left:-5px;">
+                                Sincronizado
+                            </a>
+                            
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a ng-href="#/Synchronizer/1" ng-show="!isAuditModeEnabled()">Sincronizar</a></li>
+                                    <li><a ng-href="#/Synchronizer/2" ng-show="!isAuditModeEnabled()">Enviar Datos</a></li> 
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li> 
                 
                 <li ng-show="!isAuditModeEnabled()">
                     <div class="valign-wrapper">
@@ -139,6 +153,7 @@
         <script type="text/javascript" src="app/controllers/PricesController.js"></script>
         <script type="text/javascript" src="app/controllers/QuestionsController.js"></script>
         <script type="text/javascript" src="app/controllers/SendSynchronizationController.js"></script>
+        <script type="text/javascript" src="app/controllers/HelpController.js"></script>
 
         <script type="text/javascript" src="app/services/Channel.js"></script>
         <script type="text/javascript" src="app/services/Category.js"></script>
@@ -151,6 +166,7 @@
         <script type="text/javascript" src="app/services/Config.js"></script>        
         <script type="text/javascript" src="app/services/Database.js"></script>
         <script type="text/javascript" src="app/services/Image.js"></script>
+        <script type="text/javascript" src="app/services/Dashboard.js"></script>
 
         <script type="text/javascript" src="app/directives/QuestionsDirective.js"></script>
 

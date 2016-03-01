@@ -1,43 +1,39 @@
-/*
-brfPhoneGapApp.controller('dashboardController', function($scope, $route){
-	$scope.visitedPDVs = 12;
-	$scope.obtainedCompliance = 89 + "%";
+brfPhoneGapApp.controller('dashboardController', function($scope, $route, Dashboard, Question, $routeParams, Login, Survey){
+    $scope.selectedDating;
+    $scope.modules = [];
+    
+    Dashboard.getDatings().then(function (datings) {                      
+        $scope.datings = datings;                     
+    });
+    
+    Survey.getVisitedCoachingPdvsCount(Login.getToken().id)
+        .then(function (result) {
+            $scope.visitedPDVs = result;
+ 
+             Dashboard.getDailyBase(Login.getToken().id)
+                .then(function (base) {
+                    $scope.obtainedCompliance = Math.round((result / base.target_coaching) * 100);
+                    $scope.progressStyle = { width: $scope.obtainedCompliance + "%" };
+                    $scope.target = base;
+                });           
+        });
+    
+    console.log($routeParams.auditId);
+	Survey.getAveragePerModule($routeParams.auditId)
+        .then(function (values) {
+            angular.forEach(values, function (value, key) {
+                console.log($routeParams.auditId);
+                Question.getAuditedQuestionsResume(value.id_mod, $routeParams.auditId)
+                    .then(function (questionsResult1) {
 
-	$scope.coachingPoints = 
-	{
-		percentage: 90,
-		points: 
-		[
-			{ name: 'Punto #1', percentage: 90 },
-			{ name: 'Punto #2', percentage: 90 },
-			{ name: 'Punto #3', percentage: 90 },
-			{ name: 'Punto #4', percentage: 90 }
-		]
-	};
-
-	$scope.executionPoints =
-	{
-		percentage: 72,
-		points: 
-		[
-			{ name: 'Punto #1', percentage: 90 },
-			{ name: 'Punto #2', percentage: 90 },
-			{ name: 'Punto #3', percentage: 90 },
-			{ name: 'Punto #4', percentage: 90 }
-		]		
-	};
-
-	$scope.dashboardOpts = {
-		availableOptions:
-		[
-			{ id: '0', name: "HOY" },
-			{ id: '1', name: "ESTA SEMANA" },
-			{ id: '2', name: "MES ACTUAL" },
-			{ id: '3', name: "ULTIMOS 30 DIAS" },
-			{ id: '4', name: "TRIMESTRE" }
-		],
-		selectedOption: { id: '0', name: 'HOY' }
-	};
-		
+                        $scope.modules.push
+                        ( {
+                            percents: value,
+                            points: questionsResult1        
+                        } );
+                        
+                    });                
+            });
+        });
+    	
 });
-*/

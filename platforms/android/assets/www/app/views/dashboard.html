@@ -8,12 +8,12 @@
 	<section class="row col s12">
 
 		<article class="col s12">
-			<select ng-options="option.name for option in dashboardOpts.availableOptions track by option.id" 
-					ng-model="dashboardOpts.selectedOption">
+			<select>
+                <option>HOY</option>
 			</select>
 		</article>
 
-		<article class="col s12">
+		<article class="col s12" ng-show="!(target === 0)">
 			<article class="card blue-grey darken-1 col s12">
 				<div class="card-content white-text">
 					<p>
@@ -30,13 +30,13 @@
 			</article>
 		</article>
 				
-		<article class="col s12">
+		<article class="col s12" ng-show="!(target === 0)">
 			<article class="card blue-grey darken-1 col s12">
 				<div class="card-content white-text">			
-					<div class="card-content teal white-text" style="width:85%;"></div>
+					<div class="card-content teal white-text" ng-style="progressStyle"></div>
 						<p style="overflow:auto; margin-top:10px;">
 							<strong class="center-align" style="float:left;font-size:40px;">
-								{{obtainedCompliance}}
+								{{obtainedCompliance + '%'}}
 							</strong>
 							<strong class="center-align" style="float:right;font-size:16px;margin-top:5px;">
 								CUMPLIMIENTO<br/>OBTENIDO
@@ -48,41 +48,23 @@
 
 		<article class="col s12">
 			<ul class="collapsible" data-collapsible="expandable">					
-				<li>
+				<li ng-repeat="module in modules">
 					<div class="collapsible-header">
-						<i class="material-icons">account_circle</i>Coching
+						<i class="material-icons">{{module.percents.icon}}</i>{{module.percents.mod_name}}
 						<span class="badge" style="color:#54922a;"><i class="material-icons">check_circle</i>
-							{{executionPoints.percentage}}%
+							{{module.percents.percent}}%
 						</span>
 					</div>
 					<div class="collapsible-body">
 							<p>
-								<span ng-repeat-start="executionPoint in executionPoints.points">{{executionPoint.name}}</span>
+								<span ng-repeat-start="executionPoint in module.points">{{executionPoint.title}}</span>
 								<span class="badge" style="color:#54922a;">
 									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">check_circle</i>{{executionPoint.percentage}}%
 								</span>
 								<br ng-repeat-end/>						
 							</p>
-						</div>
-					</li>
-					<li>
-						<div class="collapsible-header">
-							<i class="material-icons">find_in_page</i>Ejecución
-								<span class="badge" style="color:#f6a704;">
-									<i class="material-icons">warning</i>
-									{{coachingPoints.percentage}}%
-								</span>
-						</div>
-						<div class="collapsible-body">
-							<p>							
-								<span ng-repeat-start="coachingPoint in coachingPoints.points">{{coachingPoint.name}}</span>
-								<span class="badge" style="color:#54922a;">
-									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">check_circle</i>{{coachingPoint.percentage}}%
-								</span>
-								<br ng-repeat-end/>						
-							</p>
-						</div>
-					</li>						
+					</div>
+                </li>						
 			</ul>
 		</article>
 

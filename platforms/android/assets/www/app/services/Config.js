@@ -53,7 +53,8 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'companyName', type: 'text' },
                     { name: 'cuit', type: 'text' },
                     { name: 'address', type: 'text' },
-                    { name: 'pdvType', type: 'integer' }
+                    { name: 'pdvType', type: 'integer' },
+                    { name: 'highlighted', type: 'integer' }
                 ]
             },
             {
@@ -113,7 +114,12 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'thumb', type: 'text' },
                     { name: 'questionModuleId', type: 'integer' },
                     { name: 'config', type: 'text' },
-                    { name: 'styling', type: 'text' }
+                    { name: 'styling', type: 'text' },
+                    { name: 'is_mandatory', type: 'integer' },
+                    { name: 'has_percent', type: 'integer' },
+                    { name: 'is_dashboard', type: 'integer' },
+                    { name: 'weight', type: 'integer' },
+                    { name: 'is_coaching', type: 'integer' }
                 ]
             },
             {
@@ -143,7 +149,9 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'channelId', type: 'integer' },
                     { name: 'pdvId', type: 'integer' },
                     { name: 'sellerId', type: 'integer' },
-                    { name: 'userId', type: 'integer' }
+                    { name: 'userId', type: 'integer' },
+                    { name: 'date', type: 'datetime' },
+                    { name: 'coaching_compliance', type: 'integer' }
                 ]
             },
             {
@@ -183,6 +191,36 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'icon', type: 'text' },
                     { name: 'map_label', type: 'text' },
                     { name: 'has_dashboard', type: 'integer' }                                                        
+                ]
+            },
+            {
+                name: 'Dating',
+                columns:
+                [
+                    { name: 'id', type: 'integer' },
+                    { name: 'type', type: 'text' },
+                    { name: 'label', type: 'text' }
+                ]
+            },
+            {
+                name: 'Target',
+                columns:
+                [
+                    { name: 'id', type: 'integer primary key' },                    
+                    { name: 'target_coaching', type: 'integer' },
+                    { name: 'id_user', type: 'integer' }
+                ]
+            },
+            {
+                name: 'AuditFinalValues',
+                columns:
+                [
+                    { name: 'id_audit', type: 'integer' },
+                    { name: 'id_mod', type: 'integer' },
+                    { name: 'final_value', type: 'numeric' },     
+                    { name: 'mod_name', type: 'text' },
+                    { name: 'icon', type: 'text' },
+                    { name: 'id_mainmod', type: 'integer' }                                                       
                 ]
             }                                                                                                                                                                                    
         ]

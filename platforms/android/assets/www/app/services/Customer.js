@@ -16,8 +16,8 @@
             return $http.get('http://ws.brf-horizonte.com/get/customers/type/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
-        var setCustomer = function (id, companyName, cuit, address, pdvType) {
-            return Database.query('INSERT INTO Customer(customerId, companyName, cuit, address, pdvType) VALUES(?, ?, ?, ?, ?)', [id, companyName, cuit, address, pdvType])
+        var setCustomer = function (id, companyName, cuit, address, pdvType, highlighted) {
+            return Database.query('INSERT INTO Customer(customerId, companyName, cuit, address, pdvType, highlighted) VALUES(?, ?, ?, ?, ?, ?)', [id, companyName, cuit, address, pdvType, highlighted])
                 .then(function (result){
                     return true;
                 });
@@ -51,6 +51,13 @@
                 });
         };
         
+        var getPdvById = function (customerId) {
+            return Database.query('SELECT * FROM Customer WHERE CustomerId = ?', [customerId])  
+                .then(function (result) {
+                    return Database.fetch(result);
+                });
+        };
+        
         var service = {
             synchronizeCustomers:synchronizeCustomers,
             synchronizeCustomerTypes: synchronizeCustomerTypes,
@@ -58,7 +65,8 @@
             setCustomerType: setCustomerType,
             getCustomers: getCustomers,
             getCustomerTypes: getCustomerTypes,
-            getPdvTypeByCustomerId: getPdvTypeByCustomerId
+            getPdvTypeByCustomerId: getPdvTypeByCustomerId,
+            getPdvById: getPdvById
         };
         
         return service;

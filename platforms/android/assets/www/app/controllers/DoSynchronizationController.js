@@ -5,8 +5,8 @@
         .module('brfPhoneGapApp')
         .controller('DoSynchronizationController', DoSynchronizationController);
 
-    DoSynchronizationController.$inject = ['$scope', '$route', '$q', '$location', 'Category', 'Channel', 'Customer', 'Module', 'Question', 'Seller', 'Database', 'Image', '$rootScope'];
-    function DoSynchronizationController($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database, Image, $rootScope) {
+    DoSynchronizationController.$inject = ['$scope', '$route', '$q', '$location', 'Category', 'Channel', 'Customer', 'Module', 'Question', 'Seller', 'Database', 'Image', '$rootScope', 'Dashboard', 'Login'];
+    function DoSynchronizationController($scope, $route, $q, $location, Category, Channel, Customer, Module, Question, Seller, Database, Image, $rootScope, Dashboard, Login) {
         var vm = this;
         vm.devicePath = undefined;
         
@@ -31,6 +31,8 @@
             $scope.syncCategoriesImg = 0;
             $scope.syncQuestions = 0;
             $scope.syncImages = 0;
+            $scope.syncDating = 0;
+            $scope.syncTarget = 0;
 
             Database.dropAll().then(function(){
 
@@ -67,7 +69,7 @@
                     var promises = [];
 
                     angular.forEach(customers.data.customers, function(value, key){
-                        promises.push(Customer.setCustomer(value.id, value["company_name"], value.cuit, value.address, value.type_pdv));			
+                        promises.push(Customer.setCustomer(value.id, value["company_name"], value.cuit, value.address, value.type_pdv, value.highlighted));			
                     });
 
                     $q.all(promises).then(function(){
@@ -276,8 +278,13 @@
                                 : cordova.file.externalApplicationStorageDirectory + 'BRF/Images/' + value.thumb.split('/').pop(), 
                             questionModuleId: value.id_question_mod,
                             config: (typeof value.config === 'object') ? JSON.stringify(value.config) : value.config,
-                            styling: (typeof value.styling === 'object') ? JSON.stringify(value.styling) : value.styling
-                        }));
+                            styling: (typeof value.styling === 'object') ? JSON.stringify(value.styling) : value.styling,
+                            is_mandatory: value.is_mandatory,
+                            has_percent: value.has_percent,
+                            is_dashboard: value.is_dashboard,
+                            weight: value.weight,
+                            is_coaching: value.is_coaching
+                        })); 
                     
                         angular.forEach(value.pdv_filter, function(value, key){
                             promises.push(Question.setQuestionPdv(questionId, value));
@@ -334,7 +341,6 @@
                     };
                     
                     angular.forEach(urls.data.images, function (value, key) {
-                        console.log(value);
                         
                         if(value.thumb !== undefined){
                             promises.push(download(value.thumb));                           
@@ -350,6 +356,54 @@
                        deferred.resolve();
                     });
 
+                })
+                .catch(function (error) {
+                    deferred.reject(error);
+                });
+                
+                return deferred.promise;
+            })
+            .then(function () {
+                var deferred = $q.defer();
+                $scope.syncDating = 1;
+                
+                Dashboard.synchronizeDating().then(function (datings) {
+                    var promises = [];
+                    
+                    angular.forEach(datings.data.dating, function (value, key) {
+                        promises.push(
+                            Dashboard.setDating(value.id, value.type, value.label)
+                        );                  
+                    });  
+                    
+                    $q.all(promises).then(function () {
+                        $scope.syncDating = 2;
+                        deferred.resolve(); 
+                    });
+                                      
+                })
+                .catch(function (error) {
+                    deferred.reject(error);
+                });
+                
+                return deferred.promise;
+            })
+            .then(function () {
+                var deferred = $q.defer();
+                var userId = Login.getToken().id;
+                $scope.syncTarget = 1;
+                
+                Dashboard.synchronizeTargets(userId).then(function (targets) {
+                    var promises = [];
+                    
+                    angular.forEach(targets.data.targets, function (value, key) {
+                        promises.push(Dashboard.setTarget(value.target_coaching, userId))
+                    });
+                    
+                    $q.all(promises).then(function () {
+                        $scope.syncTarget = 2;
+                        deferred.resolve(); 
+                    });
                 })
                 .catch(function (error) {
                     deferred.reject(error);

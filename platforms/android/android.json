@@ -39,6 +39,10 @@
                         {
                             "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.sqlc.SQLitePlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -74,6 +78,9 @@
             "PACKAGE_NAME": "com.phonegap.helloworld"
         },
         "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.phonegap.helloworld"
+        },
+        "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.phonegap.helloworld"
         }
     },
@@ -247,6 +254,13 @@
             "id": "cordova-plugin-file-transfer.FileTransfer",
             "clobbers": [
                 "window.FileTransfer"
+            ]
+        },
+        {
+            "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+            "id": "cordova-sqlite-storage.SQLitePlugin",
+            "clobbers": [
+                "SQLitePlugin"
             ]
         }
     ]
