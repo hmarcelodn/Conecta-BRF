@@ -18,10 +18,12 @@ brfPhoneGapApp.controller('dashboardController', function($scope, $route, Dashbo
                 });           
         });
     
+    console.log($routeParams.auditId);
 	Survey.getAveragePerModule($routeParams.auditId)
         .then(function (values) {
             angular.forEach(values, function (value, key) {
-                Question.getAuditedQuestionsResume(value.id_mod)
+                console.log($routeParams.auditId);
+                Question.getAuditedQuestionsResume(value.id_mod, $routeParams.auditId)
                     .then(function (questionsResult1) {
 
                         $scope.modules.push

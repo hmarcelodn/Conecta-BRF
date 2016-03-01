@@ -69,10 +69,11 @@
                      </ul>            
                 </li>          
 
-                <li class="no-padding">
+                <li class="no-padding" ng-show="!isAuditModeEnabled()">
                     <ul class="collapsible collapsible-accordion">
                         <li>
                             <a class="collapsible-header" style="margin-left:-5px;">
+                                <i class="material-icons" style="color:#E53935">import_export </i>
                                 Sincronizado
                             </a>
                             
@@ -154,6 +155,7 @@
         <script type="text/javascript" src="app/controllers/QuestionsController.js"></script>
         <script type="text/javascript" src="app/controllers/SendSynchronizationController.js"></script>
         <script type="text/javascript" src="app/controllers/HelpController.js"></script>
+        <script type="text/javascript" src="app/controllers/WebSQLController.js"></script>
 
         <script type="text/javascript" src="app/services/Channel.js"></script>
         <script type="text/javascript" src="app/services/Category.js"></script>

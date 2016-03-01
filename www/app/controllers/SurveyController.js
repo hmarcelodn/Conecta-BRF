@@ -29,31 +29,31 @@
                                 }                         
                                 
                                 //Calculate Weights
+                                console.log('getCurrentAuditQuestionsWeight');
                                 Question.getCurrentAuditQuestionsWeight(survey.id)
                                     .then(function (weight) {
                                         
                                         if(weight === 0){
                                             //Close Survey
                                             Survey.closeSurvey(coaching_compliance).then(function(){						
-                                                $location.path('/Welcome');                                                  
-                                                return;                                          
+                                                $location.path('/Welcome');                                                                                          
                                             });                                                                                      
                                         }
                                         
                                         var weightPercent = (100 / weight.totalWeight);                                       
                                         
                                         Question.getCalcultedTotalWeight(weightPercent)
-                                            .then(function (moduleQuestions) {                                                
-                                                angular.forEach(moduleQuestions, function (value, key) {
-                                                    console.log(auditId);
-                                                    Survey.setAuditFinalValues(survey.id, value.moduleId, value.modName, value.finalValue, value.icon, auditId)
-                                                        .then(function () {
-                                                            //Close Survey
-                                                            Survey.closeSurvey(coaching_compliance).then(function(){						
-                                                                $location.path('/Welcome');
-                                                            });                  
-                                                        });                                                      
+                                            .then(function (moduleQuestions) {       
+                                                
+                                                //Set Modules results
+                                                angular.forEach(moduleQuestions, function (value, key) {                                                    
+                                                    Survey.setAuditFinalValues(survey.id, value.moduleId, value.modName, value.finalValue, value.icon, auditId);                                                      
                                                 });                                                  
+                                                
+                                                //Close Survey
+                                                Survey.closeSurvey(coaching_compliance).then(function(){						
+                                                    $location.path('/Welcome');
+                                                });  
                                             });    
                                     });                                                                 
                             });                        

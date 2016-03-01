@@ -72,7 +72,7 @@
         $rootScope.$on('defaultModuleLoaded', function (event, data) {            
             
             Survey.getPendingSurvey().then(function(pendingSurvey){
-                if(pendingSurvey === undefined){          
+                if(pendingSurvey === undefined){        
                     Customer.getPdvTypeByCustomerId(vm.routeParams.pdvId).then(function (customerPdvType) {
                         Survey.setSurvey(new Date().getTime().toString(), vm.routeParams.channelId, customerPdvType.pdvType, vm.routeParams.sellerId, Login.getToken().id)
                             .then(function(){

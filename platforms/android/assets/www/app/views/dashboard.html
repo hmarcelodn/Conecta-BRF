@@ -51,15 +51,15 @@
 				<li ng-repeat="module in modules">
 					<div class="collapsible-header">
 						<i class="material-icons">{{module.percents.icon}}</i>{{module.percents.mod_name}}
-						<span class="badge" style="color:#54922a;"><i class="material-icons">check_circle</i>
+						<span class="badge" ng-style="{ 'color': module.percents.percent < 80? '#e84033': '#54922a' }"><i class="material-icons">{{ module.percents.percent < 80? 'error' :'check_circle' }}</i>
 							{{module.percents.percent}}%
 						</span>
 					</div>
 					<div class="collapsible-body">
 							<p>
 								<span ng-repeat-start="executionPoint in module.points">{{executionPoint.title}}</span>
-								<span class="badge" style="color:#54922a;">
-									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">check_circle</i>{{executionPoint.percentage}}%
+								<span class="badge" ng-style="{ 'color': module.percents.percent < 80? '#e84033': '#54922a' }">
+									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">{{ executionPoint.percentage < 80? 'error' :'check_circle' }}</i>{{executionPoint.percentage}}%
 								</span>
 								<br ng-repeat-end/>						
 							</p>

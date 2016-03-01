@@ -19,6 +19,7 @@ var auditIdKey = 'audit-id';
         var self = this;
 
         self.setSurvey = function(survey, channelId, pdvId, sellerId, userId){
+            console.log('setSurvey');
             return Database.query("INSERT INTO Survey(survey, syncStatus, channelId, pdvId, sellerId, userId, date, coaching_compliance) VALUES (?, ?, ?, ?, ?, ?, datetime(), 0)", [survey, 0, channelId, pdvId, sellerId, userId])
                 .then(function (result){
                     return true;
@@ -37,8 +38,9 @@ var auditIdKey = 'audit-id';
         };
 
         self.closeSurvey = function(coachingCompliance){
+            console.log('closeSurvey');
             return Database.query('UPDATE Survey SET syncStatus = 1, coaching_compliance = ? WHERE syncStatus = 0', [coachingCompliance])
-                .then(function (result){
+                .then(function (){
                     return true;
                 });
         };

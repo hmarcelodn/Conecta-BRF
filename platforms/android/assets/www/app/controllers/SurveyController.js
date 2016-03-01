@@ -7,12 +7,14 @@
 
     SurveyController.$inject = ['$scope', '$route', '$location', 'Survey', 'Login', 'Question', '$routeParams'];
     function SurveyController($scope, $route, $location, Survey, Login, Question, $routeParams) {
-        var vm = this;        
+        var vm = this;                 
         
-        var closeAudit = function(){
-            
-            console.log($routeParams);
-            
+        console.log($routeParams);     
+        
+        var closeAudit = function(){            
+
+            var auditId = $routeParams.auditId;   
+                    
      		Survey.disableAuditMode();            
              
             Question.getCoachingQuestionsPerUserRolesCount(Login.getToken().id_role)
@@ -41,10 +43,10 @@
                                         var weightPercent = (100 / weight.totalWeight);                                       
                                         
                                         Question.getCalcultedTotalWeight(weightPercent)
-                                            .then(function (moduleQuestions) {
-                                                
+                                            .then(function (moduleQuestions) {                                                
                                                 angular.forEach(moduleQuestions, function (value, key) {
-                                                    Survey.setAuditFinalValues(survey.id, value.moduleId, value.modName, value.finalValue, value.icon)
+                                                    console.log(auditId);
+                                                    Survey.setAuditFinalValues(survey.id, value.moduleId, value.modName, value.finalValue, value.icon, auditId)
                                                         .then(function () {
                                                             //Close Survey
                                                             Survey.closeSurvey(coaching_compliance).then(function(){						
@@ -62,7 +64,9 @@
 
         activate();
 
-        function activate() { }
+        function activate() { 
+            
+        }
         
         vm.closeAudit = closeAudit;
     }

@@ -204,19 +204,28 @@
                 });
         };     
 
-        self.getAuditedQuestionsResume = function(moduleId){
+        self.getAuditedQuestionsResume = function(moduleId, mainModuleId){
            var query = ' SELECT ((SELECT COUNT(*) AS [QuestionsCount] FROM SurveyQuestionsResults sqr INNER JOIN Question q ON sqr.questionId = q.questionId WHERE q.questionModuleId = ?)' + 
                        " / (SELECT COUNT(*) AS [QuestionsCount] FROM SurveyQuestionsResults sqr INNER JOIN Question q ON sqr.questionId = q.questionId WHERE q.questionModuleId = ? AND sqr.JSONData LIKE '%true%')) AS [percentage]" +
                        ' , q.title' +
                        ' FROM Question q' +
                        ' INNER JOIN SurveyQuestionsResults sqr ON q.questionId = sqr.questionId' +
+                       ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                        ' WHERE q.questionModuleId = ?' +
+                       ' AND mod.idMainMod = ?'
                        ' GROUP BY q.title'; 
            
-           return Database.query(query, [moduleId, moduleId, moduleId])
+           return Database.query(query, [moduleId, moduleId, moduleId, mainModuleId])
             .then(function(result){
                 return Database.fetchAll(result);
             });
+        };
+        
+        self.getQuestionById = function(questionId){
+            return Database.query('SELECT * FROM Question q WHERE q.questionId = ?', [questionId])
+                .then(function(question){
+                    return Database.fetch(question);
+                });
         };
 
         return self;

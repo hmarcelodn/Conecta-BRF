@@ -260,6 +260,8 @@ var auditIdKey = 'audit-id';
         };
 
         self.setAuditFinalValues = function(id_audit, id_mod, mod_name, value, icon, mainModuleId){
+            console.log('setAuditFinalValues');
+            console.log(mainModuleId);
             return Database.query('INSERT INTO AuditFinalValues(id_audit, id_mod, mod_name, final_value, icon, id_mainmod) VALUES (?, ?, ?, ?, ?, ?)', [id_audit, id_mod, mod_name, value, icon, mainModuleId])
                 .then(function(){
                     return true;
