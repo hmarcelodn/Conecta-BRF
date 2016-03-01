@@ -36,7 +36,7 @@
                                         if(weight === 0){
                                             //Close Survey
                                             Survey.closeSurvey(coaching_compliance).then(function(){						
-                                                $location.path('/Welcome');                                                                                          
+                                                $location.path('/Dashboard/' + auditId);                                                                                          
                                             });                                                                                      
                                         }
                                         
@@ -52,7 +52,7 @@
                                                 
                                                 //Close Survey
                                                 Survey.closeSurvey(coaching_compliance).then(function(){						
-                                                    $location.path('/Welcome');
+                                                    $location.path('/Dashboard/' + auditId);
                                                 });  
                                             });    
                                     });                                                                 
