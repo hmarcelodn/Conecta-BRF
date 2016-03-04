@@ -35,7 +35,7 @@
         <link rel="stylesheet" type="text/css" href="css/index.css">
 
         <!--Import Google Icon Font-->
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">   
         
         <title>BRF APP</title>
     </head>
@@ -89,7 +89,7 @@
                 
                 <li ng-show="!isAuditModeEnabled()">
                     <div class="valign-wrapper">
-                        <a ng-click="vm.logout()">Cerrar Sesión</a>
+                        <a ng-href="#/beforeLogOff">Cerrar Sesión</a>
                     </div>
                 </li>   
 
@@ -156,6 +156,7 @@
         <script type="text/javascript" src="app/controllers/SendSynchronizationController.js"></script>
         <script type="text/javascript" src="app/controllers/HelpController.js"></script>
         <script type="text/javascript" src="app/controllers/WebSQLController.js"></script>
+        <script type="text/javascript" src="app/controllers/BeforeLogOffController.js"></script>
 
         <script type="text/javascript" src="app/services/Channel.js"></script>
         <script type="text/javascript" src="app/services/Category.js"></script>

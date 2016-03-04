@@ -6,18 +6,25 @@ brfPhoneGapApp.controller('dashboardController', function($scope, $route, Dashbo
         $scope.datings = datings;                     
     });
     
+    console.log('getVisitedCoachingPdvsCount');
     Survey.getVisitedCoachingPdvsCount(Login.getToken().id)
         .then(function (result) {
             $scope.visitedPDVs = (result === undefined ? 0 : result);
               
              Dashboard.getDailyBase(Login.getToken().id)
                 .then(function (base) {
-                    $scope.obtainedCompliance = Math.round((result / base.target_coaching) * 100);
-                    $scope.progressStyle = { width: $scope.obtainedCompliance + "%" };
-                    $scope.target = base;
+                    
+                    console.log(base);
+                    
+                    if(base.target_coaching != 0){
+                        $scope.obtainedCompliance = Math.round((result / base.target_coaching) * 100);
+                        $scope.progressStyle = { width: $scope.obtainedCompliance + "%" };                        
+                    }
+                    
+                    $scope.target = base.target_coaching;
                 });           
         });
-        
+    
 	Survey.getAveragePerModule($routeParams.auditId)
         .then(function (values) {           
                         

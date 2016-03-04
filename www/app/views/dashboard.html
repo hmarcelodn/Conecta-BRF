@@ -50,16 +50,16 @@
 			<ul class="collapsible" data-collapsible="expandable">					
 				<li ng-repeat="module in modules">
 					<div class="collapsible-header">
-						<i class="material-icons">{{module.percents.icon}}</i>{{module.percents.mod_name}}
-						<span class="badge" ng-style="{ 'color': module.percents.percent < 80? '#e84033': '#54922a' }"><i class="material-icons">{{ module.percents.percent < 80? 'error' :'check_circle' }}</i>
-							{{module.percents.percent}}%
+						<i class="material-icons">{{module.percents.moduleIcon}}</i>{{module.percents.moduleName}}
+						<span class="badge" ng-style="{ 'color': module.percents.moduleAverage < 80? '#e84033': '#54922a' }"><i class="material-icons">{{ module.percents.moduleAverage < 80? 'error' :'check_circle' }}</i>
+							{{module.percents.moduleAverage}} %
 						</span>
 					</div>
 					<div class="collapsible-body">
 							<p>
 								<span ng-repeat-start="executionPoint in module.points">{{executionPoint.title}}</span>
-								<span class="badge" ng-style="{ 'color': module.percents.percent < 80? '#e84033': '#54922a' }">
-									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">{{ executionPoint.percentage < 80? 'error' :'check_circle' }}</i>{{executionPoint.percentage}}%
+								<span class="badge" ng-style="{ 'color': executionPoint.questionAverage < 80? '#e84033': '#54922a' }">
+									<i class="material-icons" style="font-size:12.9px;padding-right:5px;">{{ executionPoint.questionAverage < 80? 'error' :'check_circle' }}</i>{{executionPoint.questionAverage}}%
 								</span>
 								<br ng-repeat-end/>						
 							</p>

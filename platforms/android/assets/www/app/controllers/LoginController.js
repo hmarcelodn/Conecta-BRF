@@ -5,8 +5,8 @@
         .module('brfPhoneGapApp')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module', 'Customer'];
-    function LoginController($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module, Customer) {
+    LoginController.$inject = ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module', 'Customer', 'Database'];
+    function LoginController($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module, Customer, Database) {
         var vm = this;
         vm.username;
 	    vm.password;
@@ -39,12 +39,7 @@
                     $location.path("/Main");
                 }
             });            
-        };
-        
-        var logout = function(){
-            Login.authenticate(undefined);
-            $location.path("/");   
-        };       
+        };             
         
         var getUserName = function(){
             if(!Login.authenticated()){
@@ -57,16 +52,18 @@
         };  
 
         function activate() { 
+            
+            //If logged.
             if(Login.authenticated()){
                 $location.path("/Main");
-            }
-            
-            $scope.loggedUserName = vm.getUserName();
-            vm.routeParams = $routeParams;
-            
-            Module.getMainModules().then(function (mainModules) {
-                loadMainModules();
-            });
+                
+                $scope.loggedUserName = vm.getUserName();
+                vm.routeParams = $routeParams;
+                
+                Module.getMainModules().then(function (mainModules) {
+                    loadMainModules();
+                });                
+            }            
         }             
         
         $rootScope.$on('defaultModuleLoaded', function (event, data) {            
@@ -90,7 +87,13 @@
         $rootScope.$on('synchronizationSuccessfulyFinished', function (event, data) {
             console.log('Received Event synchronizationSuccessfulyFinished');
             loadMainModules();
-        });   
+        });           
+        
+        $rootScope.$on('userLoggedOff', function(){
+           console.log('userLoggedOff');
+           $scope.mainModules = [];
+           $location.path("/");
+        });
         
         $scope.authenticated = function(){
             return Login.authenticated();
@@ -102,7 +105,6 @@
         
         vm.loadModules = loadModules;
         vm.login = login;
-        vm.logout = logout;
         vm.getUserName = getUserName;
         
         activate();     

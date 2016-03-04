@@ -179,15 +179,43 @@
                 });
         };
         
-        self.getCurrentAuditQuestionsWeight = function(surveyId){
-            var query = ' SELECT SUM(q.weight) AS [totalWeight] FROM Question q' + 
-                        ' INNER JOIN SurveyQuestionsResults sqr ON q.questionId = sqr.questionId' +
-                        ' WHERE sqr.surveyId = ?';
+        //TODO: Revisar.
+        self.getBaseWeightPerModule = function(roleId, channelId, surveyId){                    
             
-            return Database.query(query, [surveyId])
+            var query = 'SELECT SUM(q2.weight) [base], q2.questionModuleId AS [moduleId], mod2.modName, mod2.icon' +
+                        ' FROM Question q2' +
+                        ' INNER JOIN SurveyQuestionsResults res ON res.questionId = q2.questionId' +
+                        ' INNER JOIN Module mod2 ON mod2.moduleId = q2.questionModuleId' +
+                        ' INNER JOIN MainModule main ON main.id = mod2.idMainMod' +
+                        ' WHERE q2.questionId IN (' +
+                        ' SELECT q.questionId FROM Question q ' +
+                        ' INNER JOIN ModuleChannels modChan ON modChan.moduleId = q.questionModuleId' +
+                        ' INNER JOIN ModuleUserRoles modRol ON modRol.moduleId = q.questionModuleId' +
+                        ' WHERE modChan.channelId = ?' +  
+                        ' AND modRol.roleId = ?' +                      
+                        ')' +
+                        ' AND q2.questionModuleId IN (SELECT DISTINCT q3.questionModuleId FROM Question q3 INNER JOIN SurveyQuestionsResults surres ON q3.questionId = surres.questionId)' +
+                        ' AND main.has_dashboard = 1' +
+                        ' AND res.surveyId = ?' +
+                        ' GROUP BY q2.questionModuleId';             
+            
+            return Database.query(query, [channelId, roleId, surveyId])
                 .then(function(result){
-                    return Database.fetch(result);    
+                    return Database.fetchAll(result);    
                 });    
+        };
+        
+        self.getModulePercentageByWeight = function(surveyId, moduleId, weight){                        
+            var query = ' SELECT ' +
+                        ' ((SELECT SUM(q.weight) FROM Question q ' +
+                        '   INNER JOIN SurveyQuestionsResults res ON q.questionId = res.questionId ' +
+                        '   AND res.surveyId = ?' +
+                        " WHERE res.JSONData LIKE '%true%' AND q.questionModuleId = ?) / ?) * 100 [ModulePercentage]";            
+            
+            return Database.query(query, [surveyId, moduleId, weight])
+                .then(function(result){
+                    return Database.fetch(result);
+                });
         };
         
         self.getCalcultedTotalWeight = function(weightPercent){
@@ -204,18 +232,29 @@
                 });
         };     
 
-        self.getAuditedQuestionsResume = function(moduleId, mainModuleId){
-           var query = ' SELECT ((SELECT COUNT(*) AS [QuestionsCount] FROM SurveyQuestionsResults sqr INNER JOIN Question q ON sqr.questionId = q.questionId WHERE q.questionModuleId = ?)' + 
-                       " / (SELECT COUNT(*) AS [QuestionsCount] FROM SurveyQuestionsResults sqr INNER JOIN Question q ON sqr.questionId = q.questionId WHERE q.questionModuleId = ? AND sqr.JSONData LIKE '%true%')) AS [percentage]" +
-                       ' , q.title' +
-                       ' FROM Question q' +
-                       ' INNER JOIN SurveyQuestionsResults sqr ON q.questionId = sqr.questionId' +
-                       ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
-                       ' WHERE q.questionModuleId = ?' +
-                       ' AND mod.idMainMod = ?'
-                       ' GROUP BY q.title'; 
-           
-           return Database.query(query, [moduleId, moduleId, moduleId, mainModuleId])
+        self.getAuditedQuestionsResume = function(moduleId, mainModuleId){            
+           var query = 'SELECT' + 
+                        ' ROUND(AVG(' +
+                        ' (' +
+                            ' SELECT ROUND(COUNT(*), 2) FROM SurveyQuestionsResults  res1' +
+                            " WHERE res1.JSONData LIKE '%true%'" +
+                            ' AND res1.questionid = res0.questionId' +
+                        ' )' + 
+                        ' /' +
+                        ' (' +
+                            ' SELECT ROUND(COUNT(*), 2)  FROM SurveyQuestionsResults  res1' +
+                            ' WHERE res1.questionid = res0.questionId' +
+                        ')' + 
+                    ') * 100, 2) AS [questionAverage], q.title' +
+                    ' FROM SurveyQuestionsResults  res0' +
+                    ' INNER JOIN Survey sur ON sur.id = res0.surveyId' +
+                    ' INNER JOIN Question q ON q.questionId = res0.questionId' +
+                    ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
+                    ' AND q.questionModuleId = ?' +
+                    ' AND mod.idMainMod = ?' +
+                    ' GROUP BY q.title'; 
+                                              
+           return Database.query(query, [moduleId, mainModuleId])
             .then(function(result){
                 return Database.fetchAll(result);
             });
@@ -226,7 +265,7 @@
                 .then(function(question){
                     return Database.fetch(question);
                 });
-        };
+        };               
 
         return self;
     }

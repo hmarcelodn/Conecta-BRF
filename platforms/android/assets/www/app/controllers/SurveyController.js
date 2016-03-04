@@ -5,21 +5,34 @@
         .module('brfPhoneGapApp')
         .controller('SurveyController', SurveyController);
 
-    SurveyController.$inject = ['$scope', '$route', '$location', 'Survey', 'Login', 'Question', '$routeParams'];
-    function SurveyController($scope, $route, $location, Survey, Login, Question, $routeParams) {
-        var vm = this;                 
+    SurveyController.$inject = ['$scope', '$route', '$location', 'Survey', 'Login', 'Question', '$routeParams', '$q'];
+    function SurveyController($scope, $route, $location, Survey, Login, Question, $routeParams, $q) {
+        var vm = this;       
         
-        console.log($routeParams);     
-        
+        var closeSurvey = function(coaching_compliance, auditId, is_dashboard){
+            Survey.closeSurvey(coaching_compliance).then(function(){		
+                
+                if(is_dashboard){
+                    $location.path('/Dashboard/' + auditId);                                                                                                              
+                }
+                else{
+                    $location.path('/Main');                    
+                }				                
+            });             
+        };        
+                  
         var closeAudit = function(){            
 
             var auditId = $routeParams.auditId;   
+            var channelId = $routeParams.channelId;
                     
      		Survey.disableAuditMode();            
              
             Question.getCoachingQuestionsPerUserRolesCount(Login.getToken().id_role)
-                .then(function (coachingQuestions) {                    
+                .then(function (coachingQuestions) {          
+                              
                     Survey.getPendingSurvey().then(function (survey) {
+                        
                         Survey.getCoachingSurveyQuestionsCount(survey.id)
                             .then(function (auditCoachingQuestions) {                                                          
                                 var coaching_compliance = 0;
@@ -29,32 +42,42 @@
                                 }                         
                                 
                                 //Calculate Weights
-                                console.log('getCurrentAuditQuestionsWeight');
-                                Question.getCurrentAuditQuestionsWeight(survey.id)
-                                    .then(function (weight) {
+                                Question.getBaseWeightPerModule(Login.getToken().id_role, channelId, survey.id)
+                                    .then(function (baseWeights) {                                                                                
                                         
-                                        if(weight === 0){
-                                            //Close Survey
-                                            Survey.closeSurvey(coaching_compliance).then(function(){						
-                                                $location.path('/Dashboard/' + auditId);                                                                                          
-                                            });                                                                                      
+                                        if(baseWeights.length > 0){
+                                            angular.forEach(baseWeights, function (value, key) {
+                                                
+                                                var promises = [];
+                                                
+                                                Question.getModulePercentageByWeight(survey.id, value.moduleId, value.base)
+                                                    .then(function (modulePercentage) {                                                                                                                                                                                                                
+                                                        promises.push(
+                                                            Survey.setAuditFinalValues
+                                                                (
+                                                                    survey.id, 
+                                                                    value.moduleId, 
+                                                                    value.modName, 
+                                                                    modulePercentage.ModulePercentage === null ? 
+                                                                        0 : 
+                                                                        modulePercentage.ModulePercentage, 
+                                                                    value.icon, 
+                                                                    auditId
+                                                                )
+                                                        );                                                                                                     
+                                                    });
+                                                
+                                                $q.all(promises).then(function () {
+                                                    //Close Survey                                                
+                                                    vm.closeSurvey(coaching_compliance, auditId, true);                                        
+                                                })
+                                            });                                              
                                         }
-                                        
-                                        var weightPercent = (100 / weight.totalWeight);                                       
-                                        
-                                        Question.getCalcultedTotalWeight(weightPercent)
-                                            .then(function (moduleQuestions) {       
-                                                
-                                                //Set Modules results
-                                                angular.forEach(moduleQuestions, function (value, key) {                                                    
-                                                    Survey.setAuditFinalValues(survey.id, value.moduleId, value.modName, value.finalValue, value.icon, auditId);                                                      
-                                                });                                                  
-                                                
-                                                //Close Survey
-                                                Survey.closeSurvey(coaching_compliance).then(function(){						
-                                                    $location.path('/Dashboard/' + auditId);
-                                                });  
-                                            });    
+                                        else{
+                                              //Close Survey                                                
+                                              vm.closeSurvey(coaching_compliance, auditId, false);
+                                        }                                                                              
+                                           
                                     });                                                                 
                             });                        
                     });                   
@@ -69,5 +92,6 @@
         }
         
         vm.closeAudit = closeAudit;
+        vm.closeSurvey = closeSurvey;
     }
 })();

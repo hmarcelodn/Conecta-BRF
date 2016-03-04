@@ -174,6 +174,15 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
   				isFreeAccess: true             
             }            
         })
+        .when('/beforeLogOff', {
+            templateUrl: 'app/views/beforeLogOff.html',
+            controller: 'BeforeLogOffController',
+            controllerAs: 'vm',
+            access:{
+                isFreeAccess: false,
+                audit: false
+            }
+        })
 		.otherwise({
 			redirectTo: '/'
 		})

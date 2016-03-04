@@ -262,8 +262,6 @@ var auditIdKey = 'audit-id';
         };
 
         self.setAuditFinalValues = function(id_audit, id_mod, mod_name, value, icon, mainModuleId){
-            console.log('setAuditFinalValues');
-            console.log(mainModuleId);
             return Database.query('INSERT INTO AuditFinalValues(id_audit, id_mod, mod_name, final_value, icon, id_mainmod) VALUES (?, ?, ?, ?, ?, ?)', [id_audit, id_mod, mod_name, value, icon, mainModuleId])
                 .then(function(){
                     return true;
@@ -277,11 +275,13 @@ var auditIdKey = 'audit-id';
             });
         };
 
-        self.getAveragePerModule = function(mainModuleId){
-            var query = ' SELECT SUM(final_value) / (SELECT COUNT(*) FROM Survey) AS [percent], afv.id_mod, afv.mod_name, afv.icon' + 
-                        ' FROM AuditFinalValues afv' + 
-                        ' WHERE afv.id_mainmod = ?' +
-                        ' GROUP BY afv.id_mod, afv.mod_name';  
+        self.getAveragePerModule = function(mainModuleId){            
+            
+            var query = 'SELECT ROUND(AVG(afr.final_value), 2) [moduleAverage], afr.id_mod, mod.modName [moduleName], mod.icon FROM AuditFinalValues afr' +
+                        ' INNER JOIN Module mod ON mod.moduleId = afr.id_mod' +
+                        ' WHERE afr.id_mainmod = ?' +
+                        ' GROUP BY afr.id_mod' +
+                        ' HAVING moduleAverage IS NOT NULL';                   
             
             return Database.query(query, [mainModuleId])
                 .then(function(result){

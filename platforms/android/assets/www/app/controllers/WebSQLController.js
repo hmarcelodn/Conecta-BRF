@@ -18,9 +18,12 @@
         
         $scope.query;
         $scope.run = function () {
-            console.log(
+
                 Database.query($scope.query)
-            );
+                    .then(function(result){
+                        console.log(Database.fetchAll(result));
+                    });
+            
         };
         
     }
