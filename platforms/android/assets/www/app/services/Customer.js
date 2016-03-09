@@ -31,7 +31,7 @@
         };
 
         var getCustomers = function (){
-            return Database.query('SELECT customerId, address FROM Customer LIMIT 0, 10')
+            return Database.query('SELECT customerId, address FROM Customer LIMIT 0, 2000')
                 .then(function (result){
                     return Database.fetchAll(result);
                 });

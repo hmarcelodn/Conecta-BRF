@@ -1,0 +1,29 @@
+<section class="row center-align" style="width:100%;">		
+	<article class="col s12">		
+		<article class="card blue-grey darken-1 col s12">		
+			<div class="card-content white-text">
+				<p>COACHING SUPERVISOR</p>
+			</div>					
+		</article>			
+	</article>
+</section>
+		
+<main style="margin-top:-30px;">		  
+	<section class="row col s12" ng-controller="questionsController">		
+		<questions content="questions"></questions>
+	</section>
+</main>
+
+<section id="modal1" class="modal" style="width:100%;">
+	<img class="activator" src="img/content/office.jpg"></img>
+</section>
+		
+<aside class="row col s12">			
+	<section class="col s12">
+		<article class="card col s12">
+			<p class="center-align">
+				<a href="#/Channel/{{routeParams.channelId}}/Pdv/{{routeParams.pdvId}}/Seller/{{routeParams.sellerId}}/Execution" class="waves-effect waves-light btn">CONTINUAR A EJECUCIÓN PDV</a>
+			</p>				
+		</article>
+	</section>
+</aside>		

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta charset="ISO-8859-1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+        <!-- Import MaterializeCss -->
+        <link rel="stylesheet" type="text/css" href="css/bin/materialize.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+
+        <!--Import Google Icon Font-->
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">   
+        
+        <title>BRF APP</title>
+    </head>
+    <body ng-app="brfPhoneGapApp">                
+        <nav ng-controller="LoginController as vm" ng-show="authenticated()">    
+
+            <!-- No Audit Menu -->      
+                            
+            <ul id="slide-out" class="side-nav">     
+                <li style="background-color:#e53935;background-image:url('img/gui/bg.jpg');">
+                    <img src="img/content/logo.png" style="padding-top:20px;margin-left:10px;"></img>
+                </li>            
+                <li style="color:#494849;border-bottom:1px solid #a3a3a3;" class="center-align">            
+                    <a ng-href="#/">{{loggedUserName}}</a>            
+                </li>            
+                <li class="no-padding" ng-show="!isAuditModeEnabled()">            
+                    <ul class="collapsible collapsible-accordion" ng-show="mainModules.length > 0">
+                        <li ng-repeat="mainModule in mainModules">                    
+                            <a class="collapsible-header" style="margin-left:-5px;">
+                                <i class="material-icons" style="color:#E53935">{{mainModule.icon}}</i>
+                                {{mainModule.mod_name}}
+                            </a>
+                          
+                            <div class="collapsible-body">
+                                <ul>                                
+                                    <li><a ng-href="#/Audit/{{mainModule.id}}">{{mainModule.map_label}}</a></li>
+                                    <li><a ng-href="#/Dashboard/{{mainModule.id}}" ng-show="mainModule.has_dashboard === 1">Dashboard</a></li>                                
+                                </ul>
+                             </div>                      
+                        </li>
+                     </ul>            
+                </li>          
+
+                <li class="no-padding" ng-show="!isAuditModeEnabled()">
+                    <ul class="collapsible collapsible-accordion">
+                        <li>
+                            <a class="collapsible-header" style="margin-left:-5px;">
+                                <i class="material-icons" style="color:#E53935">import_export </i>
+                                Sincronizado
+                            </a>
+                            
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li><a ng-href="#/Synchronizer/1" ng-show="!isAuditModeEnabled()">Sincronizar</a></li>
+                                    <li><a ng-href="#/Synchronizer/2" ng-show="!isAuditModeEnabled()">Enviar Datos</a></li> 
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li> 
+                
+                <li ng-show="!isAuditModeEnabled()">
+                    <div class="valign-wrapper">
+                        <a ng-href="#/beforeLogOff">Cerrar Sesión</a>
+                    </div>
+                </li>   
+
+                <li ng-if="isAuditModeEnabled()" ng-repeat="module in modules">
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">{{module.icon}}</i>
+                        <a ng-href="#/Audit/{{vm.routeParams.auditId}}/Channel/{{vm.routeParams.channelId}}/Pdv/{{vm.routeParams.pdvId}}/Seller/{{vm.routeParams.sellerId}}/{{module.slug}}">{{module.modName}}</a>
+                    </div>
+                </li>                                                      
+
+                <li ng-show="isAuditModeEnabled()">
+                    <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">cancel</i>
+                        <a ng-controller="SurveyController as vm" ng-click="vm.closeAudit()" ng-href="#/Welcome">Cerrar Auditoría</a>
+                    </div>
+                </li>                     
+            </ul>                        
+            
+
+            <a href="#" data-activates="slide-out" class="button-collapse show-on-large">
+                <i class="mdi-navigation-menu"></i>
+            </a>        
+            <strong class="text-flow hide-on-small-only" style="padding-left:10px;font-size:20px;">APP BRF</strong>      
+        </nav>
+
+        <!-- Angular Routing -->
+        <div ng-view></div>
+
+        <footer class="page-footer center-align">
+            <p style="margin:0px;margin-bottom:10px;margin-left:5px;">
+                <a href="http://www.thinkion.com.ar/" target="_blank" style="color:white;">
+                    Desarrollado por Thinkion, Be Creative
+                </a>
+            </p>
+        </footer>
+
+        <!-- Vendor -->        
+        <script type="text/javascript" src="dist/scripts/vendor.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="app/app.js"></script>
+        <!--<script type="text/javascript" src="dist/scripts/bundle.min.js"></script>-->
+
+        <script type="text/javascript" src="app/routes.js"></script>
+        <script type="text/javascript" src="app/controllers/HomeController.js"></script>
+        <script type="text/javascript" src="app/controllers/DashboardController.js"></script>
+        <script type="text/javascript" src="app/controllers/WelcomeController.js"></script>
+        <script type="text/javascript" src="app/controllers/ChannelsController.js"></script>
+        <script type="text/javascript" src="app/controllers/FormController.js"></script>
+        <script type="text/javascript" src="app/controllers/PdvController.js"></script>
+        <script type="text/javascript" src="app/controllers/SearchController.js"></script>
+        <script type="text/javascript" src="app/controllers/CoachingController.js"></script>
+        <script type="text/javascript" src="app/controllers/ExecutionController.js"></script>
+        <script type="text/javascript" src="app/controllers/LoginController.js"></script>
+        <script type="text/javascript" src="app/controllers/SynchronizerController.js"></script>
+        <script type="text/javascript" src="app/controllers/DoSynchronizationController.js"></script>
+        <script type="text/javascript" src="app/controllers/SyncOkController.js"></script>
+        <script type="text/javascript" src="app/controllers/SyncNokController.js"></script>
+        <script type="text/javascript" src="app/controllers/SurveyController.js"></script>
+        <script type="text/javascript" src="app/controllers/ObservationsController.js"></script>
+        <script type="text/javascript" src="app/controllers/NoBrfController.js"></script>
+        <script type="text/javascript" src="app/controllers/CategoryController.js"></script>
+        <script type="text/javascript" src="app/controllers/PricesController.js"></script>
+        <script type="text/javascript" src="app/controllers/QuestionsController.js"></script>
+        <script type="text/javascript" src="app/controllers/SendSynchronizationController.js"></script>
+        <script type="text/javascript" src="app/controllers/HelpController.js"></script>
+        <script type="text/javascript" src="app/controllers/WebSQLController.js"></script>
+        <script type="text/javascript" src="app/controllers/BeforeLogOffController.js"></script>
+
+        <script type="text/javascript" src="app/services/Channel.js"></script>
+        <script type="text/javascript" src="app/services/Category.js"></script>
+        <script type="text/javascript" src="app/services/Customer.js"></script>
+        <script type="text/javascript" src="app/services/Module.js"></script>
+        <script type="text/javascript" src="app/services/Question.js"></script>
+        <script type="text/javascript" src="app/services/Seller.js"></script>
+        <script type="text/javascript" src="app/services/Login.js"></script>
+        <script type="text/javascript" src="app/services/Survey.js"></script>
+        <script type="text/javascript" src="app/services/Config.js"></script>        
+        <script type="text/javascript" src="app/services/Database.js"></script>
+        <script type="text/javascript" src="app/services/Image.js"></script>
+        <script type="text/javascript" src="app/services/Dashboard.js"></script>
+
+        <script type="text/javascript" src="app/directives/QuestionsDirective.js"></script>
+
+        <script type="text/javascript" src="js/session.js"></script>
+        
+        <!-- Initializer -->
+        <script type="text/javascript">
+            app.initialize();
+
+            $(document).ready(function(){
+                //$(".button-collapse").sideNav();
+
+                $(".button-collapse").sideNav({
+                      menuWidth: 300, // Default is 240
+                      edge: 'left', // Choose the horizontal origin
+                      closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                    }
+                  );
+
+                $('.modal-trigger').leanModal();    
+                $('.button-collapse').sideNav('show');
+            });
+
+        </script>
+    </body>
+</html>

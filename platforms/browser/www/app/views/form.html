@@ -1,0 +1,50 @@
+<section class="row center-align" style="width:100%;">		
+	<article class="col s12">
+		<article class="card blue-grey darken-1 col s12">
+			<div class="card-content white-text">
+				<p>BÚSQUEDA PUNTO DE VENTA</p>
+			</div>					
+		</article>			
+	</article>
+</section>
+		
+<section style="margin-top:-30px;">		  
+	<section class="row col s12">			
+		<article class="col s12">
+			<article class="card col s12">					
+				<form action="#" class="row">						
+					<p class="input-field col s12">
+						<input id="input_text" type="text" placeholder="Búsqueda" ng-model="query">
+					</p>						 
+				</form>						
+			</article>
+		</article>				
+	</section>
+</section>
+		
+<main style="margin-top:-30px;">		  
+	<section class="row col s12">
+		<section class="fixed-action-btn" style="bottom:15px; right: 15px;">
+			<a class="btn-floating btn-large green modal-trigger" ng-href="#/Audit/{{vm.auditId}}/Channel/{{channelId}}/AddPdv">
+				<i class="large material-icons">add_circle</i>
+			</a>
+		</section>		
+		<ul class="collection with-header">				
+			<li class="collection-item" ng-repeat="customer in vm.customers | filter: query">						
+				<a ng-href="#/Audit/{{vm.auditId}}/Channel/{{channelId}}/Pdv/{{customer.customerId}}/Seller">
+					{{customer.address}}
+					<div class="secondary-content">
+						<i class="material-icons">chevron_right</i>
+					</div>
+				</a>							
+			</li>					
+		</ul>
+	</section>
+    <p class="center-align">
+        <a class="waves-effect waves-light btn"
+           ng-show="vm.lastPdvId !== undefined"
+           ng-href="#/Audit/{{vm.auditId}}/Channel/{{channelId}}/Pdv/{{vm.lastPdvId}}/Seller">
+            EMPLEAR ULTIMO
+         </a>
+	</p>
+</main>
