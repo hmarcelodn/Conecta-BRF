@@ -37,14 +37,20 @@
                     });
             };
 
-        var getCategories = function (typeId, channelId) {
+        var getCategories = function (typeId, channelId, moduleId) {
 
-                var query = 'SELECT * FROM Category cat' + 
-                            ' INNER JOIN CategoryChannels catchan ON catchan.categoryId = cat.categoryId' +
+
+                var query = ' SELECT * FROM Category cat2' +
+                            ' WHERE cat2.id IN (' +
+                            ' SELECT DISTINCT cat.id FROM Category cat' +
+                            ' INNER JOIN CategoryChannels catchan ON catchan.categoryId = cat.categoryId' + 
+                            ' INNER JOIN Question q ON q.categoryId = cat.categoryId' + 
                             ' WHERE cat.type = ?' +
-                            ' AND catchan.channelId = ?';
+                            ' AND catchan.channelId = ?' +
+                            ' AND q.questionModuleId = ?' +
+                            ' )';
 
-                return Database.query(query, [typeId, channelId])
+                return Database.query(query, [typeId, channelId, moduleId])
                     .then(function (result) {
                         return Database.fetchAll(result);
                     });	

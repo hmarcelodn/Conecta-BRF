@@ -25,7 +25,7 @@ var app = {
         this.bindEvents();
 
         //Move to DeviceReady Event
-        db = window.openDatabase('BRF', '1.0', 'BRF', 200000);        
+        //db = window.openDatabase('BRF', '1.0', 'BRF', 200000);        
     },
     // Bind Event Listeners
     //

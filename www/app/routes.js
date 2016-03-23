@@ -47,6 +47,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		.when('/Audit/:auditId/Channel/:channelId/AddPdv', {
 			templateUrl: 'app/views/new-pdv.html',
 			controller: 'PdvController',
+			controllerAs: 'vm',
 			access:{
 				isFreeAccess: false,
 				audit: false

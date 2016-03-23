@@ -23,7 +23,7 @@
             Module.getModuleBySlug(vm.routeParams.slug).then(function (module){
                 vm.currentModule = module;
 
-                Category.getCategories(module.categoryType, vm.routeParams.channelId).then(function(categories){
+                Category.getCategories(module.categoryType, vm.routeParams.channelId, module.moduleId).then(function(categories){
                     if(categories.length > 0){
                         $scope.categories = categories;
                     }
