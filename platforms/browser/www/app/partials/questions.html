@@ -54,8 +54,15 @@
 		<!-- Title Content-->
 		<h5 ng-if="question.render === 'title'" 
 			style="font-size:18px;">
-			{{question.title}}
+			{{question.title}}		
 		</h5>
+
+		<!-- Planograma percentage -->
+		<div class="col s12" style="position:absolute;" ng-if="question.has_percent === 1 && question.answer === 'open' && question.config.answer_config.is_number === true">
+			<div style="position:relative;top:-30px;left:85%;">
+				<span style="background-color:#515151;color:white;padding:3px 5px;">55%</span>
+			</div>
+		</div>	
 
 		<!-- Binary Action -->
 		<div ng-if="question.answer === 'binary'" 

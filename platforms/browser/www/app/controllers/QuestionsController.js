@@ -77,6 +77,7 @@
                     Question.getQuestions($routeParams.moduleId, pendingSurvey.id, $routeParams.categoryId, $routeParams.categoryType)
                         .then(function(questions){
                             $scope.questions = questions;
+                            console.log(questions);
                     });
                 });
             }

@@ -18,7 +18,7 @@
         var addPdv = function(){
             Customer.setCustomer(0, $scope.companyName, $scope.identifier, $scope.address, $scope.selectedCustomerType.id)
                     .then(function(){
-                        $location.path('Channel/' + $routeParams.channelId + '/Pdv/0/Seller');
+                        $location.path('/Audit/' + $routeParams.auditId + '/Channel/' + $routeParams.channelId + '/Pdv/0/Seller');
                     });            
         };
 

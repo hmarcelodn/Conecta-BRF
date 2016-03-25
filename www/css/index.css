@@ -21,3 +21,7 @@
 }
 
 .side-nav ul{min-height:65px;}
+
+.highlightedCustomer{
+	background-color: #FFCC66 !important;
+}
