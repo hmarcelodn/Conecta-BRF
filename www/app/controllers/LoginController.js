@@ -81,7 +81,7 @@
                 else{
                     vm.loadModules();
                 }
-            });
+            });            
         });	     
         
         $rootScope.$on('synchronizationSuccessfulyFinished', function (event, data) {
