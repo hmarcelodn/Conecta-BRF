@@ -26,10 +26,10 @@
                 switch(module.slug){
                     case 'no_brf':
                       $location.path('/Audit/' + vm.routeParams.auditId + 
-                                   '/Channel/' + vm.routeParams.channelId + 
-                                   '/Pdv/' + vm.routeParams.pdvId + 
-                                   '/Seller/' + vm.routeParams.sellerId +
-                                   '/no_brf');                      
+                                     '/Channel/' + vm.routeParams.channelId + 
+                                     '/Pdv/' + vm.routeParams.pdvId + 
+                                     '/Seller/' + vm.routeParams.sellerId +
+                                     '/no_brf');                      
                         break;
                     default:
                         Category.getCategories(module.categoryType, vm.routeParams.channelId, module.moduleId).then(function(categories){
@@ -38,10 +38,10 @@
                             }
                             else{
                                 $location.path('/Audit/' + vm.routeParams.auditId + 
-                                            '/Channel/' + vm.routeParams.channelId + 
-                                            '/Pdv/' + vm.routeParams.pdvId + 
-                                            '/Seller/' + vm.routeParams.sellerId + 
-                                            '/Module/' + module.moduleId);
+                                               '/Channel/' + vm.routeParams.channelId + 
+                                               '/Pdv/' + vm.routeParams.pdvId + 
+                                               '/Seller/' + vm.routeParams.sellerId + 
+                                               '/Module/' + module.moduleId);
                             }           
                         });  
                         break;                  

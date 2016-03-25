@@ -23,6 +23,10 @@
         var loadModules = function (){
             Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId()).then(function(modules){
                 $scope.modules = modules;
+
+                /* Once Loaded all modules show Side Bar */
+                $('.modal-trigger').leanModal();    
+                $('.button-collapse').sideNav('show');                
             });
         };        
         
