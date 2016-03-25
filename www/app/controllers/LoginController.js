@@ -66,8 +66,7 @@
             }            
         }             
         
-        $rootScope.$on('defaultModuleLoaded', function (event, data) {            
-            
+        $rootScope.$on('defaultModuleLoaded', function (event, data) {                        
             Survey.getPendingSurvey().then(function(pendingSurvey){
                 if(pendingSurvey === undefined){        
                     Customer.getPdvTypeByCustomerId(vm.routeParams.pdvId).then(function (customerPdvType) {

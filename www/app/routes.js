@@ -121,8 +121,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				isFreeAccess: false,
 				audit: true
 			}
-		})
-		.when('/Audit/:auditId/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/no_brf/:default?', {
+		})		
+		.when('/Audit/:auditId/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/no_brf', {
 			templateUrl: 'app/views/noBrf.html',
 			controller: 'NoBrfController',
             controllerAs: 'vm',
@@ -188,7 +188,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 			redirectTo: '/'
 		})
 }]).
-run(function($rootScope, $location, Login, Survey, Database){
+run(function($rootScope, $location, Login, Survey, Database, Module){
 
 	Database.init();
 
@@ -206,11 +206,16 @@ run(function($rootScope, $location, Login, Survey, Database){
 
         if(prevRoute.access != undefined){
         	 if(!prevRoute.access.audit && Survey.getAuditMode()){
-        	 	$location.path('/Audit/' + Survey.getAuditId() +
-                               '/Channel/' + Survey.getAuditChannel() + 
-        	 				   '/Pdv/' + Survey.getAuditPdv() + 
-        	 				   '/Seller/' + Survey.getAuditSeller() + 
-        	 				   '/coaching_sp/defaultModule');
+        	 	/* Load default Module */
+	            Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId()).then(function(modules){
+	        	 	$location.path('/Audit/' + Survey.getAuditId() +
+	                               '/Channel/' + Survey.getAuditChannel() + 
+	        	 				   '/Pdv/' + Survey.getAuditPdv() + 
+	        	 				   '/Seller/' + Survey.getAuditSeller() + 
+	        	 				   '/' + modules[0].slug + 
+	        	 				   '/defaultModule');	                
+	            });
+
         	 }
         }
         else{
