@@ -12,6 +12,7 @@
         
         $scope.pdvId = $routeParams.pdvId;
         $scope.channelId = $routeParams.channelId;	
+        $scope.auditId = $routeParams.auditId;
         $scope.defaultModuleSlug;
         vm.auditId;
     
@@ -19,8 +20,8 @@
 
         function activate() { 
             //Get Default module to be redirected
-            Module.getDefaultModules($scope.channelId, Login.getToken().id_role).then(function (result){
-                $scope.defaultModuleSlug = result.slug;
+            Module.getModules($scope.channelId, Login.getToken().id_role, $scope.auditId).then(function(modules){
+                $scope.defaultModuleSlug = modules[0].slug;
             });
 
             Seller.getSellers().then(function(sellers){

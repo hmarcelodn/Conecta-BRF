@@ -14,8 +14,6 @@ brfPhoneGapApp.controller('dashboardController', function($scope, $route, Dashbo
              Dashboard.getDailyBase(Login.getToken().id)
                 .then(function (base) {
                     
-                    console.log(base);
-                    
                     if(base.target_coaching != 0){
                         $scope.obtainedCompliance = Math.round((result / base.target_coaching) * 100);
                         $scope.progressStyle = { width: $scope.obtainedCompliance + "%" };                        

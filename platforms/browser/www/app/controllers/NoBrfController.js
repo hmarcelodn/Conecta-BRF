@@ -12,6 +12,8 @@
         activate();
 
         function activate() { 
+
+            /*
             Survey.getPendingSurvey().then(function(survey){
                 Survey.getNoBrf(survey.id).then(function(noBrfs){
                     if(noBrfs === undefined){
@@ -21,7 +23,7 @@
                         $scope.noBrfStatus = (noBrfs.noBrf === 'true');
                     }
                 });
-            });	
+            });	*/
 
             $scope.noBrfChanged = function(){
                 Survey.getPendingSurvey().then(function(survey){

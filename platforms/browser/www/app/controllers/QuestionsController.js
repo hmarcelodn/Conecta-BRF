@@ -35,6 +35,7 @@
         var openAction = function(question){
             Survey.getPendingSurvey().then(function(survey){
                 Survey.setQuestionAnswer(survey.id, question.id, JSON.stringify(question.JSONData)).then(function(){
+                    updatePercents();
                     return;
                 });
             });			
@@ -56,6 +57,27 @@
             });
         };        
         
+        function updatePercents(){
+
+            /* Filter all has_percent questions */
+            var percentQuestions = $scope.questions.filter(function(questionItem){
+                return  questionItem.has_percent === 1;
+            });
+
+
+            var totalQuantity = 0;
+
+            /* Calculate Total Quantities */
+            angular.forEach(percentQuestions, function(questionItem){
+                totalQuantity += (questionItem.JSONData.value === "" ? 0 : parseInt(questionItem.JSONData.value));
+            });
+
+            /* Calculate Total Quantities */
+            angular.forEach(percentQuestions, function(questionItem){
+                questionItem.percent = parseInt((questionItem.JSONData.value === "" ? 0: questionItem.JSONData.value / totalQuantity) * 100);
+            });
+        };
+
         $scope.range = function(n){
             return new Array(n);
         };       
@@ -77,7 +99,7 @@
                     Question.getQuestions($routeParams.moduleId, pendingSurvey.id, $routeParams.categoryId, $routeParams.categoryType)
                         .then(function(questions){
                             $scope.questions = questions;
-                            console.log(questions);
+                            updatePercents();
                     });
                 });
             }
@@ -90,11 +112,13 @@
                         if(pendingSurvey !== undefined){
                             Question.getQuestions(module.moduleId, pendingSurvey.id, undefined, module.categoryType).then(function(questions){
                                 $scope.questions = questions;
+                                updatePercents();
                             });
                         }
                         else{
                             Question.getQuestions($routeParams.moduleId, 0, undefined, module.categoryType).then(function(questions){
                                 $scope.questions = questions;
+                                updatePercents();
                             });
                         }
                     });

@@ -12,6 +12,7 @@
 	    vm.password;
 	    vm.routeParams;
         $scope.loggedUserName;
+        $scope.auditCustomerName;
         $scope.mainModules = [];
 
         var loadMainModules = function () {
@@ -23,6 +24,20 @@
         var loadModules = function (){
             Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId()).then(function(modules){
                 $scope.modules = modules;
+
+
+            if(Survey.getAuditMode() === true){
+
+                Customer.getPdvById(Survey.getAuditPdv()).then(function(customer){
+                    console.log(customer.companyName);
+                    $scope.auditCustomerName = customer.companyName;
+                });
+
+            }
+
+                /* Once Loaded all modules show Side Bar */
+                $('.modal-trigger').leanModal();    
+                $('.button-collapse').sideNav('show');                
             });
         };        
         
@@ -66,8 +81,7 @@
             }            
         }             
         
-        $rootScope.$on('defaultModuleLoaded', function (event, data) {            
-            
+        $rootScope.$on('defaultModuleLoaded', function (event, data) {                        
             Survey.getPendingSurvey().then(function(pendingSurvey){
                 if(pendingSurvey === undefined){        
                     Customer.getPdvTypeByCustomerId(vm.routeParams.pdvId).then(function (customerPdvType) {
@@ -81,7 +95,7 @@
                 else{
                     vm.loadModules();
                 }
-            });
+            });            
         });	     
         
         $rootScope.$on('synchronizationSuccessfulyFinished', function (event, data) {
@@ -94,6 +108,11 @@
            $scope.mainModules = [];
            $location.path("/");
         });
+
+        $rootScope.$on('closedSurvey', function (event, data){
+            console.log('closedSurvey');
+            $scope.auditCustomerName = '';
+        });
         
         $scope.authenticated = function(){
             return Login.authenticated();
@@ -103,6 +122,17 @@
             return Survey.getAuditMode();
         };
         
+        $scope.getCustomerName = function(){
+            if(Survey.getAuditMode() === true){
+                Customer.getPdvById(Survey.getAuditPdv()).then(function(customer){
+                    return customer.address;
+                });
+            }
+
+            return '';
+            
+        };
+
         vm.loadModules = loadModules;
         vm.login = login;
         vm.getUserName = getUserName;

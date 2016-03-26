@@ -5,13 +5,16 @@
         .module('brfPhoneGapApp')
         .controller('SurveyController', SurveyController);
 
-    SurveyController.$inject = ['$scope', '$route', '$location', 'Survey', 'Login', 'Question', '$routeParams', '$q'];
-    function SurveyController($scope, $route, $location, Survey, Login, Question, $routeParams, $q) {
+    SurveyController.$inject = ['$scope', '$route', '$location', 'Survey', 'Login', 'Question', '$routeParams', '$q', '$rootScope'];
+    function SurveyController($scope, $route, $location, Survey, Login, Question, $routeParams, $q, $rootScope) {
         var vm = this;       
         
         var closeSurvey = function(coaching_compliance, auditId, is_dashboard){
             Survey.closeSurvey(coaching_compliance).then(function(){		
                 
+
+                $rootScope.$emit('closedSurvey');   
+
                 if(is_dashboard){
                     $location.path('/Dashboard/' + auditId);                                                                                                              
                 }

@@ -5,8 +5,8 @@
         .module('brfPhoneGapApp')
         .controller('SendSynchronizationController', SendSynchronizationController);
 
-    SendSynchronizationController.$inject = ['$scope', 'Survey', '$location', '$q', 'Question', 'Customer'];
-    function SendSynchronizationController($scope, Survey, $location, $q, Question, Customer) {
+    SendSynchronizationController.$inject = ['$scope', 'Survey', '$location', '$q', 'Question', 'Customer', 'Database', '$rootScope'];
+    function SendSynchronizationController($scope, Survey, $location, $q, Question, Customer, Database, $rootScope) {
         var vm = this;
       
         $scope.syncSurveys = 0;
@@ -150,7 +150,18 @@
                
                return deferred.promise;                 
             })
+            .then(function(){
+
+              var deferred = $q.defer();
+
+              Database.dropAll().then(function(){
+                deferred.resolve();
+              });
+
+              return deferred.promise;
+            })
             .then(function () {
+                $rootScope.$emit('sendSyncFinished');
                 $location.path('/SyncOk');
             })
             .catch(function (error) {

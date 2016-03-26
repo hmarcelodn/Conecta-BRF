@@ -10,7 +10,7 @@
         var vm = this;        
         vm.routeParams = $routeParams;
         vm.currentModule;
-        
+
         activate();
 
         function activate() { 
@@ -23,18 +23,30 @@
             Module.getModuleBySlug(vm.routeParams.slug).then(function (module){
                 vm.currentModule = module;
 
-                Category.getCategories(module.categoryType, vm.routeParams.channelId, module.moduleId).then(function(categories){
-                    if(categories.length > 0){
-                        $scope.categories = categories;
-                    }
-                    else{
-                        $location.path('/Audit/' + vm.routeParams.auditId + 
-                                    '/Channel/' + vm.routeParams.channelId + 
-                                    '/Pdv/' + vm.routeParams.pdvId + 
-                                    '/Seller/' + vm.routeParams.sellerId + 
-                                    '/Module/' + module.moduleId);
-                    }			
-                });
+                switch(module.slug){
+                    case 'no_brf':
+                      $location.path('/Audit/' + vm.routeParams.auditId + 
+                                     '/Channel/' + vm.routeParams.channelId + 
+                                     '/Pdv/' + vm.routeParams.pdvId + 
+                                     '/Seller/' + vm.routeParams.sellerId +
+                                     '/no_brf');                      
+                        break;
+                    default:
+                        Category.getCategories(module.categoryType, vm.routeParams.channelId, module.moduleId).then(function(categories){
+                            if(categories.length > 0){
+                                $scope.categories = categories;
+                            }
+                            else{
+                                $location.path('/Audit/' + vm.routeParams.auditId + 
+                                               '/Channel/' + vm.routeParams.channelId + 
+                                               '/Pdv/' + vm.routeParams.pdvId + 
+                                               '/Seller/' + vm.routeParams.sellerId + 
+                                               '/Module/' + module.moduleId);
+                            }           
+                        });  
+                        break;                  
+                }
+
             });            
         }
     }
