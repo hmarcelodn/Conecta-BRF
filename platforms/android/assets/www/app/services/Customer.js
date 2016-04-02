@@ -9,11 +9,11 @@
     function Customer($http, Database) {
         
         var synchronizeCustomers = function (){
-            return $http.get('http://ws.brf-horizonte.com/get/customers/?token=560a100abad225d5afdf4fc6e5334917');
+            return $http.get('https://ws.conecta-brf.com/get/customers/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
         var synchronizeCustomerTypes = function (argument) {
-            return $http.get('http://ws.brf-horizonte.com/get/customers/type/?token=560a100abad225d5afdf4fc6e5334917');
+            return $http.get('https://ws.conecta-brf.com/get/customers/type/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
         var setCustomer = function (id, companyName, cuit, address, pdvType, highlighted) {

@@ -10,11 +10,11 @@
         var self = this;
 
         self.synchronizeModules = function(){
-            return $http.get('http://ws.brf-horizonte.com/get/modules/?token=560a100abad225d5afdf4fc6e5334917');
+            return $http.get('https://ws.conecta-brf.com/get/modules/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
         self.synchronizeMainModules = function(){
-            return $http.get('http://ws.brf-horizonte.com/get/modules/main/?token=560a100abad225d5afdf4fc6e5334917');  
+            return $http.get('https://ws.conecta-brf.com/get/modules/main/?token=560a100abad225d5afdf4fc6e5334917');  
         };
         
         self.setMainModule = function(id, modName, icon, mapLabel, hasDashboard){

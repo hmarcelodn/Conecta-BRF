@@ -193,9 +193,9 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
                 audit: false
             }
         })
-        .when('/LockSynchronization',{
-            templateUrl: '',
-            controller: '',
+        .when('/LockSynchronization/:leftCoaching',{
+            templateUrl: 'app/views/lockSynchronization.html',
+            controller: 'LockSynchronizationController',
             controllerAs: 'vm',
             access:{
                 isFreeAccess: false,

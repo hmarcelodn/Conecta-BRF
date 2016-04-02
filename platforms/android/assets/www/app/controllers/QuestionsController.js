@@ -81,6 +81,11 @@
         $scope.range = function(n){
             return new Array(n);
         };       
+        
+        var openModal = function(){
+            console.log("open modal");
+             $('#modal1').openModal();
+        };
 
         function activate() { 
             if($routeParams.categoryId !== undefined){
@@ -131,7 +136,8 @@
         vm.undoBinaryAction = undoBinaryAction;
         vm.openAction = openAction;
         vm.priceAction = priceAction;
-        vm.multipleAction = multipleAction;     
+        vm.multipleAction = multipleAction; 
+        vm.openModal = openModal;    
         
         activate();   
     }

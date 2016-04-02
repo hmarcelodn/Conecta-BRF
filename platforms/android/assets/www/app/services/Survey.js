@@ -204,7 +204,7 @@ var auditIdKey = 'audit-id';
         self.informSurvey = function(survey){            
             var req = {
                 method: "POST",
-                url: "http://ws.brf-horizonte.com/set/survey/?token=560a100abad225d5afdf4fc6e5334917",
+                url: "https://ws.conecta-brf.com/set/survey/?token=560a100abad225d5afdf4fc6e5334917",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -218,7 +218,7 @@ var auditIdKey = 'audit-id';
             console.log(survey);      
             var req = {
                 method: "POST",
-                url: "http://ws.brf-horizonte.com/set/survey/no-brf/?token=560a100abad225d5afdf4fc6e5334917",
+                url: "https://ws.conecta-brf.com/set/survey/no-brf/?token=560a100abad225d5afdf4fc6e5334917",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -231,7 +231,7 @@ var auditIdKey = 'audit-id';
         self.informSurveyQuestions = function(survey){            
             var req = {
                 method: "POST",
-                url: "http://ws.brf-horizonte.com/set/survey/questions/?token=560a100abad225d5afdf4fc6e5334917",
+                url: "https://ws.conecta-brf.com/set/survey/questions/?token=560a100abad225d5afdf4fc6e5334917",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -353,6 +353,13 @@ var auditIdKey = 'audit-id';
                     closeSurvey(coaching_compliance, auditId, false);
                 }                                           
             });     
+        };
+
+        self.getCoachingComplianceSurvey = function () {
+            return Database.query('SELECT * FROM Survey WHERE coaching_compliance = 1')
+                .then(function (result) {
+                    return Database.fetchAll(result);
+                })
         };
 
         return self;

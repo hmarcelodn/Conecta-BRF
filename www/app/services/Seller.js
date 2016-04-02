@@ -10,7 +10,7 @@
         var self = this;
 
         self.synchronizeSellers = function (){
-            return $http.get('http://ws.brf-horizonte.com/get/sellers/?token=560a100abad225d5afdf4fc6e5334917');
+            return $http.get('https://ws.conecta-brf.com/get/sellers/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
         self.setSeller = function (id, name){
