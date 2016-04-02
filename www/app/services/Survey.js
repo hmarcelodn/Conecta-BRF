@@ -355,6 +355,13 @@ var auditIdKey = 'audit-id';
             });     
         };
 
+        self.getCoachingComplianceSurvey = function () {
+            return Database.query('SELECT * FROM Survey WHERE coaching_compliance = 1')
+                .then(function (result) {
+                    return Database.fetchAll(result);
+                })
+        };
+
         return self;
     }
 })();

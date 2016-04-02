@@ -131,6 +131,15 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: true
 			}
 		})
+        .when('/Audit/:auditId/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Mandatory',{
+            templateUrl: 'app/views/mandatoryQuestions.html',
+            controller: 'MandatoryQuestionsController',
+            controllerAs: 'vm',
+            access:{
+                isFreeAccess: false,
+                audit: true
+            }
+        })        
 		.when('/Audit/:auditId/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/Module/:moduleId', {
 			templateUrl: 'app/views/questions.html',
 			controller: 'QuestionsController',
@@ -184,6 +193,15 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
                 audit: false
             }
         })
+        .when('/LockSynchronization',{
+            templateUrl: '',
+            controller: '',
+            controllerAs: 'vm',
+            access:{
+                isFreeAccess: false,
+                audit: false
+            }
+        })
 		.otherwise({
 			redirectTo: '/'
 		})
@@ -197,7 +215,8 @@ run(function($rootScope, $location, Login, Survey, Database, Module){
 		$('select').material_select();
 	});
 
-	$rootScope.$on('$routeChangeStart', function(currRoute, prevRoute){
+	$rootScope.$on('$routeChangeStart', function(currRoute, prevRoute){        
+
 		if (prevRoute.access != undefined) {
             if (!prevRoute.access.isFreeAccess && !Login.authenticated()) {
                 $location.path('/');
@@ -205,7 +224,8 @@ run(function($rootScope, $location, Login, Survey, Database, Module){
         }
 
         if(prevRoute.access != undefined){
-        	 if(!prevRoute.access.audit && Survey.getAuditMode()){
+        	 if(!prevRoute.access.audit && Survey.getAuditMode()){                
+                 
         	 	/* Load default Module */
 	            Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId()).then(function(modules){
 	        	 	$location.path('/Audit/' + Survey.getAuditId() +

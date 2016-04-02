@@ -12,6 +12,8 @@
         activate();
 
         function activate() { 
+            
+            //TODO: Refactor Promises
             Module.getModuleByName('Ejecución PDV').then(function(module){
                 Survey.getPendingSurvey().then(function(pendingSurvey){
                     if($routeParams.categoryId !== undefined){

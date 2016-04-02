@@ -15,6 +15,8 @@
         function activate() { 
             vm.routeParams = $routeParams;
             
+            //TODO: Refactor Promises
+            
             Module.getModuleByName('Coaching Supervisor').then(function(module){
 
                 console.log("Emit Default Module Loaded Event");

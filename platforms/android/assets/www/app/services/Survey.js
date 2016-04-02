@@ -14,8 +14,8 @@ var auditIdKey = 'audit-id';
         .module('brfPhoneGapApp')
         .factory('Survey', Survey);
 
-    Survey.$inject = ['$http', 'Database'];
-    function Survey($http, Database) {
+    Survey.$inject = ['$http', 'Database', 'Question', '$location', '$rootScope', '$q'];
+    function Survey($http, Database, Question, $location, $rootScope, $q) {
         var self = this;
 
         self.setSurvey = function(survey, channelId, pdvId, sellerId, userId){
@@ -37,8 +37,7 @@ var auditIdKey = 'audit-id';
                 });
         };
 
-        self.closeSurvey = function(coachingCompliance){
-            console.log('closeSurvey');
+        self.updateSurveyStatus = function(coachingCompliance){
             return Database.query('UPDATE Survey SET syncStatus = 1, coaching_compliance = ? WHERE syncStatus = 0', [coachingCompliance])
                 .then(function (){
                     return true;
@@ -287,6 +286,73 @@ var auditIdKey = 'audit-id';
                 .then(function(result){
                     return Database.fetchAll(result);
                 });
+        };
+        
+        self.closeSurvey = function (roleId, channelId, surveyId, auditId) {            
+            
+            var closeSurvey = function(coaching_compliance, auditId, is_dashboard){
+                self.updateSurveyStatus(coaching_compliance).then(function(){		
+                            
+                    $rootScope.$emit('closedSurvey');   
+
+                    if(is_dashboard){
+                        $location.path('/Dashboard/' + auditId);                                                                                                              
+                    }
+                    else{
+                        $location.path('/Main');                    
+                    }				                
+                });             
+            };        
+                         
+            //Without Pending Questions close current survey                    
+            self.disableAuditMode();            
+            
+            $q.all([
+                Question.getCoachingQuestionsPerUserRolesCount(roleId),
+                self.getCoachingSurveyQuestionsCount(surveyId),
+                Question.getBaseWeightPerModule(roleId, channelId, surveyId)
+            ])
+            .then(function (data) {
+                var coachingQuestions = data[0];
+                var auditCoachingQuestions = data[1];
+                var baseWeights = data[2];
+                var coaching_compliance = 0;                
+                
+                if(coachingQuestions === auditCoachingQuestions){
+                    coaching_compliance = 1;
+                }         
+                
+                if(baseWeights.length > 0){
+                    angular.forEach(baseWeights, function (value, key) {                                                            
+                    
+                        var promises = [];
+                                                            
+                        Question.getModulePercentageByWeight(surveyId, value.moduleId, value.base)
+                            .then(function (modulePercentage) {                                                                                                                                                                                                                
+                                promises.push(
+                                    self.setAuditFinalValues(
+                                        surveyId, 
+                                        value.moduleId, 
+                                        value.modName, 
+                                        modulePercentage.ModulePercentage === null ? 
+                                        0 : modulePercentage.ModulePercentage, 
+                                        value.icon, 
+                                        auditId
+                                     )
+                                );                                                                                                     
+                         });
+                                                            
+                            $q.all(promises).then(function () {
+                                //Close Survey                                                
+                                closeSurvey(coaching_compliance, auditId, true);                                        
+                            })
+                        });                                              
+                 }
+                 else{
+                     //Close Survey                                                
+                    closeSurvey(coaching_compliance, auditId, false);
+                }                                           
+            });     
         };
 
         return self;
