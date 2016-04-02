@@ -25,15 +25,14 @@
             Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId()).then(function(modules){
                 $scope.modules = modules;
 
+                if(Survey.getAuditMode() === true){
 
-            if(Survey.getAuditMode() === true){
+                    Customer.getPdvById(Survey.getAuditPdv()).then(function(customer){
+                        console.log(customer.companyName);
+                        $scope.auditCustomerName = '- ' + customer.address;
+                    });
 
-                Customer.getPdvById(Survey.getAuditPdv()).then(function(customer){
-                    console.log(customer.companyName);
-                    $scope.auditCustomerName = customer.companyName;
-                });
-
-            }
+                }
 
                 /* Once Loaded all modules show Side Bar */
                 $('.modal-trigger').leanModal();    
@@ -109,6 +108,12 @@
            $location.path("/");
         });
 
+        $rootScope.$on('sendSyncFinished', function(){
+           console.log('sendSyncFinished');
+           $scope.mainModules = [];
+           $location.path("/");
+        });
+
         $rootScope.$on('closedSurvey', function (event, data){
             console.log('closedSurvey');
             $scope.auditCustomerName = '';
@@ -120,17 +125,6 @@
         
         $scope.isAuditModeEnabled = function (){
             return Survey.getAuditMode();
-        };
-        
-        $scope.getCustomerName = function(){
-            if(Survey.getAuditMode() === true){
-                Customer.getPdvById(Survey.getAuditPdv()).then(function(customer){
-                    return customer.address;
-                });
-            }
-
-            return '';
-            
         };
 
         vm.loadModules = loadModules;

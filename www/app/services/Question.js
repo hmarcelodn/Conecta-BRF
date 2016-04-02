@@ -188,11 +188,11 @@
                         ' INNER JOIN Module mod2 ON mod2.moduleId = q2.questionModuleId' +
                         ' INNER JOIN MainModule main ON main.id = mod2.idMainMod' +
                         ' WHERE q2.questionId IN (' +
-                        ' SELECT q.questionId FROM Question q ' +
-                        ' INNER JOIN ModuleChannels modChan ON modChan.moduleId = q.questionModuleId' +
-                        ' INNER JOIN ModuleUserRoles modRol ON modRol.moduleId = q.questionModuleId' +
-                        ' WHERE modChan.channelId = ?' +  
-                        ' AND modRol.roleId = ?' +                      
+                            ' SELECT q.questionId FROM Question q ' +
+                            ' INNER JOIN ModuleChannels modChan ON modChan.moduleId = q.questionModuleId' +
+                            ' INNER JOIN ModuleUserRoles modRol ON modRol.moduleId = q.questionModuleId' +
+                            ' WHERE modChan.channelId = ?' +  
+                            ' AND modRol.roleId = ?' +                      
                         ')' +
                         ' AND q2.questionModuleId IN (SELECT DISTINCT q3.questionModuleId FROM Question q3 INNER JOIN SurveyQuestionsResults surres ON q3.questionId = surres.questionId)' +
                         ' AND main.has_dashboard = 1' +
@@ -266,6 +266,38 @@
                     return Database.fetch(question);
                 });
         };               
+
+        self.getMandatoryQuestions = function(surveyId, roleId, channelId){                        
+            return Database.query('SELECT q.*, mod.slug FROM Question q' +
+                                  ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
+                                  ' INNER JOIN ModuleUserRoles modUs ON q.questionModuleId = modUs.moduleId' +
+                                  ' INNER JOIN ModuleChannels modCh ON modCh.moduleId = modUs.moduleId' +
+                                  ' LEFT JOIN SurveyQuestionsResults qRes ON qRes.questionId = q.questionId' +
+                                  '  AND qRes.surveyId = ?' +
+                                  '  WHERE q.is_mandatory = 2' +
+                                  '  AND modUs.roleId = ?' +
+                                  '  AND modCh.channelId = ?' +
+                                  ' AND qRes.questionId IS NULL', [surveyId, roleId, channelId])
+                .then(function(questions){
+                    return Database.fetchAll(questions);    
+                });       
+        };
+        
+        self.getSuggestedQuestions = function(surveyId, roleId, channelId){
+            return Database.query('SELECT q.*, mod.slug FROM Question q' +
+                                  ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
+                                  ' INNER JOIN ModuleUserRoles modUs ON q.questionModuleId = modUs.moduleId' +
+                                  ' INNER JOIN ModuleChannels modCh ON modCh.moduleId = modUs.moduleId' +
+                                  ' LEFT JOIN SurveyQuestionsResults qRes ON qRes.questionId = q.questionId' +
+                                  '  AND qRes.surveyId = ?' +
+                                  '  WHERE q.is_mandatory = 1' +
+                                  '  AND modUs.roleId = ?' +
+                                  '  AND modCh.channelId = ?' +
+                                  ' AND qRes.questionId IS NULL', [surveyId, roleId, channelId])
+                .then(function(questions){
+                    return Database.fetchAll(questions);    
+                });               
+        };
 
         return self;
     }

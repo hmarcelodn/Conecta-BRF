@@ -42,8 +42,8 @@
                                 
                                 if(coachingQuestions === auditCoachingQuestions){
                                     coaching_compliance = 1;
-                                }                         
-                                
+                                }                                                         
+
                                 //Calculate Weights
                                 Question.getBaseWeightPerModule(Login.getToken().id_role, channelId, survey.id)
                                     .then(function (baseWeights) {                                                                                
