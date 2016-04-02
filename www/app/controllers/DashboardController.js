@@ -6,6 +6,8 @@ brfPhoneGapApp.controller('dashboardController', function($scope, $route, Dashbo
         $scope.datings = datings;                     
     });
     
+    //TODO: Refactor Promises
+    
     Survey.getVisitedCoachingPdvsCount(Login.getToken().id)
         .then(function (result) {
             $scope.visitedPDVs = (result === undefined ? 0 : result);

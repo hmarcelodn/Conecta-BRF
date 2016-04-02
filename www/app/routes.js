@@ -215,11 +215,7 @@ run(function($rootScope, $location, Login, Survey, Database, Module){
         }
 
         if(prevRoute.access != undefined){
-        	 if(!prevRoute.access.audit && Survey.getAuditMode()){
-                 
-                 console.log("cagaste!");
-                 console.log(prevRoute);
-                 //console.log(currRoute);
+        	 if(!prevRoute.access.audit && Survey.getAuditMode()){                
                  
         	 	/* Load default Module */
 	            Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId()).then(function(modules){
