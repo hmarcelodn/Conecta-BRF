@@ -30,9 +30,7 @@
             });            
         }
         
-        var closeSurvey = function(){
-            console.log('Close Survey');
-            
+        var closeSurvey = function(){            
             Survey.getPendingSurvey().then(function(pendingSurvey){
                Survey.closeSurvey(Login.getToken().id_role, $routeParams.channelId, pendingSurvey.id, $routeParams.auditId); 
             });            

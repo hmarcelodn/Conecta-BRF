@@ -15,10 +15,12 @@
 
         function activate() { 
 
-            if(vm.routeParams.default === 'defaultModule'){
-                console.log("defaultModuleLoaded");
-                $rootScope.$emit('defaultModuleLoaded');			
-            }            
+            /* Load Default Modules by Event upwards */
+            if(vm.routeParams.default !== undefined){
+              if(vm.routeParams.default === 'defaultModule'){
+                  $rootScope.$emit('defaultModuleLoaded', vm.routeParams);      
+              }  
+            }          
             
             Module.getModuleBySlug(vm.routeParams.slug).then(function (module){
                 vm.currentModule = module;

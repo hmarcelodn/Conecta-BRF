@@ -28,15 +28,13 @@
                 if(Survey.getAuditMode() === true){
 
                     Customer.getPdvById(Survey.getAuditPdv()).then(function(customer){
-                        console.log(customer.companyName);
                         $scope.auditCustomerName = '- ' + customer.address;
+
+                        /* Once Loaded all modules show Side Bar */   
+                        $('.button-collapse').sideNav('show');  
                     });
 
-                }
-
-                /* Once Loaded all modules show Side Bar */
-                $('.modal-trigger').leanModal();    
-                $('.button-collapse').sideNav('show');                
+                }              
             });
         };        
         
@@ -80,13 +78,15 @@
             }            
         }             
         
-        $rootScope.$on('defaultModuleLoaded', function (event, data) {                        
+        $rootScope.$on('defaultModuleLoaded', function (event, data) {     
+
             Survey.getPendingSurvey().then(function(pendingSurvey){
                 if(pendingSurvey === undefined){        
-                    Customer.getPdvTypeByCustomerId(vm.routeParams.pdvId).then(function (customerPdvType) {
-                        Survey.setSurvey(new Date().getTime().toString(), vm.routeParams.channelId, customerPdvType.pdvType, vm.routeParams.sellerId, Login.getToken().id)
+
+                    Customer.getPdvTypeByCustomerId(data.pdvId).then(function (customerPdvType) {
+                        Survey.setSurvey(new Date().getTime().toString(), data.channelId, customerPdvType.pdvType, data.sellerId, Login.getToken().id)
                             .then(function(){
-                                Survey.enableAuditMode($routeParams.channelId, $routeParams.pdvId, $routeParams.sellerId, $routeParams.auditId);
+                                Survey.enableAuditMode(data.channelId, data.pdvId, data.sellerId, data.auditId);
                                 vm.loadModules();
                         });                        
                     });                              

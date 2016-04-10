@@ -83,7 +83,6 @@
         };       
         
         var openModal = function(){
-            console.log("open modal");
              $('#modal1').openModal();
         };
 
