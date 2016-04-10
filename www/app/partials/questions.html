@@ -68,8 +68,8 @@
 		<div ng-if="question.answer === 'binary'" 
 			 ng-show="question.JSONData.value === undefined"
 			 class="card-action center-align">
-			<a href ng-click="vm.binaryAction(question, true)">CUMPLE</a>
-			<a href ng-click="vm.binaryAction(question, false)">NO CUMPLE</a>
+			<a href ng-click="vm.binaryAction(question, true)">{{question.config.answer_config.labels[1]}}</a>
+			<a href ng-click="vm.binaryAction(question, false)">{{question.config.answer_config.labels[0]}}</a>
 		</div>
 
 		<div ng-if="question.answer === 'binary'" 
