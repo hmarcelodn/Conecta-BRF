@@ -11,7 +11,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/Dashboard/:auditId', {
 			templateUrl: 'app/views/dashboard.html',
-			controller: 'dashboardController',
+			controller: 'DashboardController',
 			access:{
 				isFreeAccess: false,
 				audit: false

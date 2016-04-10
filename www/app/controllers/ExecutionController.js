@@ -12,7 +12,8 @@
         activate();
 
         function activate() { 
-            
+                        
+            console.log('Ejecución PDV');
             //TODO: Refactor Promises
             Module.getModuleByName('Ejecución PDV').then(function(module){
                 Survey.getPendingSurvey().then(function(pendingSurvey){

@@ -13,6 +13,7 @@
 
         function activate() { 
 
+            console.log("Toma de Precios");
             // TODO: Refactor getModuleBySlug instead
             Module.getModuleByName('Toma de Precios').then(function(module){
                 Survey.getPendingSurvey().then(function(pendingSurvey){
