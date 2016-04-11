@@ -28,7 +28,7 @@
                 if(Survey.getAuditMode() === true){
 
                     Customer.getPdvById(Survey.getAuditPdv()).then(function(customer){
-                        $scope.auditCustomerName = '- ' + customer.address;
+                        $scope.auditCustomerName = customer.address;
 
                         /* Once Loaded all modules show Side Bar */   
                         $('.button-collapse').sideNav('show');  

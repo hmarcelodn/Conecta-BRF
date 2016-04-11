@@ -19,7 +19,7 @@
 		<div ng-if="question.render === 'image'" 
 			 class="card-image waves-effect waves-block waves-light" 
 			 style="margin-top:25px;margin-bottom: 8px;">
-			<img class="activator" src="img/content/thumb_office.jpg"></img>
+			<img class="activator" ng-src="{{question.thumb}}"></img>
 		</div>
 												
 		<div ng-if="question === 'image'" 
@@ -35,7 +35,7 @@
 		</div>
 
 		<div ng-if="question.render === 'image'" class="card-reveal">
-			<a href="#modal1" class="modal-trigger">
+			<a ng-href="" ng-click="vm.openBigImageModal(question)" class="modal-trigger">
 				<i class="material-icons left">photo_library</i>
 			</a>					
 			<span class="card-title grey-text text-darken-4">
@@ -44,6 +44,10 @@
 			<br/>
 			<p>{{question.data}}</p>
 		</div>
+
+		<section ng-if="question.render === 'image'" id="questionModal{{question.id}}" class="modal" style="width:100%;">
+		    <img class="activator" ng-src="{{question.big}}"></img>			
+		</section>		
 
 		<!-- Content Bis Content -->
 		<h5 ng-if="question.render === 'complete_bis'" 
