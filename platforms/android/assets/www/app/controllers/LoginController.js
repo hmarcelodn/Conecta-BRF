@@ -5,19 +5,20 @@
         .module('brfPhoneGapApp')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module', 'Customer', 'Database'];
-    function LoginController($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module, Customer, Database) {
+    LoginController.$inject = ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module', 'Customer', 'Database', '$timeout'];
+    function LoginController($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module, Customer, Database, $timeout) {
         var vm = this;
         vm.username;
 	    vm.password;
 	    vm.routeParams;
-        $scope.loggedUserName;
         $scope.auditCustomerName;
         $scope.mainModules = [];
+        $scope.loggedUserName = '';
 
         var loadMainModules = function () {
             Module.getMainModules().then(function (mainModules) {
                 $scope.mainModules = mainModules;
+                updateUserName();
             });          
         };  
         
@@ -28,14 +29,14 @@
                 if(Survey.getAuditMode() === true){
 
                     Customer.getPdvById(Survey.getAuditPdv()).then(function(customer){
-                        $scope.auditCustomerName = customer.address;
-
-                        /* Once Loaded all modules show Side Bar */   
-                        $('.button-collapse').sideNav('show');  
+                        $scope.auditCustomerName = customer.address; 
                     });
 
                 }              
             });
+
+            /* Once Loaded all modules show Side Bar */   
+            //$('.button-collapse').sideNav('show'); 
         };        
         
         var login = function (){            
@@ -46,8 +47,9 @@
                         vm.password = '';
                     }
                 }
-                else if(typeof response.data === 'object'){
-                    Login.authenticate(response.data);
+                else if(typeof response.data === 'object'){                    
+                    Login.authenticate(response.data);                    
+
                     $location.path("/Main");
                 }
             });            
@@ -63,13 +65,17 @@
             return token.name;
         };  
 
+        var updateUserName = function(){
+            $scope.loggedUserName = vm.getUserName();
+        };
+
         function activate() { 
             
             //If logged.
             if(Login.authenticated()){
                 $location.path("/Main");
                 
-                $scope.loggedUserName = vm.getUserName();
+                updateUserName();
                 vm.routeParams = $routeParams;
                 
                 Module.getMainModules().then(function (mainModules) {
@@ -82,6 +88,8 @@
 
             Survey.getPendingSurvey().then(function(pendingSurvey){
                 if(pendingSurvey === undefined){        
+
+                    vm.routeParams = data;
 
                     Customer.getPdvTypeByCustomerId(data.pdvId).then(function (customerPdvType) {
                         Survey.setSurvey(new Date().getTime().toString(), data.channelId, customerPdvType.pdvType, data.sellerId, Login.getToken().id)

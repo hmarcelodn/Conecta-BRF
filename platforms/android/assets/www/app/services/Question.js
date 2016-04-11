@@ -51,13 +51,13 @@
             var query;			
 
             if(categoryType === 0){
-                query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent, q.is_dashboard, q.weight, q.is_coaching,res.JSONData FROM Question q' +
+                query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent, q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big FROM Question q' +
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
                         ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                         ' WHERE q.questionModuleId = ?';
             }
             else{
-                query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent, q.is_dashboard, q.weight, q.is_coaching,res.JSONData FROM Question q' +
+                query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent, q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big FROM Question q' +
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
                         ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                         ' INNER JOIN Category cat ON cat.categoryId = q.categoryId' +
@@ -138,7 +138,9 @@
                                     weight: res.rows.item(i).weight,              
                                     is_coaching: res.rows.item(i).is_coaching,                   
                                     JSONData: renderJSONData(res.rows.item(i).JSONData, 
-                                                            res.rows.item(i).answer)
+                                                            res.rows.item(i).answer),
+                                    big: res.rows.item(i).big,
+                                    thumb: res.rows.item(i).thumb
                                 }
                             );
                         }

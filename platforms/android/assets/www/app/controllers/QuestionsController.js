@@ -86,6 +86,10 @@
              $('#modal1').openModal();
         };
 
+        var openBigImageModal = function(question){
+            $('#questionModal' + question.id).openModal();
+        }
+
         function activate() { 
             if($routeParams.categoryId !== undefined){
                 Survey.getPendingSurvey().then(function(pendingSurvey){
@@ -137,6 +141,7 @@
         vm.priceAction = priceAction;
         vm.multipleAction = multipleAction; 
         vm.openModal = openModal;    
+        vm.openBigImageModal = openBigImageModal;
         
         activate();   
     }
