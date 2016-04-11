@@ -11,6 +11,7 @@
         vm.currentCategory;
         vm.currentModule;
         $scope.questions = [];
+        $scope.routeParams = $routeParams;
         
         var binaryAction = function(question, answer){
             var result = { 

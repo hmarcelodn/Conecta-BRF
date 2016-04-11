@@ -36,7 +36,7 @@
             });
 
             /* Once Loaded all modules show Side Bar */   
-            //$('.button-collapse').sideNav('show'); 
+            $('.button-collapse').sideNav('show'); 
         };        
         
         var login = function (){            

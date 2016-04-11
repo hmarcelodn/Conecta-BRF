@@ -33,3 +33,7 @@
 		<questions content="questions"></questions>
 	</section>		
 </main>
+
+<div ng-if="routeParams.categoryType !== undefined" class="fixed-action-btn" style="bottom:15px; right: 15px;">
+	<a class="btn-floating btn-large red modal-trigger" href="javascript:history.go(-1)"><i class="large material-icons">arrow_back</i></a>
+</div>
