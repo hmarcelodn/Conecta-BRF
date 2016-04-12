@@ -16,9 +16,6 @@
 
         function activate() { 
             Channel.getChannels(Login.getToken().channels).then(function(channels){
-
-                                    console.log(channels);
-
                 //Pre-Selected Unique Channel
                 if(channels.length === 1){
                     $location.path(
