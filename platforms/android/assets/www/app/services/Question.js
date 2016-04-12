@@ -269,7 +269,7 @@
                 });
         };               
 
-        self.getMandatoryQuestions = function(surveyId, roleId, channelId){                        
+        self.getMandatoryQuestions = function(surveyId, roleId, channelId, auditId){        
             return Database.query('SELECT q.*, mod.slug FROM Question q' +
                                   ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                                   ' INNER JOIN ModuleUserRoles modUs ON q.questionModuleId = modUs.moduleId' +
@@ -279,13 +279,14 @@
                                   '  WHERE q.is_mandatory = 2' +
                                   '  AND modUs.roleId = ?' +
                                   '  AND modCh.channelId = ?' +
-                                  ' AND qRes.questionId IS NULL', [surveyId, roleId, channelId])
+                                  ' AND qRes.questionId IS NULL' + 
+                                  ' AND mod.idMainMod = ?', [surveyId, roleId, channelId, auditId])
                 .then(function(questions){
                     return Database.fetchAll(questions);    
                 });       
         };
         
-        self.getSuggestedQuestions = function(surveyId, roleId, channelId){
+        self.getSuggestedQuestions = function(surveyId, roleId, channelId, auditId){
             return Database.query('SELECT q.*, mod.slug FROM Question q' +
                                   ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                                   ' INNER JOIN ModuleUserRoles modUs ON q.questionModuleId = modUs.moduleId' +
@@ -295,7 +296,8 @@
                                   '  WHERE q.is_mandatory = 1' +
                                   '  AND modUs.roleId = ?' +
                                   '  AND modCh.channelId = ?' +
-                                  ' AND qRes.questionId IS NULL', [surveyId, roleId, channelId])
+                                  ' AND qRes.questionId IS NULL' +
+                                  ' AND mod.idMainMod = ?', [surveyId, roleId, channelId, auditId])
                 .then(function(questions){
                     return Database.fetchAll(questions);    
                 });               

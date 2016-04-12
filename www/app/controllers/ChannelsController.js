@@ -5,8 +5,8 @@
         .module('brfPhoneGapApp')
         .controller('ChannelsController', ChannelsController);
 
-    ChannelsController.$inject = ['$scope', '$route', '$routeParams', 'Channel', 'Survey', '$location'];
-    function ChannelsController($scope, $route, $routeParams, Channel, Survey, $location) {
+    ChannelsController.$inject = ['$scope', '$route', '$routeParams', 'Channel', 'Survey', '$location', 'Login'];
+    function ChannelsController($scope, $route, $routeParams, Channel, Survey, $location, Login) {
         var vm = this;
         vm.channels = [];
         vm.lastChannelId;
@@ -15,7 +15,9 @@
         activate();
 
         function activate() { 
-            Channel.getChannels().then(function(channels){
+            Channel.getChannels(Login.getToken().channels).then(function(channels){
+
+                                    console.log(channels);
 
                 //Pre-Selected Unique Channel
                 if(channels.length === 1){

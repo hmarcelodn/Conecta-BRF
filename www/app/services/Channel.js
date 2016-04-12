@@ -19,8 +19,8 @@
                 });
         };
 
-        var getChannels = function(){
-            return Database.query('Select id, name From Channel')
+        var getChannels = function(userChannels){
+            return Database.query('Select id, name From Channel WHERE id IN (?)', [userChannels])
                 .then(function (result){
                     return Database.fetchAll(result);
                 });
