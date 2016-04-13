@@ -17,9 +17,10 @@
             var roleId = Login.getToken().id_role;
             
             Survey.getPendingSurvey().then(function(pendingSurvey){
+
                 $q.all([
-                    Question.getMandatoryQuestions(pendingSurvey.id, roleId, $routeParams.pdvId, $routeParams.auditId),
-                    Question.getSuggestedQuestions(pendingSurvey.id, roleId, $routeParams.pdvId, $routeParams.auditId)
+                    Question.getMandatoryQuestions(pendingSurvey.id, roleId, $routeParams.channelId, $routeParams.auditId),
+                    Question.getSuggestedQuestions(pendingSurvey.id, roleId, $routeParams.channelId, $routeParams.auditId)
                 ])
                 .then(function(data){
                     $scope.mandatoryQuestions = data[0];

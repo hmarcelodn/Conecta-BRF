@@ -24,6 +24,7 @@
                     Question.getMandatoryQuestions(pendingSurvey.id, roleId, channelId, auditId),
                     Question.getSuggestedQuestions(pendingSurvey.id, roleId, channelId, auditId)
                 ]).then(function (data) {
+
                     var mandatoryQuestions = data[0];
                     var suggestedQuestions = data[1];                                   
                     

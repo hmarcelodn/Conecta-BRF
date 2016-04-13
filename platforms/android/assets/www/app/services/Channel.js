@@ -20,7 +20,7 @@
         };
 
         var getChannels = function(userChannels){
-            return Database.query('Select id, name From Channel WHERE id IN (?)', [userChannels])
+            return Database.query('SELECT id, name From Channel')
                 .then(function (result){
                     return Database.fetchAll(result);
                 });

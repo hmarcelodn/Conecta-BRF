@@ -16,8 +16,18 @@
 
         function activate() { 
             Channel.getChannels(Login.getToken().channels).then(function(channels){
+
+                var allowedChannels = Login.getToken().channels;
+                var availableChannels = new Array();
+
+                angular.forEach(channels, function(value, key){
+                    if($.inArray(value.id.toString(), allowedChannels) !== -1){
+                        availableChannels.push(value);
+                    }
+                });
+
                 //Pre-Selected Unique Channel
-                if(channels.length === 1){
+                if(availableChannels.length === 1){
                     $location.path(
                         '/Audit/' + $routeParams.auditId +
                         '/Channel/' + channels[0].id +
@@ -25,7 +35,7 @@
                     );
                 }
                 else{
-                    vm.channels = channels;                
+                    vm.channels = availableChannels;                
                     vm.lastChannelId = Survey.getLastAuditChannel() === null ? undefined : Survey.getLastAuditChannel();
                     vm.auditId = $routeParams.auditId;
                 }

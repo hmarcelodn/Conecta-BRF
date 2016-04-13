@@ -26,6 +26,9 @@
 
             $scope.observationsChanged = function(){
                 Survey.getPendingSurvey().then(function(survey){
+
+                    console.log(survey);
+
                     Survey.setObservations(survey.id, $scope.observations).then(function(){
                         return;
                     });
