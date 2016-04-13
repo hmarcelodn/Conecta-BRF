@@ -114,7 +114,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}
 		})		
-		.when('/Audit/:auditId/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/observaciones/:default?', {
+		.when('/Audit/:auditId/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/observaciones', {
 			templateUrl: 'app/views/observations.html',
 			controller: 'ObservationsController',
 			access:{

@@ -88,7 +88,6 @@
 
             Survey.getPendingSurvey().then(function(pendingSurvey){
                 if(pendingSurvey === undefined){        
-
                     vm.routeParams = data;
 
                     Customer.getPdvTypeByCustomerId(data.pdvId).then(function (customerPdvType) {
