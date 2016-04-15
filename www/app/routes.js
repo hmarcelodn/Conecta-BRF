@@ -64,7 +64,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 		})
 		.when('/',{
 			templateUrl: 'app/views/login.html',
-			controller: 'LoginController',
+			controller: 'AuthController',
             controllerAs: 'vm',
 			access:{
 				isFreeAccess: true				
@@ -181,7 +181,8 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
             controller: 'WebSQLController',
             controllerAs: 'vm',
             access:{
-  				isFreeAccess: true             
+  				isFreeAccess: true,
+  				audit: true           
             }            
         })
         .when('/beforeLogOff', {
