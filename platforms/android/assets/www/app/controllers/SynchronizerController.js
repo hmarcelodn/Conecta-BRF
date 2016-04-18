@@ -9,10 +9,13 @@
     function SynchronizerController($routeParams, $location, $scope, Target, Survey, $q) {
         var vm = this;
         $scope.syncRoute;
+               
 
         activate();
 
         function activate() { 
+            $scope.syncModeId = parseInt($routeParams.syncModeId); 
+            
             if(parseInt($routeParams.syncModeId) === 1){
                 $scope.syncRoute = '#/DoSynchronization';
             }
