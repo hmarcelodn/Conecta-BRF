@@ -3,10 +3,10 @@
 
     angular
         .module('brfPhoneGapApp')
-        .controller('LoginController', LoginController);
+        .controller('MasterController', MasterController);
 
-    LoginController.$inject = ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module', 'Customer', 'Database', '$timeout'];
-    function LoginController($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module, Customer, Database, $timeout) {
+    MasterController.$inject = ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module', 'Customer', 'Database', '$timeout'];
+    function MasterController($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module, Customer, Database, $timeout) {
         var vm = this;
         vm.username;
 	    vm.password;
@@ -38,22 +38,7 @@
             /* Once Loaded all modules show Side Bar */   
             $('.button-collapse').sideNav('show'); 
         };        
-        
-        var login = function (){            
-            Login.validateUser(vm.username, vm.password).then(function(response){        
-                if(typeof response.data === 'string'){
-                    if(response.data.trim() === 'false'){
-                        vm.username = '';
-                        vm.password = '';
-                    }
-                }
-                else if(typeof response.data === 'object'){                    
-                    Login.authenticate(response.data);                    
-
-                    $location.path("/Main");
-                }
-            });            
-        };             
+                   
         
         var getUserName = function(){
             if(!Login.authenticated()){
@@ -86,12 +71,14 @@
         
         $rootScope.$on('defaultModuleLoaded', function (event, data) {     
 
+            console.log('defaultModuleLoaded');
+
             Survey.getPendingSurvey().then(function(pendingSurvey){
                 if(pendingSurvey === undefined){        
                     vm.routeParams = data;
 
                     Customer.getPdvTypeByCustomerId(data.pdvId).then(function (customerPdvType) {
-                        Survey.setSurvey(new Date().getTime().toString(), data.channelId, customerPdvType.pdvType, data.sellerId, Login.getToken().id)
+                        Survey.setSurvey(new Date().getTime().toString(), data.channelId, data.pdvId, data.sellerId, Login.getToken().id)
                             .then(function(){
                                 Survey.enableAuditMode(data.channelId, data.pdvId, data.sellerId, data.auditId);
                                 vm.loadModules();
@@ -135,9 +122,8 @@
         };
 
         vm.loadModules = loadModules;
-        vm.login = login;
         vm.getUserName = getUserName;
         
-        activate();     
+        activate();  
     }
 })();

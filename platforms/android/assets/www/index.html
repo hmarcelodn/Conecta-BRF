@@ -40,7 +40,7 @@
         <title>BRF APP</title>
     </head>
     <body ng-app="brfPhoneGapApp">                
-        <nav ng-controller="LoginController as vm" ng-show="authenticated()">    
+        <nav ng-controller="MasterController as vm" ng-show="authenticated()">    
 
             <!-- No Audit Menu -->      
                             
@@ -141,9 +141,8 @@
         <script type="text/javascript" src="app/controllers/FormController.js"></script>
         <script type="text/javascript" src="app/controllers/PdvController.js"></script>
         <script type="text/javascript" src="app/controllers/SearchController.js"></script>
-        <script type="text/javascript" src="app/controllers/CoachingController.js"></script>
         <script type="text/javascript" src="app/controllers/ExecutionController.js"></script>
-        <script type="text/javascript" src="app/controllers/LoginController.js"></script>
+        <script type="text/javascript" src="app/controllers/MasterController.js"></script>
         <script type="text/javascript" src="app/controllers/SynchronizerController.js"></script>
         <script type="text/javascript" src="app/controllers/DoSynchronizationController.js"></script>
         <script type="text/javascript" src="app/controllers/SyncOkController.js"></script>
@@ -152,7 +151,6 @@
         <script type="text/javascript" src="app/controllers/ObservationsController.js"></script>
         <script type="text/javascript" src="app/controllers/NoBrfController.js"></script>
         <script type="text/javascript" src="app/controllers/CategoryController.js"></script>
-        <script type="text/javascript" src="app/controllers/PricesController.js"></script>
         <script type="text/javascript" src="app/controllers/QuestionsController.js"></script>
         <script type="text/javascript" src="app/controllers/SendSynchronizationController.js"></script>
         <script type="text/javascript" src="app/controllers/HelpController.js"></script>
@@ -160,6 +158,7 @@
         <script type="text/javascript" src="app/controllers/BeforeLogOffController.js"></script>
         <script type="text/javascript" src="app/controllers/MandatoryQuestionsController.js"></script>
         <script type="text/javascript" src="app/controllers/LockSynchronizationController.js"></script>
+        <script type="text/javascript" src="app/controllers/AuthController.js"></script>
 
         <script type="text/javascript" src="app/services/Channel.js"></script>
         <script type="text/javascript" src="app/services/Category.js"></script>
