@@ -413,7 +413,7 @@
             })
             .then(function () {
                 $rootScope.$emit('synchronizationSuccessfulyFinished');
-                $location.path('/SyncOk');
+                $location.path('/SyncOk/1');
             })
             .catch(function(error){
                 console.log(error);

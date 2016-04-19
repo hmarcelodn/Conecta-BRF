@@ -96,7 +96,7 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				audit: false
 			}            
         })
-		.when('/SyncOk', {
+		.when('/SyncOk/:syncId', {
 			templateUrl: 'app/views/syncOk.html',
 			controller: 'SyncOkController',
             controllerAs: 'vm',

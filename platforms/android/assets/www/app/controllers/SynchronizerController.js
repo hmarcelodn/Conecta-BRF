@@ -15,6 +15,7 @@
 
         function activate() { 
             $scope.syncModeId = parseInt($routeParams.syncModeId); 
+            $scope.buttonText = $scope.syncModeId === 1 ? 'COMENZAR SINCRONIZACION' : 'ENVIAR DATOS';
             
             if(parseInt($routeParams.syncModeId) === 1){
                 $scope.syncRoute = '#/DoSynchronization';

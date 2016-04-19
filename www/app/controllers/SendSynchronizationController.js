@@ -18,6 +18,8 @@
         function activate() { 
             
             Survey.getClosedSurveys().then(function(surveys) {
+
+               console.log("sync surveys");
                 
                $scope.syncSurveys = 1;
                 
@@ -71,6 +73,9 @@
                return deferred.promise; 
             })
             .then(function() {
+
+              console.log("sync nobrf");
+
                $scope.syncNoBrf = 1;
                var deferred = $q.defer();
                
@@ -112,15 +117,23 @@
                return deferred.promise;                                 
             })
             .then(function() {
+
+              console.log("sync questions");
+
                $scope.syncQuestions = 1;               
                
                var deferred = $q.defer();
                var promises = new Array();
                
-                Survey.getClosedSurveys().then(function (surveys) {                    
+                Survey.getClosedSurveys().then(function (surveys) {          
+
+                  console.log(surveys);          
                     
                    angular.forEach(surveys, function (value, key) {                                            
                      Question.getQuestionsBySurveyId(value.id).then(function (questions) {
+
+                        console.log(questions);
+
                         promises.push(Survey.informSurveyQuestions
                         (
                             JSON.stringify
@@ -154,15 +167,15 @@
 
               var deferred = $q.defer();
 
-              Database.dropAll().then(function(){
+              //Database.dropAll().then(function(){
                 deferred.resolve();
-              });
+              //});
 
               return deferred.promise;
             })
             .then(function () {
                 $rootScope.$emit('sendSyncFinished');
-                $location.path('/SyncOk');
+                $location.path('/SyncOk/2');
             })
             .catch(function (error) {
                 console.log(error);

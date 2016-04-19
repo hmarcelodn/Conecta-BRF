@@ -162,7 +162,7 @@
             })
             .then(function () {
                 $rootScope.$emit('sendSyncFinished');
-                $location.path('/SyncOk');
+                $location.path('/SyncOk/2');
             })
             .catch(function (error) {
                 console.log(error);

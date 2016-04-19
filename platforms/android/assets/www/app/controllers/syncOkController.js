@@ -5,12 +5,14 @@
         .module('brfPhoneGapApp')
         .controller('SyncOkController', SyncOkController);
 
-    SyncOkController.$inject = [];
-    function SyncOkController() {
-        var vm = this;        
+    SyncOkController.$inject = ['$routeParams', '$scope'];
+    function SyncOkController($routeParams, $scope) {
+        var vm = this;              
 
         activate();
 
-        function activate() { }
+        function activate() { 
+        	$scope.syncId = parseInt($routeParams.syncId);
+        }
     }
 })();

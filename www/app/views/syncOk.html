@@ -22,7 +22,9 @@
 
 					<article class="card col s12">
 
-						<p class="center-align" style="font-size:22px;">Se han sincronizado correctamente sus datos</p>
+						<p ng-if="syncId === 1" class="center-align" style="font-size:22px;">Se han sincronizado correctamente sus datos</p>
+
+						<p ng-if="syncId !== 1" class="center-align" style="font-size:22px;">Sus datos han sido enviados correctamente.</p>
 						
 					</article>
 
