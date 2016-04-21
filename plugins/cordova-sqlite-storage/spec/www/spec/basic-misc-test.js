@@ -43,13 +43,14 @@ var mytests = function() {
             // prevent reuse of database from default db implementation:
             name: 'i2-'+name,
             androidDatabaseImplementation: 2,
-            androidLockWorkaround: 1
+            androidLockWorkaround: 1,
+            location: 1
           });
         }
         if (isWebSql) {
           return window.openDatabase(name, '1.0', 'Test', DEFAULT_SIZE);
         } else {
-          return window.sqlitePlugin.openDatabase(name, '1.0', 'Test', DEFAULT_SIZE);
+          return window.sqlitePlugin.openDatabase({name: name, location: 0});
         }
       }
 
@@ -482,37 +483,6 @@ var mytests = function() {
     });
 
   }
-
-  describe('Plugin - BASIC sqlitePlugin.openDatabase test(s)', function() {
-
-    var suiteName = 'plugin: ';
-
-        // NOTE: this was an issue due to the inconsistency ng cordova documentation and source code which
-        // triggered problems reported in litehelpers/Cordova-sqlite-storage#246 and
-        // litehelpers/Cordova-sqlcipher-adapter#5.
-        // The implementation now avoids this problem *by throwing an exception*.
-        // It could be nicer to just signal an error in the error callback, if present,
-        // through throwing an exception does prevent the user from using an invalid db object.
-        // Brody TBD: check how the Web SQL API would handle this condition?
-        it(suiteName + 'check that db name is really a string', function(done) {
-          var p1 = { name: 'my.db.name', location: 1 };
-          try {
-            window.sqlitePlugin.openDatabase({ name: p1 }, function(db) {
-              // not expected:
-              expect(false).toBe(true);
-              done();
-            }, function(error) {
-              // OK but NOT EXPECTED:
-              expect(true).toBe(true);
-              done();
-            });
-          } catch (e) {
-              // stopped by the implementation:
-              expect(true).toBe(true);
-              done();
-          }
-        }, MYTIMEOUT);
-  });
 
 }
 

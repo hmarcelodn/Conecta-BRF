@@ -98,6 +98,7 @@
         
         $rootScope.$on('userLoggedOff', function(){
            console.log('userLoggedOff');
+           localStorage.clear();
            $scope.mainModules = [];
            $location.path("/");
         });

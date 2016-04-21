@@ -16,7 +16,6 @@
             //self.db = window.sqlitePlugin.openDatabase(Config.DB_CONFIG.name, '1.0', 'database', 2000);
             self.db = window.openDatabase(Config.DB_CONFIG.name, '1.0', 'database', 2000);
 
-
             angular.forEach(Config.DB_CONFIG.tables, function(table){
                 var  columns = [];
 
