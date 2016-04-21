@@ -71,6 +71,7 @@
                return deferred.promise; 
             })
             .then(function() {
+
                $scope.syncNoBrf = 1;
                var deferred = $q.defer();
                
@@ -112,15 +113,21 @@
                return deferred.promise;                                 
             })
             .then(function() {
+
                $scope.syncQuestions = 1;               
                
                var deferred = $q.defer();
                var promises = new Array();
                
-                Survey.getClosedSurveys().then(function (surveys) {                    
+                Survey.getClosedSurveys().then(function (surveys) {          
+
+                  console.log(surveys);          
                     
                    angular.forEach(surveys, function (value, key) {                                            
                      Question.getQuestionsBySurveyId(value.id).then(function (questions) {
+
+                        console.log(questions);
+
                         promises.push(Survey.informSurveyQuestions
                         (
                             JSON.stringify
@@ -150,7 +157,7 @@
                
                return deferred.promise;                 
             })
-            .then(function(){
+            /*.then(function(){
 
               var deferred = $q.defer();
 
@@ -159,9 +166,9 @@
               });
 
               return deferred.promise;
-            })
+            })*/
             .then(function () {
-                $rootScope.$emit('sendSyncFinished');
+                //$rootScope.$emit('sendSyncFinished');
                 $location.path('/SyncOk/2');
             })
             .catch(function (error) {

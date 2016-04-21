@@ -22,7 +22,16 @@
         var getChannels = function(userChannels){
             return Database.query('SELECT id, name From Channel')
                 .then(function (result){
-                    return Database.fetchAll(result);
+                    var channels = Database.fetchAll(result);
+                    var allowedChannels = new Array();
+
+                    channels.forEach(function(channel){
+                        if(userChannels.indexOf(channel.id.toString()) !== -1){
+                            allowedChannels.push(channel);
+                        }
+                    });                   
+
+                    return allowedChannels;
                 });
         };        
         

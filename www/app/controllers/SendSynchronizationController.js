@@ -18,8 +18,6 @@
         function activate() { 
             
             Survey.getClosedSurveys().then(function(surveys) {
-
-               console.log("sync surveys");
                 
                $scope.syncSurveys = 1;
                 
@@ -74,8 +72,6 @@
             })
             .then(function() {
 
-              console.log("sync nobrf");
-
                $scope.syncNoBrf = 1;
                var deferred = $q.defer();
                
@@ -117,8 +113,6 @@
                return deferred.promise;                                 
             })
             .then(function() {
-
-              console.log("sync questions");
 
                $scope.syncQuestions = 1;               
                
@@ -163,18 +157,18 @@
                
                return deferred.promise;                 
             })
-            .then(function(){
+            /*.then(function(){
 
               var deferred = $q.defer();
 
-              //Database.dropAll().then(function(){
+              Database.dropAll().then(function(){
                 deferred.resolve();
-              //});
+              });
 
               return deferred.promise;
-            })
+            })*/
             .then(function () {
-                $rootScope.$emit('sendSyncFinished');
+                //$rootScope.$emit('sendSyncFinished');
                 $location.path('/SyncOk/2');
             })
             .catch(function (error) {
