@@ -9,7 +9,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "Category",
                 columns: 
                 [
-                    { name: 'id', type: 'integer primary key'},
+                    { name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'categoryId', type: 'integer' },
                     { name: 'type', type: 'integer' },
                     { name: 'name', type: 'text' },
@@ -19,7 +19,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "CategoryChannels",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'categoryId', type: 'integer' },
                     { name: 'channelId', type: 'integer' }
                 ]
@@ -28,7 +28,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "CategoryImage",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'imageId', type: 'integer' },
                     { name: 'idMod', type: 'integer' },
                     { name: 'idCat', type: 'integer' },
@@ -40,7 +40,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "Channel",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    { name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'name', type: 'text' }
                 ]
             },
@@ -48,7 +48,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "Customer",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'customerId', type: 'integer' },
                     { name: 'companyName', type: 'text' },
                     { name: 'cuit', type: 'text' },
@@ -61,7 +61,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "CustomerType",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'name', type: 'text' }
                 ]
             },
@@ -69,7 +69,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "Module",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'moduleId', type: 'integer' },
                     { name: 'behavior', type: 'text' },
                     { name: 'modName', type: 'text' },
@@ -84,7 +84,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "ModuleChannels",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'moduleId', type: 'integer' },
                     { name: 'channelId', type: 'integer' }
                 ]
@@ -93,7 +93,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "ModuleUserRoles",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    { name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'moduleId', type: 'integer' },
                     { name: 'roleId', type: 'integer' }
                 ]
@@ -102,7 +102,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "Question",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'questionId', type: 'integer' },
                     { name: 'categoryId', type: 'integer' },
                     { name: 'render', type: 'text' },
@@ -126,7 +126,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "QuestionPdv",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'questionId', type: 'integer' },
                     { name: 'pdvId', type: 'integer' }
                 ]
@@ -135,7 +135,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "Seller",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
+                    {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'name', type: 'name' }
                 ]
             },
@@ -143,7 +143,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "Survey",
                 columns: 
                 [
-                    { name: 'id', type: 'integer primary key'},
+                    { name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'survey', type: 'text' },
                     { name: 'syncStatus', type: 'integer' },
                     { name: 'channelId', type: 'integer' },
@@ -158,8 +158,8 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "SurveyNoBrfResults",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
-                    { name: 'surveyId', type: 'integer' },
+                    { name: 'id', type: 'integer primary key autoincrement'},
+                    { name: 'surveyId', type: 'integer references Survey(id) on delete cascade' },
                     { name: 'noBrf', type: 'boolean' }
                 ]
             },
@@ -167,8 +167,8 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "SurveyObservationResults",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
-                    { name: 'surveyId', type: 'integer' },
+                    {name: 'id', type: 'integer primary key autoincrement'},
+                    { name: 'surveyId', type: 'integer references Survey(id) on delete cascade' },
                     { name: 'observations', type: 'text' }
                 ]
             },
@@ -176,8 +176,8 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "SurveyQuestionsResults",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key'},
-                    { name: 'surveyId', type: 'integer' },
+                    {name: 'id', type: 'integer primary key autoincrement'},
+                    { name: 'surveyId', type: 'integer references Survey(id) on delete cascade' },
                     { name: 'questionId', type: 'integer' },
                     { name: 'JSONData', type: 'text' }
                 ]
@@ -186,7 +186,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "MainModule",
                 columns:
                 [
-                    { name: 'id', type: 'integer primary key' },
+                    { name: 'id', type: 'integer primary key autoincrement' },
                     { name: 'mod_name', type: 'text' },
                     { name: 'icon', type: 'text' },
                     { name: 'map_label', type: 'text' },
@@ -197,7 +197,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: 'Dating',
                 columns:
                 [
-                    { name: 'id', type: 'integer' },
+                    { name: 'id', type: 'integer primary key autoincrement' },
                     { name: 'type', type: 'text' },
                     { name: 'label', type: 'text' }
                 ]
@@ -206,7 +206,7 @@ brfPhoneGapApp.factory('Config', function(){
                 name: 'Target',
                 columns:
                 [
-                    { name: 'id', type: 'integer primary key' },                    
+                    { name: 'id', type: 'integer primary key autoincrement' },                    
                     { name: 'target_coaching', type: 'integer' },
                     { name: 'id_user', type: 'integer' }
                 ]

@@ -42,7 +42,24 @@
                     }
                 });                  
              });                                  
-        }
+        };
+
+        var cancelAudit = function(){
+            
+            Survey.disableAuditMode();
+
+            Survey.getPendingSurvey().then(function (pendingSurvey) {                
+                $q.all([
+                        Survey.deleteSurveyNoBrfResults(pendingSurvey.id),
+                        Survey.deleteSurveyObservationResults(pendingSurvey.id),
+                        Survey.deleteSurveyQuestionsResults(pendingSurvey.id),
+                        Survey.deleteSurvey(pendingSurvey.id)
+                    ]).then(function(){          
+                        //Survey.disableAuditMode();          
+                        $location.path('/Main');
+                    }); 
+            });           
+        };
 
         activate();
 
@@ -51,5 +68,6 @@
         }
         
         vm.closeAudit = closeAudit;
+        vm.cancelAudit = cancelAudit;
     }
 })();

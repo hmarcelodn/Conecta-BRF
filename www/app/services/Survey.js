@@ -362,6 +362,34 @@ var auditIdKey = 'audit-id';
                 })
         };
 
+        self.deleteSurveyNoBrfResults = function(auditId){
+            return Database.query('DELETE FROM SurveyNoBrfResults WHERE surveyId = ?', [auditId])
+                .then(function (result){
+                    return true;
+                });
+        };
+
+        self.deleteSurveyObservationResults = function(auditId){
+            return Database.query('DELETE FROM SurveyObservationResults WHERE surveyId = ?', [auditId])
+                .then(function (result){
+                    return true;
+                });
+        };
+
+        self.deleteSurveyQuestionsResults = function(auditId){
+            return Database.query('DELETE FROM SurveyQuestionsResults WHERE surveyId = ?', [auditId])
+                .then(function (result){
+                    return true;
+                });
+        };
+
+        self.deleteSurvey = function(auditId){
+            return Database.query('DELETE FROM Survey WHERE id = ?', [auditId])
+                .then(function (result){
+                    return true;
+                });
+        };
+
         return self;
     }
 })();
