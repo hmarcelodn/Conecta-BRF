@@ -105,7 +105,15 @@
                         <i class="material-icons" style="color:#e53935">cancel</i>
                         <a ng-controller="SurveyController as vm" ng-click="vm.closeAudit()" ng-href="#/Audit/{{vm.routeParams.auditId}}/Channel/{{vm.routeParams.channelId}}/Pdv/{{vm.routeParams.pdvId}}/Seller/{{vm.routeParams.sellerId}}/Mandatory">Cerrar Auditoría</a>
                     </div>
-                </li>                     
+                </li>   
+
+                <li ng-show="isAuditModeEnabled()">
+                   <div class="valign-wrapper">
+                        <i class="material-icons" style="color:#e53935">not_interested</i>
+                        <a ng-controller="SurveyController as vm" ng-click="vm.cancelAudit()" ng-href="#">Cancelar Auditoría</a>
+                    </div>
+                </li>
+
             </ul>                                    
 
             <a href="#" data-activates="slide-out" class="button-collapse show-on-large">
