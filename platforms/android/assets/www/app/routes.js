@@ -194,6 +194,15 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
                 audit: false
             }
         })
+        .when('/beforeCancelSurvey', {
+        	templateUrl: 'app/views/beforeCancelSurvey.html',
+        	controller: 'BeforeCancelSurveyController',
+        	controllerAs: 'vm',
+        	access:{
+        		isFreeAccess: true,
+        		audit: true        		
+        	}
+        })
         .when('/LockSynchronization/:leftCoaching',{
             templateUrl: 'app/views/lockSynchronization.html',
             controller: 'LockSynchronizationController',
