@@ -181,11 +181,11 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "cordova-plugin-crosswalk-webview": "1.5.0",
+    "cordova-plugin-crosswalk-webview": "1.6.1",
     "cordova-plugin-file": "4.1.1",
     "cordova-plugin-file-transfer": "1.5.0",
     "cordova-plugin-whitelist": "1.2.1",
-    "cordova-sqlite-storage": "0.8.4-dev"
+    "cordova-sqlite-storage": "1.2.1"
 };
 // BOTTOM OF METADATA
 });

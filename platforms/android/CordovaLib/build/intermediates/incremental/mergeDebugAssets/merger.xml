@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\Users\jimenag\Documents\PhoneGap\Brf\platforms\android\CordovaLib\assets"/></dataSet><dataSet config="debug"><source path="C:\Users\jimenag\Documents\PhoneGap\Brf\platforms\android\CordovaLib\src\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="C:\Luciano\Privado\BRF\Code\Conecta-BRF\platforms\android\CordovaLib\assets"/></dataSet><dataSet config="debug"><source path="C:\Luciano\Privado\BRF\Code\Conecta-BRF\platforms\android\CordovaLib\src\debug\assets"/></dataSet></merger>
