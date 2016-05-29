@@ -254,6 +254,7 @@
                     ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                     ' AND q.questionModuleId = ?' +
                     ' AND mod.idMainMod = ?' +
+                    ' AND q.is_dashboard = 1' +
                     ' GROUP BY q.title'; 
                                               
            return Database.query(query, [moduleId, mainModuleId])
