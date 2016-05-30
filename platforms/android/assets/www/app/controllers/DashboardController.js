@@ -46,7 +46,7 @@
                                     $scope.modules.push
                                     ( {
                                         percents: value,
-                                        points: questionsResult1        
+                                        points: questionsResult1     
                                     } );                                    
                                 });                
                         });

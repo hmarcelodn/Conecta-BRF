@@ -63,8 +63,9 @@
             var query = 'SELECT DISTINCT mod.id, mod.moduleId, mod.behavior, mod.modName, mod.categoryType, mod.color, mod.icon, mod.slug FROM Module mod' +
                             ' INNER JOIN ModuleChannels modcha ON modcha.moduleId = mod.moduleId' +
                             ' INNER JOIN ModuleUserRoles modur ON modur.moduleId = mod.moduleId' +
+                            //' INNER JOIN (Select Count(1) as cDashboard, questionModuleId qModId FROM Question q WHERE q.is_Dashboard = 1 Group By questionModuleId) dashC ON mod.id = dashC.qModId' +
                             ' WHERE modcha.channelId = ?' +
-                            ' AND modur.roleId = ?' + 
+                            ' AND modur.roleId = ?' +
                             ' AND mod.idMainMod = ?';
 
             return Database.query(query, [channelId, roleId, auditId])

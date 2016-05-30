@@ -1,0 +1,39 @@
+<!--<div class="fixed-action-btn" style="bottom:15px; right: 15px;">
+	<a class="btn-floating btn-large red modal-trigger" href="javascript:history.go(-1)">
+		<i class="large material-icons">arrow_back</i>
+	</a>
+</div>-->
+
+<!-- Planograma -->
+<!--
+<div class="fixed-action-btn" style="bottom:15px; right:75px;">
+    <a class="btn-floating btn-large green modal-trigger" ng-href="" ng-click="vm.openModal()"><i class="large material-icons">map</i></a>
+</div>
+-->
+
+<!--
+<section id="modal1" class="modal" style="width:100%;">
+    <img class="activator" src="images/content/office.jpg"></img>			
+</section>
+-->
+		
+<section class="row center-align" style="width:100%;">
+	<article class="col s12">			
+		<article class="card blue-grey darken-1 col s12">				
+			<div class="card-content white-text">
+				<p>{{vm.currentModule.modName}}</p>
+				<p><small>{{vm.currentCategory.name}}</small></p>
+			</div>					
+		</article>			
+	</article>
+</section>
+		
+<main style="margin-top:-30px;">		  
+	<section class="row col s12">
+		<questions content="questions"></questions>
+	</section>		
+</main>
+
+<div ng-if="routeParams.categoryType !== undefined" class="fixed-action-btn" style="bottom:15px; right: 15px;">
+	<a class="btn-floating btn-large red modal-trigger" href="javascript:history.go(-1)"><i class="large material-icons">arrow_back</i></a>
+</div>
