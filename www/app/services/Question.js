@@ -255,8 +255,9 @@
                     ' AND q.questionModuleId = ?' +
                     ' AND mod.idMainMod = ?' +
                     ' AND q.is_dashboard = 1' +
+                    " AND ( (q.questionModuleId not in (4,17,23,26)) OR  (q.questionModuleId in (4,17,23,26) and res0.JSONData LIKE '%false%'))" +
                     ' GROUP BY q.title'; 
-                                              
+                    console.log (query);                          
            return Database.query(query, [moduleId, mainModuleId])
             .then(function(result){
                 return Database.fetchAll(result);
