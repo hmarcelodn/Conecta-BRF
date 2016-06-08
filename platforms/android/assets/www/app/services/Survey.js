@@ -276,12 +276,20 @@ var auditIdKey = 'audit-id';
 
         self.getAveragePerModule = function(mainModuleId){            
             
-            var query = 'SELECT ROUND(AVG(afr.final_value), 2) [moduleAverage], afr.id_mod, mod.modName [moduleName], mod.icon FROM AuditFinalValues afr' +
-                        ' INNER JOIN Module mod ON mod.moduleId = afr.id_mod' +
+            var query = 'SELECT ROUND(AVG(afr.final_value), 2) [moduleAverage], afr.id_mod, mod.modName [moduleName], mod.icon, dashC.cDashboard' +
+                        ' FROM AuditFinalValues afr' +
+                        '   INNER JOIN Module mod ON mod.moduleId = afr.id_mod' +
+                        '   INNER JOIN (Select Count(1) as cDashboard, questionModuleId qModId' +
+                        '               FROM Question q INNER JOIN SurveyQuestionsResults res0 on q.questionId = res0.questionId ' +
+                        '               WHERE q.is_Dashboard = 1' +
+                        "                   AND ( (q.questionModuleId not in (4,17,23,26)) OR (q.questionModuleId in (4,17,23,26) and res0.JSONData LIKE '%false%'))" +
+                        '               GROUP BY questionModuleId) dashC ON mod.moduleid = dashC.qModId ' +
                         ' WHERE afr.id_mainmod = ?' +
                         ' GROUP BY afr.id_mod' +
                         ' HAVING moduleAverage IS NOT NULL';                   
-            
+
+            //console.log (query);
+                        
             return Database.query(query, [mainModuleId])
                 .then(function(result){
                     return Database.fetchAll(result);

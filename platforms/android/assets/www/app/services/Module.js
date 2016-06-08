@@ -67,6 +67,9 @@
                             ' WHERE modcha.channelId = ?' +
                             ' AND modur.roleId = ?' +
                             ' AND mod.idMainMod = ?';
+                            
+                //console.log ('ModQry');
+            //console.log (query);                            
 
             return Database.query(query, [channelId, roleId, auditId])
                 .then(function (result){
