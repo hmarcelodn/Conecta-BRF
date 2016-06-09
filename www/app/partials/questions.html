@@ -69,21 +69,21 @@
 		</div>	
 
 		<!-- Binary Action -->
-		<div ng-if="question.answer === 'binary'" 
+		<div ng-if="question.answer === 'binary' || question.answer === 'binary_strict'" 
 			 ng-show="question.JSONData.value === undefined"
 			 class="card-action center-align">
 			<a href ng-click="vm.binaryAction(question, true)">{{question.config.answer_config.labels[1]}}</a>
 			<a href ng-click="vm.binaryAction(question, false)">{{question.config.answer_config.labels[0]}}</a>
 		</div>
 
-		<div ng-if="question.answer === 'binary'" 
+		<div ng-if="question.answer === 'binary' || question.answer === 'binary_strict'" 
 			 ng-show="(question.JSONData.value !== undefined && question.JSONData.value === true)"
 			 class="card-action right-align">
 			<i class="material-icons left" style="position:relative;left:-20px;top:-5px;color:#54922a;">check_circle</i>
 			<a href ng-click="vm.undoBinaryAction(question)"><strong style="color:#54922a;">{{question.config.answer_config.labels[1]}}</strong></a>
 		</div>
 
-		<div ng-if="question.answer === 'binary'" 
+		<div ng-if="question.answer === 'binary' || question.answer === 'binary_strict'" 
 			 ng-show="(question.JSONData.value !== undefined && question.JSONData.value === false)"
 			 class="card-action right-align">
 			<i class="material-icons left" style="position:relative;left:-20px;top:-5px;color:#cd372f;">cancel</i>

@@ -84,6 +84,9 @@
                                     case 'binary':
                                         result = {};
                                         break;
+                                    case 'binary_strict':
+                                        result = {};
+                                        break;
                                     case 'open':
                                         result = { value: '' };
                                         break;
