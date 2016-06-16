@@ -15,7 +15,7 @@
         
         var binaryAction = function(question, answer){
             var result = { 
-                value: (answer == 1) ?true:(answer == 2)?'neutral':false 
+                value: (answer == 1) ?true:(answer == 2)?"neutral":false 
             };
 
             Survey.getPendingSurvey().then(function(survey){

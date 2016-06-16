@@ -73,7 +73,7 @@
 			 ng-show="question.JSONData.value === undefined"
 			 class="card-action center-align">
 			 <ng-repeat ng-repeat="n in range(question.config.answer_config.labels.length) track by $index">
-			 <a href ng-click="vm.binaryAction(question, question.config.answer_config.result[$index])">{{question.config.answer_config.labels[$index]}}</a>
+			 <a href ng-click="vm.binaryAction(question, (question.config.answer_config.labels.length == 2)?$index:question.config.answer_config.result[$index])">{{question.config.answer_config.labels[$index]}}</a>
 			 </ng-repeat>
 		</div>
 
