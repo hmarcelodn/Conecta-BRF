@@ -276,7 +276,7 @@ var auditIdKey = 'audit-id';
 
         self.getAveragePerModule = function(mainModuleId){            
             
-            var query = 'SELECT Case  WHEN (ifnull(BinStrict.cBinStrict, 0)  = 0) THEN 0 ELSE ROUND(AVG(afr.final_value), 2) END as [moduleAverage] , afr.id_mod, mod.modName [moduleName], mod.icon, dashC.cDashboard, ifnull(BinStrict.cBinStrict, 0)' +
+            var query = 'SELECT Case  WHEN (ifnull(BinStrict.cBinStrict, 0) > 0) THEN 0 ELSE ROUND(AVG(afr.final_value), 2) END as [moduleAverage] , afr.id_mod, mod.modName [moduleName], mod.icon, dashC.cDashboard, ifnull(BinStrict.cBinStrict, 0)' +
                         ' FROM AuditFinalValues afr' +
                         '   INNER JOIN Module mod ON mod.moduleId = afr.id_mod' +
                         '   INNER JOIN (Select Count(1) as cDashboard, questionModuleId qModId' +
