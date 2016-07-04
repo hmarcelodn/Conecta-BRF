@@ -54,7 +54,8 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'cuit', type: 'text' },
                     { name: 'address', type: 'text' },
                     { name: 'pdvType', type: 'integer' },
-                    { name: 'highlighted', type: 'integer' }
+                    { name: 'highlighted', type: 'integer' },
+                    { name: 'channelId', type: 'integer' }
                 ]
             },
             {
@@ -136,7 +137,8 @@ brfPhoneGapApp.factory('Config', function(){
                 columns: 
                 [
                     {name: 'id', type: 'integer primary key autoincrement'},
-                    { name: 'name', type: 'name' }
+                    { name: 'name', type: 'name' },
+                    { name: 'channelId', type: 'integer' },
                 ]
             },
             {

@@ -16,7 +16,7 @@
         function activate() { 
             $scope.channelId = $routeParams.channelId;
             
-            Customer.getCustomers().then(function(customers){
+            Customer.getCustomers($scope.channelId).then(function(customers){
                 vm.customers = customers;
                 vm.lastPdvId = Survey.getLastAuditPdv() === null ? undefined : Survey.getLastAuditPdv();
                 vm.auditId = $routeParams.auditId;

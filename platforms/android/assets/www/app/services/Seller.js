@@ -13,15 +13,15 @@
             return $http.get('https://ws.conecta-brf.com/get/sellers/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
-        self.setSeller = function (id, name){
-            return Database.query('INSERT INTO Seller(id, name) VALUES(?, ?)', [id, name])
+        self.setSeller = function (id, name, channelId){
+            return Database.query('INSERT INTO Seller(id, name, channelId) VALUES(?, ?, ?)', [id, name, channelId])
                 .then(function (result){
                     return true;
                 });
         };
 
-        self.getSellers = function (){
-            return Database.query('SELECT id, name FROM Seller')
+        self.getSellers = function (channelid){
+            return Database.query('SELECT id, name, channelId FROM Seller WHERE channelId=?', [channelid])
                 .then(function (result){
                     return Database.fetchAll(result);
                 });

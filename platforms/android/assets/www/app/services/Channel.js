@@ -12,7 +12,7 @@
             return $http.get('https://ws.conecta-brf.com/get/channels/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
-        var setChannel = function(id, name){
+        var setChannel = function(id, name, channelId){
             return Database.query('INSERT INTO Channel(id, name) VALUES(?, ?)', [id, name])
                 .then(function (result){
                     return true;

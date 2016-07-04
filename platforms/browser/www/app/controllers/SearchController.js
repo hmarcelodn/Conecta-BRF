@@ -24,7 +24,7 @@
                 $scope.defaultModuleSlug = modules[0].slug;
             });
 
-            Seller.getSellers().then(function(sellers){
+            Seller.getSellers($scope.channelId).then(function(sellers){
                 $scope.sellers = sellers;		
             });	            
             

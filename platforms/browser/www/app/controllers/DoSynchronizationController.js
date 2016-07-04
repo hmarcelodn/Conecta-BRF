@@ -69,7 +69,7 @@
                     var promises = [];
 
                     angular.forEach(customers.data.customers, function(value, key){
-                        promises.push(Customer.setCustomer(value.id, value["company_name"], value.cuit, value.address, value.type_pdv, value.highlighted));			
+                        promises.push(Customer.setCustomer(value.id, value["company_name"], value.cuit, value.address, value.type_pdv, value.highlighted, value.id_channel));			
                     });
 
                     $q.all(promises).then(function(){
@@ -115,7 +115,7 @@
                     var promises = [];
 
                     angular.forEach(sellers.data.sellers, function(value, key){
-                        promises.push(Seller.setSeller(value.id, value.name));							
+                        promises.push(Seller.setSeller(value.id, value.name, value.id_channel));							
                     });
 
                     $q.all(promises).then(function(){
