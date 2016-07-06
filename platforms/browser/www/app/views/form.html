@@ -32,7 +32,7 @@
 		<ul class="collection with-header">				
 			<li class="collection-item" ng-repeat="customer in vm.customers | filter: query" ng-class="(customer.highlighted == '1') ? 'highlightedCustomer' : ''">						
 				<a ng-href="#/Audit/{{vm.auditId}}/Channel/{{channelId}}/Pdv/{{customer.customerId}}/Seller">
-					{{customer.address}}
+					{{customer.code}} - {{customer.address}}
 					<div class="secondary-content">
 						<i class="material-icons">chevron_right</i>
 					</div>

@@ -48,14 +48,15 @@ brfPhoneGapApp.factory('Config', function(){
                 name: "Customer",
                 columns: 
                 [
-                    {name: 'id', type: 'integer primary key autoincrement'},
+                    { name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'customerId', type: 'integer' },
                     { name: 'companyName', type: 'text' },
                     { name: 'cuit', type: 'text' },
                     { name: 'address', type: 'text' },
                     { name: 'pdvType', type: 'integer' },
                     { name: 'highlighted', type: 'integer' },
-                    { name: 'channelId', type: 'integer' }
+                    { name: 'channelId', type: 'integer' },
+                    { name: 'code', type: 'text'}
                 ]
             },
             {

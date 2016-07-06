@@ -29,7 +29,7 @@
                 if(Survey.getAuditMode() === true){
 
                     Customer.getPdvById(Survey.getAuditPdv()).then(function(customer){
-                        $scope.auditCustomerName = customer.address; 
+                        $scope.auditCustomerName = customer.pdvTypeName + ' - ' + customer.address; 
                     });
 
                 }              

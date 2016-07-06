@@ -153,7 +153,7 @@
         };
         
         self.getQuestionsBySurveyId = function(surveyId){
-            return Database.query('SELECT questionId AS [id], JSONData AS [value] FROM SurveyQuestionsResults WHERE surveyId = ? AND JSONData not like (%neutral%)', [surveyId])
+            return Database.query("SELECT questionId AS [id], JSONData AS [value] FROM SurveyQuestionsResults WHERE surveyId = ? AND JSONData not like ('%neutral%')", [surveyId])
                 .then(function(result){
                     var questions = Database.fetchAll(result);
                     var questionsResult = new Array();

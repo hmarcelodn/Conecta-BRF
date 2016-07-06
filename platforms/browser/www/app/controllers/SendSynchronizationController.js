@@ -34,7 +34,7 @@
                                         "data":
                                         {
                                             "main":
-                                            {
+                                           {
                                                 "id_user": value.userId,
                                                 "survey": value.survey,
                                                 "token": "560a100abad225d5afdf4fc6e5334917"
@@ -126,7 +126,7 @@
                    angular.forEach(surveys, function (value, key) {                                            
                      Question.getQuestionsBySurveyId(value.id).then(function (questions) {
 
-                        console.log(questions);
+                        //console.log(questions);
 
                         promises.push(Survey.informSurveyQuestions
                         (
@@ -149,7 +149,7 @@
                      });
                    });
                 });                                                        
-               
+               //console.log ("EXIT");
                $q.all(promises).then(function () {
                   $scope.syncQuestions = 2;
                   deferred.resolve();

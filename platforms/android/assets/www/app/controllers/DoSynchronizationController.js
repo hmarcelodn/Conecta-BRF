@@ -69,7 +69,7 @@
                     var promises = [];
 
                     angular.forEach(customers.data.customers, function(value, key){
-                        promises.push(Customer.setCustomer(value.id, value["company_name"], value.cuit, value.address, value.type_pdv, value.highlighted, value.id_channel));			
+                        promises.push(Customer.setCustomer(value.id, value["company_name"], value.cuit, value.address, value.type_pdv, value.highlighted, value.id_channel, value.code));			
                     });
 
                     $q.all(promises).then(function(){
