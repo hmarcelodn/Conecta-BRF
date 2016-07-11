@@ -30,6 +30,7 @@
             $scope.syncCategories = 0;
             $scope.syncCategoriesImg = 0;
             $scope.syncQuestions = 0;
+            $scope.syncQuestionsGroups = 0;
             $scope.syncImages = 0;
             $scope.syncDating = 0;
             $scope.syncTarget = 0;
@@ -283,7 +284,8 @@
                             has_percent: value.has_percent,
                             is_dashboard: value.is_dashboard,
                             weight: value.weight,
-                            is_coaching: value.is_coaching
+                            is_coaching: value.is_coaching,
+                            id_group: value.id_group
                         })); 
                     
                         angular.forEach(value.pdv_filter, function(value, key){
@@ -300,6 +302,29 @@
                     deferred.reject(error);
                 });
                 
+                return deferred.promise;
+            })
+            .then(function(){
+
+                var deferred = $q.defer();
+                $scope.syncQuestionsGroups = 1;
+
+                Question.synchronizeQuestionsGroups().then(function(questionsGroups){
+                    var promises = [];
+
+                    angular.forEach(questionsGroups.data.groups, function(value, key){
+                        promises.push(Question.setQuestionGroups(value.id, value.type, value.name, value.target_min, value.target_max)); 
+                    
+                    });
+
+                    $q.all(promises).then(function(){
+                        $scope.syncQuestionsGroups = 2;
+                        deferred.resolve();                        
+                    });
+                })
+                .catch(function(error){			
+                    deferred.reject(error);
+                });
                 return deferred.promise;
             })
             .then(function() {

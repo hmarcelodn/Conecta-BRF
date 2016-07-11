@@ -61,12 +61,20 @@
 			{{question.title}}		
 		</h5>
 
-		<!-- Planograma percentage -->
+		<!-- Open percentage -->
 		<div class="col s12" style="position:absolute;" ng-if="question.has_percent === 1 && question.answer === 'open' && question.config.answer_config.is_number === true">
 			<div style="position:relative;top:-30px;left:85%;">
 				<span style="background-color:#515151;color:white;padding:3px 5px;">{{question.percent === '' ? '0%' : question.percent + '%'}}</span>
 			</div>
 		</div>	
+
+		<!-- Planograma percentage -->
+		<div class="col s12" style="position:absolute;" ng-if="question.has_percent === 1 && question.answer === 'planogram' && question.config.answer_config.is_number === true">
+			<div style="position:relative;top:-30px;left:85%;">
+				<span style="background-color:#515151;color:white;padding:3px 5px;">{{question.percent === '' ? '0%' : question.percent + '%'}}</span>
+			</div>
+		</div>	
+
 
 		<!-- Binary Action -->
 		<div ng-if="question.answer === 'binary' || question.answer === 'binary_strict'" 
@@ -110,6 +118,21 @@
 					   style="width:100%;padding:0;margin:0;" 
 					   placeholder="Cantidad" 
 					   ng-change="vm.openAction(question)" 
+					   ng-model="question.JSONData.value"/>
+			</div>					
+		</div>
+
+		<!-- Planogram Action -->
+
+		<div ng-if="question.answer === 'planogram'" 
+		     class="card-action" 
+		     style="margin-left:-20px;overflow:auto;">		
+			<div>
+				<input type="number" 
+					   min="0"
+					   style="width:100%;padding:0;margin:0;" 
+					   placeholder="Cantidad" 
+					   ng-change="vm.planogramAction(question)" 
 					   ng-model="question.JSONData.value"/>
 			</div>					
 		</div>

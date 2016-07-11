@@ -42,6 +42,15 @@
             });			
         };
 
+        var planogramAction = function(question){
+            Survey.getPendingSurvey().then(function(survey){
+                Survey.setQuestionAnswer(survey.id, question.id, JSON.stringify(question.JSONData)).then(function(){
+                    updatePercents();
+                    return;
+                });
+            });			
+        };
+
         var priceAction = function(question){
             Survey.getPendingSurvey().then(function(survey){
                 Survey.setQuestionAnswer(survey.id, question.id, JSON.stringify(question.JSONData)).then(function(){
@@ -76,6 +85,8 @@
             /* Calculate Total Quantities */
             angular.forEach(percentQuestions, function(questionItem){
                 questionItem.percent = parseInt((questionItem.JSONData.value === "" ? 0: questionItem.JSONData.value / totalQuantity) * 100);
+                //questionItem.grpType ==1 &&
+                //LUU calculo de porcentaje
             });
         };
 
@@ -139,6 +150,7 @@
         vm.binaryAction = binaryAction;
         vm.undoBinaryAction = undoBinaryAction;
         vm.openAction = openAction;
+        vm.planogramAction = planogramAction;
         vm.priceAction = priceAction;
         vm.multipleAction = multipleAction; 
         vm.openModal = openModal;    

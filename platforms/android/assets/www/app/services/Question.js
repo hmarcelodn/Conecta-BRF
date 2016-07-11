@@ -11,10 +11,11 @@
 
         self.synchronizeQuestions = function () {
             return $http.get('https://ws.conecta-brf.com/get/questions/?token=560a100abad225d5afdf4fc6e5334917');
+            //return $http.get('https://ws.qa.conecta-brf.com/get/questions/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
         self.setQuestion = function (question){
-            return Database.query('INSERT INTO Question(questionId, categoryId, render, answer, title, data, helper, big, thumb, questionModuleId, config, styling, is_mandatory, has_percent, is_dashboard, weight, is_coaching) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+            return Database.query('INSERT INTO Question(questionId, categoryId, render, answer, title, data, helper, big, thumb, questionModuleId, config, styling, is_mandatory, has_percent, is_dashboard, weight, is_coaching, id_group) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
                         [
                             question.questionId, 
                             question.categoryId, 
@@ -32,7 +33,8 @@
                             question.has_percent,
                             question.is_dashboard,
                             question.weight,
-                            question.is_coaching
+                            question.is_coaching,
+                            question.id_group
                         ])
             .then(function (result){
                 return true;
@@ -46,28 +48,57 @@
                 });
         };
 
+        self.synchronizeQuestionsGroups = function () {
+            return $http.get('https://ws.conecta-brf.com/get/questions/groups/?token=560a100abad225d5afdf4fc6e5334917');
+        };
+
+        self.setQuestionGroups = function (questionGroupId, Type, Name, TargetMin, TargetMax){
+            return Database.query('INSERT INTO QuestionGroups(questionGroupId, Type, Name, TargetMin, TargetMax) VALUES(?, ?, ?, ?, ?)', 
+                        [
+                            questionGroupId, 
+                            Type,
+                            Name, 
+                            TargetMin,
+                            TargetMax
+                        ])
+            .then(function (result){
+                return true;
+            });
+        };
+
+
         self.getQuestions = function(moduleId, surveyId, categoryId, categoryType){
 
             var query;			
 
             if(categoryType === 0){
-                query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent, q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big FROM Question q' +
+                query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
+                        ' q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big, q.id_group, qg.Type as grpType, qg.TargetMin, qg.TargetMax' +
+                        ' FROM Question q' +
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
                         ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
+                        ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
                         ' WHERE q.questionModuleId = ?';
             }
             else{
-                query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent, q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big FROM Question q' +
+                query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
+                        ' q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big, q.id_group, qg.Type as grpType, qg.TargetMin, qg.TargetMax' +
+                        ' FROM Question q' +
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
                         ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                         ' INNER JOIN Category cat ON cat.categoryId = q.categoryId' +
                         ' AND cat.type = mod.categoryType' +
+                        ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
                         ' WHERE q.questionModuleId = ?';
             }
 
             if(categoryId !== undefined && categoryId !== null && categoryId != 0){
                 query = query + ' AND q.categoryId = ' + categoryId;
             }		
+//LUU
+console.log ("A");
+console.log (query);
+console.log ("B");
 
             return Database.query(query, [surveyId, moduleId])
                 .then(function (res){		
@@ -90,6 +121,9 @@
                                     case 'open':
                                         result = { value: '' };
                                         break;
+                                    case 'planogram':
+                                        result = { value: '' };
+                                        break;                                        
                                     case 'price':
                                         result = { value: '' };
                                         break;
@@ -143,7 +177,11 @@
                                     JSONData: renderJSONData(res.rows.item(i).JSONData, 
                                                             res.rows.item(i).answer),
                                     big: res.rows.item(i).big,
-                                    thumb: res.rows.item(i).thumb
+                                    thumb: res.rows.item(i).thumb,
+                                    id_group: res.rows.item(i).id_group,
+                                    grpType: res.rows.item(i).grpType, 
+                                    TargetMin: res.rows.item(i).TargetMin, 
+                                    TargetMax: res.rows.item(i).TargetMax
                                 }
                             );
                         }
@@ -258,7 +296,7 @@
                     ' AND q.questionModuleId = ?' +
                     ' AND mod.idMainMod = ?' +
                     ' AND q.is_dashboard = 1' +
-                    " AND ( (q.questionModuleId not in (4,17,23,26)) OR  (q.questionModuleId in (4,17,23,26) and res0.JSONData LIKE '%false%'))" +
+                    " AND ( (q.questionModuleId not in (4,17,23,26,31,36,37,38)) OR  (q.questionModuleId in (4,17,23,26,31,36,37,38) and res0.JSONData LIKE '%false%'))" +
                     ' GROUP BY q.title'; 
                     //console.log (query);                          
            return Database.query(query, [moduleId, mainModuleId])

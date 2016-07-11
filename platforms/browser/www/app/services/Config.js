@@ -121,7 +121,20 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'has_percent', type: 'integer' },
                     { name: 'is_dashboard', type: 'integer' },
                     { name: 'weight', type: 'integer' },
-                    { name: 'is_coaching', type: 'integer' }
+                    { name: 'is_coaching', type: 'integer' },
+                    { name: 'id_group', type: 'integer' }
+                ]
+            },
+            {
+                name: "QuestionGroups",
+                columns: 
+                [
+                    { name: 'id', type: 'integer primary key autoincrement'},
+                    { name: 'questionGroupId', type: 'integer' },
+                    { name: 'Type', type: 'integer' },
+                    { name: 'Name', type: 'text' },
+                    { name: 'TargetMin', type: 'integer' },
+                    { name: 'TargetMax', type: 'integer' }
                 ]
             },
             {

@@ -277,22 +277,21 @@ var auditIdKey = 'audit-id';
         };
 
         self.getAveragePerModule = function(mainModuleId){            
-            
+            //LUU calculo de porcentajes
             var query = 'SELECT Case  WHEN (ifnull(BinStrict.cBinStrict, 0) > 0) THEN 0 ELSE ROUND(AVG(afr.final_value), 2) END as [moduleAverage] , afr.id_mod, mod.modName [moduleName], mod.icon, dashC.cDashboard, ifnull(BinStrict.cBinStrict, 0)' +
                         ' FROM AuditFinalValues afr' +
                         '   INNER JOIN Module mod ON mod.moduleId = afr.id_mod' +
                         '   INNER JOIN (Select Count(1) as cDashboard, questionModuleId qModId' +
                         '               FROM Question q INNER JOIN SurveyQuestionsResults res0 on q.questionId = res0.questionId ' +
                         '               WHERE q.is_Dashboard = 1' +
-                        "                   AND ( (q.questionModuleId not in (4,17,23,26,31,36,37,38)) OR (q.questionModuleId in (4,17,23,26) and res0.JSONData LIKE '%false%'))" +
+                        "                   AND ( (q.questionModuleId not in (4,17,23,26,31,36,37,38)) OR (q.questionModuleId in (4,17,23,26,31,36,37,38) and res0.JSONData LIKE '%false%'))" +
                         '               GROUP BY questionModuleId) dashC ON mod.moduleid = dashC.qModId ' +
                         '   LEFT JOIN (Select ifnull(Count(1),0) as cBinStrict, questionModuleId qModId' +
                         '               FROM Question q INNER JOIN SurveyQuestionsResults res0 on q.questionId = res0.questionId ' +
                         '               WHERE q.is_Dashboard = 1' +
                         "                     AND q.answer = 'binary_strict' " +
-                        "                     AND ( (q.questionModuleId not in (4,17,23,26,31,36,37,38)) OR (q.questionModuleId in (4,17,23,26) and res0.JSONData LIKE '%false%'))" +
+                        "                     AND ( (q.questionModuleId not in (4,17,23,26,31,36,37,38)) OR (q.questionModuleId in (4,17,23,26,31,36,37,38) and res0.JSONData LIKE '%false%'))" +
                         '               GROUP BY questionModuleId) BinStrict ON mod.moduleid = BinStrict.qModId ' +
-                        
                         ' WHERE afr.id_mainmod = ?' +
                         ' GROUP BY afr.id_mod' +
                         ' HAVING moduleAverage IS NOT NULL';                   
