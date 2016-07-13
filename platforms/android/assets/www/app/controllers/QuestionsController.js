@@ -76,15 +76,22 @@
 
 
             var totalQuantity = 0;
+            var totalQuantityBRF = 0;
 
             /* Calculate Total Quantities */
             angular.forEach(percentQuestions, function(questionItem){
-                totalQuantity += (questionItem.JSONData.value === "" ? 0 : parseInt(questionItem.JSONData.value));
+                totalQuantity += ((questionItem.JSONData.value === "" || questionItem.JSONData.value === null)  ? 0 : parseInt(questionItem.JSONData.value));
+                // LUU contador de los Type Id 
+                    ////totalQuantityBRF += (questionItem.grpType.value == "1"  ? 1 : 0);
+                /*console.log ("totalQuantityBRF");
+                console.log (questionItem.grpType.value);
+                console.log (totalQuantityBRF);
+                */
             });
 
             /* Calculate Total Quantities */
             angular.forEach(percentQuestions, function(questionItem){
-                questionItem.percent = parseInt((questionItem.JSONData.value === "" ? 0: questionItem.JSONData.value / totalQuantity) * 100);
+                questionItem.percent = parseInt(((questionItem.JSONData.value === "" || questionItem.JSONData.value === null)  ? 0 : questionItem.JSONData.value / totalQuantity) * 100);
                 //questionItem.grpType ==1 &&
                 //LUU calculo de porcentaje
             });
@@ -116,7 +123,7 @@
                             vm.currentModule = module;
                         });
                     
-                    Question.getQuestions($routeParams.moduleId, pendingSurvey.id, $routeParams.categoryId, $routeParams.categoryType)
+                    Question.getQuestions($routeParams.moduleId, pendingSurvey.id, $routeParams.categoryId, $routeParams.categoryType, $routeParams.pdvId)
                         .then(function(questions){
                             $scope.questions = questions;
                             updatePercents();
@@ -130,13 +137,13 @@
                         
                     Survey.getPendingSurvey().then(function (pendingSurvey){
                         if(pendingSurvey !== undefined){
-                            Question.getQuestions(module.moduleId, pendingSurvey.id, undefined, module.categoryType).then(function(questions){
+                            Question.getQuestions(module.moduleId, pendingSurvey.id, undefined, module.categoryType, $routeParams.pdvId).then(function(questions){
                                 $scope.questions = questions;
                                 updatePercents();
                             });
                         }
                         else{
-                            Question.getQuestions($routeParams.moduleId, 0, undefined, module.categoryType).then(function(questions){
+                            Question.getQuestions($routeParams.moduleId, 0, undefined, module.categoryType, $routeParams.pdvId).then(function(questions){
                                 $scope.questions = questions;
                                 updatePercents();
                             });

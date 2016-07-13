@@ -67,7 +67,7 @@
         };
 
 
-        self.getQuestions = function(moduleId, surveyId, categoryId, categoryType){
+        self.getQuestions = function(moduleId, surveyId, categoryId, categoryType, PdvId){
 
             var query;			
 
@@ -75,32 +75,47 @@
                 query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
                         ' q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big, q.id_group, qg.Type as grpType, qg.TargetMin, qg.TargetMax' +
                         ' FROM Question q' +
+                        //' INNER JOIN (Select QP.questionId, QP.PDVId FROM QuestionPDV QP LEFT JOIN Customer C ON C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) QP ON q.questionId = QP.questionId ' +
+                        /// ' INNER JOIN QuestionPDV qp ON q.questionId = qp.questionId ' + 
+                        /// ' LEFT JOIN Customer C ON ((C.customerId=' + PdvId + ' AND qp.PDVId = c.pdvType) OR (qp.PDVId = 0) )' +
+                        //
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
                         ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
-                        ' WHERE q.questionModuleId = ?';
+                        ' WHERE q.questionModuleId = ? ' +
+                        ' AND q.questionId IN (Select QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) ';
+                       
             }
             else{
                 query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
                         ' q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big, q.id_group, qg.Type as grpType, qg.TargetMin, qg.TargetMax' +
                         ' FROM Question q' +
+                        //' INNER JOIN (Select QP.questionId, QP.PDVId FROM QuestionPDV QP LEFT JOIN Customer C ON C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) QP ON q.questionId = QP.questionId ' +
+                        /// ' INNER JOIN QuestionPDV qp ON q.questionId = qp.questionId ' + 
+                        /// ' LEFT JOIN Customer C ON ((C.customerId=' + PdvId + ' AND qp.PDVId = c.pdvType) OR (qp.PDVId = 0) )' +
+                        //
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
                         ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                         ' INNER JOIN Category cat ON cat.categoryId = q.categoryId' +
                         ' AND cat.type = mod.categoryType' +
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
-                        ' WHERE q.questionModuleId = ?';
+                        ' WHERE q.questionModuleId = ? ' +
+                        ' AND q.questionId IN (Select QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) ';
             }
-
+            
             if(categoryId !== undefined && categoryId !== null && categoryId != 0){
                 query = query + ' AND q.categoryId = ' + categoryId;
             }		
 //LUU
 /* console.log ("A");
 console.log (query);
-console.log ("B");
+console.log ("moduleId");
+console.log (moduleId);
+console.log ("surveyId");
+console.log (surveyId);
+console.log ("PdvId");
+console.log (PdvId);
 */
-
             return Database.query(query, [surveyId, moduleId])
                 .then(function (res){		
 
@@ -155,6 +170,10 @@ console.log ("B");
 
                             return config;
                         };
+// LUU
+//console.log ("res.rows.length");
+//console.log (res.rows.length);
+//console.log ("//res.rows");
 
                     for(var i = 0; i < res.rows.length; i++){
                             questions.push(
@@ -297,7 +316,7 @@ console.log ("B");
                     ' AND q.questionModuleId = ?' +
                     ' AND mod.idMainMod = ?' +
                     ' AND q.is_dashboard = 1' +
-                    " AND ( (q.questionModuleId not in (4,17,23,26,31,36,37,38)) OR  (q.questionModuleId in (4,17,23,26,31,36,37,38) and res0.JSONData LIKE '%false%'))" +
+                    " AND ( (q.questionModuleId not in (4,17,23,26,37,38)) OR  (q.questionModuleId in (4,17,23,26,37,38) and res0.JSONData LIKE '%false%'))" +
                     ' GROUP BY q.title'; 
                     //console.log (query);                          
            return Database.query(query, [moduleId, mainModuleId])
