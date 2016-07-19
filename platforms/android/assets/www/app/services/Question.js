@@ -74,40 +74,41 @@
             if(categoryType === 0){
                 query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
                         ' q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big, q.id_group, qg.Type as grpType, qg.TargetMin, qg.TargetMax' +
-                        ' FROM Question q' +
-                        //' INNER JOIN (Select QP.questionId, QP.PDVId FROM QuestionPDV QP LEFT JOIN Customer C ON C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) QP ON q.questionId = QP.questionId ' +
-                        /// ' INNER JOIN QuestionPDV qp ON q.questionId = qp.questionId ' + 
-                        /// ' LEFT JOIN Customer C ON ((C.customerId=' + PdvId + ' AND qp.PDVId = c.pdvType) OR (qp.PDVId = 0) )' +
-                        //
+                        //' FROM (Select Distinct QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) QP ' +
+                        ' FROM (SELECT Distinct QP.questionId ' + 
+                        '        FROM QuestionPDV QP ' + 
+                        '        WHERE QP.PDVId = (Select C.pdvType From Customer C Where C.customerId =' + PdvId + ')' +
+                        '         OR QP.PDVId = 0) QP ' +
+                        ' INNER JOIN Question q ON QP.questionId = q.questionId ' +
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
                         ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
-                        ' WHERE q.questionModuleId = ? ' +
-                        ' AND q.questionId IN (Select QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) ';
+                        ' WHERE q.questionModuleId = ? '; // +
+                        //' AND q.questionId IN (Select Distinct QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) ';
                        
             }
             else{
                 query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
                         ' q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big, q.id_group, qg.Type as grpType, qg.TargetMin, qg.TargetMax' +
-                        ' FROM Question q' +
-                        //' INNER JOIN (Select QP.questionId, QP.PDVId FROM QuestionPDV QP LEFT JOIN Customer C ON C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) QP ON q.questionId = QP.questionId ' +
-                        /// ' INNER JOIN QuestionPDV qp ON q.questionId = qp.questionId ' + 
-                        /// ' LEFT JOIN Customer C ON ((C.customerId=' + PdvId + ' AND qp.PDVId = c.pdvType) OR (qp.PDVId = 0) )' +
-                        //
+                        //' FROM (Select Distinct QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) QP ' +
+                        ' FROM (SELECT Distinct QP.questionId ' + 
+                        '        FROM QuestionPDV QP ' + 
+                        '        WHERE QP.PDVId = (Select C.pdvType From Customer C Where C.customerId =' + PdvId + ')' +
+                        '         OR QP.PDVId = 0) QP ' +
+                        ' INNER JOIN Question q ON QP.questionId = q.questionId ' +
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
                         ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                         ' INNER JOIN Category cat ON cat.categoryId = q.categoryId' +
                         ' AND cat.type = mod.categoryType' +
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
-                        ' WHERE q.questionModuleId = ? ' +
-                        ' AND q.questionId IN (Select QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) ';
+                        ' WHERE q.questionModuleId = ? ';
             }
             
             if(categoryId !== undefined && categoryId !== null && categoryId != 0){
                 query = query + ' AND q.categoryId = ' + categoryId;
             }		
 //LUU
-console.log ("A");
+ console.log ("A");
 console.log (query);
 console.log ("moduleId");
 console.log (moduleId);
@@ -170,9 +171,10 @@ console.log (PdvId);
 
                             return config;
                         };
-console.log ("res.rows.length");
-console.log (res.rows.length);
-console.log ("//res.rows");
+// LUU
+//console.log ("res.rows.length");
+//console.log (res.rows.length);
+//console.log ("//res.rows");
 
                     for(var i = 0; i < res.rows.length; i++){
                             questions.push(
@@ -307,18 +309,60 @@ console.log ("//res.rows");
                             ' SELECT ROUND(COUNT(*), 2)  FROM SurveyQuestionsResults  res1' +
                             ' WHERE res1.questionid = res0.questionId' +
                         ')' + 
-                    ') * 100, 2) AS [questionAverage], q.title' +
+                    ') * 100, 2) AS [questionAverage], q.title as title' + 
                     ' FROM SurveyQuestionsResults  res0' +
                     ' INNER JOIN Survey sur ON sur.id = res0.surveyId' +
-                    ' INNER JOIN Question q ON q.questionId = res0.questionId' +
+                    ' INNER JOIN Question q ON q.answer != "planogram" AND q.questionId = res0.questionId' +
                     ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                     ' AND q.questionModuleId = ?' +
                     ' AND mod.idMainMod = ?' +
                     ' AND q.is_dashboard = 1' +
                     " AND ( (q.questionModuleId not in (4,17,23,26,37,38)) OR  (q.questionModuleId in (4,17,23,26,37,38) and res0.JSONData LIKE '%false%'))" +
-                    ' GROUP BY q.title'; 
-                    //console.log (query);                          
-           return Database.query(query, [moduleId, mainModuleId])
+                    ' GROUP BY q.title ' +
+                    ' UNION ALL ' + 
+                    ' SELECT Distinct Plan.PercentageGroup as [questionAverage], Plan.name as title' +
+					' FROM SurveyQuestionsResults  res0' +
+					' INNER JOIN Survey sur ON sur.id = res0.surveyId' +
+                    ' INNER JOIN Question q ON q.answer = "planogram" AND q.questionId = res0.questionId' +
+					' INNER JOIN (SELECT Distinct ' +
+					'				Grupo.categoryId, Grupo.name, ' +
+					'				CASE ' +
+					"					WHEN ((((Grupo.sCant_Group * 100) / Total.sCant_Total) >= Grupo.TargetMin) AND ((Grupo.sCant_Group * 100) / Total.sCant_Total) <= Grupo.TargetMax) THEN '100' " +
+					"					ELSE '0' " +
+					'				END as PercentageGroup ' +
+					'			  FROM ' +
+					'				(SELECT ' +
+					"					SUM(replace(replace(res1.JSONData, '" +
+                    '{"value":' +
+                    "', ''), '}', '')) as sCant_Group, q1.categoryId, qg.Name, qg.TargetMin, qg.TargetMax " +
+					'				FROM SurveyQuestionsResults  res1 INNER JOIN Question q1 ON res1.questionid = q1.questionid ' +
+					"					AND q1.answer = 'planogram' " +
+					'					INNER JOIN QuestionGroups qg ON q1.id_group = qg.questionGroupId ' +
+					'					AND qg.type = 1 ' +
+					'				GROUP BY ' +
+					'					q1.categoryId, qg.name, qg.TargetMin, qg.TargetMax) Grupo ' +
+					'				INNER JOIN (SELECT ' +
+					"					SUM(replace(replace(res1.JSONData, '" +
+                    '{"value":' +
+                    "', ''), '}', '')) as sCant_Total, q1.categoryId " +
+					'				FROM SurveyQuestionsResults  res1 INNER JOIN Question q1 ON res1.questionid = q1.questionid ' +
+					"					 AND q1.answer = 'planogram' " +
+					'				GROUP BY q1.CategoryId ) Total ' +
+					'				ON Grupo.categoryId = Total.categoryId ) Plan ON q.categoryId = Plan.categoryId ' +
+                    ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
+                    ' AND q.questionModuleId = ?' +
+                    ' AND mod.idMainMod = ?' +
+                    ' AND q.is_dashboard = 1 ';// +
+                    //" AND ( (q.questionModuleId not in (4,17,23,26,37,38)) OR  (q.questionModuleId in (4,17,23,26,37,38) and res0.JSONData LIKE '%false%'))" +
+                    //' GROUP BY q.title';
+
+                    //LUU
+                    //console.log ("query getAuditedQuestionsResume");
+                    //console.log (query);
+                    //console.log (moduleId);
+                    //console.log (mainModuleId);                          
+
+           return Database.query(query, [moduleId, mainModuleId, moduleId, mainModuleId])
             .then(function(result){
                 return Database.fetchAll(result);
             });
@@ -331,8 +375,13 @@ console.log ("//res.rows");
                 });
         };               
 
-        self.getMandatoryQuestions = function(surveyId, roleId, channelId, auditId){        
-            return Database.query('SELECT q.*, mod.slug FROM Question q' +
+        self.getMandatoryQuestions = function(surveyId, roleId, channelId, auditId, PdvId){        
+            return Database.query('SELECT q.*, mod.slug' +
+                                  ' FROM  (SELECT Distinct QP.questionId ' + 
+                                  '        FROM QuestionPDV QP ' + 
+                                  '        WHERE QP.PDVId = (Select C.pdvType From Customer C Where C.customerId =' + PdvId + ')' +
+                                  '         OR QP.PDVId = 0) QP ' +
+                                  ' INNER JOIN Question q ON QP.questionId = q.questionId ' +
                                   ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                                   ' INNER JOIN ModuleUserRoles modUs ON q.questionModuleId = modUs.moduleId' +
                                   ' INNER JOIN ModuleChannels modCh ON modCh.moduleId = modUs.moduleId' +
@@ -342,14 +391,20 @@ console.log ("//res.rows");
                                   '  AND modUs.roleId = ?' +
                                   '  AND modCh.channelId = ?' +
                                   ' AND qRes.questionId IS NULL' + 
-                                  ' AND mod.idMainMod = ?', [surveyId, roleId, channelId, auditId])
+                                  ' AND mod.idMainMod = ? ', [surveyId, roleId, channelId, auditId])
+                                  //' AND q.questionId IN (Select QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) ', [surveyId, roleId, channelId, auditId])
                 .then(function(questions){
                     return Database.fetchAll(questions);    
                 });       
         };
         
-        self.getSuggestedQuestions = function(surveyId, roleId, channelId, auditId){
-            return Database.query('SELECT q.*, mod.slug FROM Question q' +
+        self.getSuggestedQuestions = function(surveyId, roleId, channelId, auditId, PdvId){
+            return Database.query('SELECT q.*, mod.slug ' +
+                                  ' FROM (SELECT Distinct QP.questionId ' + 
+                                  '        FROM QuestionPDV QP ' + 
+                                  '        WHERE QP.PDVId = (Select C.pdvType From Customer C Where C.customerId =' + PdvId + ')' +
+                                  '         OR QP.PDVId = 0) QP ' +
+                                  ' INNER JOIN Question q ON QP.questionId = q.questionId ' +
                                   ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
                                   ' INNER JOIN ModuleUserRoles modUs ON q.questionModuleId = modUs.moduleId' +
                                   ' INNER JOIN ModuleChannels modCh ON modCh.moduleId = modUs.moduleId' +
@@ -359,7 +414,8 @@ console.log ("//res.rows");
                                   '  AND modUs.roleId = ?' +
                                   '  AND modCh.channelId = ?' +
                                   ' AND qRes.questionId IS NULL' +
-                                  ' AND mod.idMainMod = ?', [surveyId, roleId, channelId, auditId])
+                                  ' AND mod.idMainMod = ? ', [surveyId, roleId, channelId, auditId])
+                                  //' AND q.questionId IN (Select QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) ', [surveyId, roleId, channelId, auditId])
                 .then(function(questions){
                     return Database.fetchAll(questions);    
                 });               

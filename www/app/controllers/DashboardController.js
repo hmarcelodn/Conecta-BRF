@@ -41,7 +41,7 @@
             Survey.getAveragePerModule($routeParams.auditId)
                 .then(function (values) {                                               
                     angular.forEach(values, function (value, key) {                            
-                            Question.getAuditedQuestionsResume(value.id_mod, $routeParams.auditId)
+                            Question.getAuditedQuestionsResume(value.id_mod, $routeParams.auditId, value.id_mod, $routeParams.auditId)
                                 .then(function (questionsResult1) {                      
                                     $scope.modules.push
                                     ( {

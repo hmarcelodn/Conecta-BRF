@@ -16,13 +16,14 @@
             var channelId = $routeParams.channelId;
             var pdvId = $routeParams.pdvId;
             var sellerId = $routeParams.sellerId;
-            var roleId = Login.getToken().id_role;                      
+            var roleId = Login.getToken().id_role;  
+                   
             
              Survey.getPendingSurvey().then(function (pendingSurvey) {
                 //Check Mandatories + Suggested Questions Before Closing Survey
                 $q.all([
-                    Question.getMandatoryQuestions(pendingSurvey.id, roleId, channelId, auditId),
-                    Question.getSuggestedQuestions(pendingSurvey.id, roleId, channelId, auditId)
+                    Question.getMandatoryQuestions(pendingSurvey.id, roleId, channelId, auditId, pdvId),
+                    Question.getSuggestedQuestions(pendingSurvey.id, roleId, channelId, auditId, pdvId)
                 ]).then(function (data) {
 
                     var mandatoryQuestions = data[0];

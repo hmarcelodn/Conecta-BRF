@@ -121,6 +121,14 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
 				isFreeAccess: false,
 				audit: true
 			}
+		})
+		.when('/Audit/:auditId/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/observaciones_rtm', {
+			templateUrl: 'app/views/observations.html',
+			controller: 'ObservationsController',
+			access:{
+				isFreeAccess: false,
+				audit: true
+			}
 		})		
 		.when('/Audit/:auditId/Channel/:channelId/Pdv/:pdvId/Seller/:sellerId/no_brf', {
 			templateUrl: 'app/views/noBrf.html',

@@ -295,7 +295,7 @@ var auditIdKey = 'audit-id';
                         ' WHERE afr.id_mainmod = ?' +
                         ' GROUP BY afr.id_mod' +
                         ' HAVING moduleAverage IS NOT NULL';                   
-
+            //console.log ("moduleAverage");
             //console.log (query);
                         
             return Database.query(query, [mainModuleId])

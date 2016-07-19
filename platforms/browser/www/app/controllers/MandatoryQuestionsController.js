@@ -19,8 +19,8 @@
             Survey.getPendingSurvey().then(function(pendingSurvey){
 
                 $q.all([
-                    Question.getMandatoryQuestions(pendingSurvey.id, roleId, $routeParams.channelId, $routeParams.auditId),
-                    Question.getSuggestedQuestions(pendingSurvey.id, roleId, $routeParams.channelId, $routeParams.auditId)
+                    Question.getMandatoryQuestions(pendingSurvey.id, roleId, $routeParams.channelId, $routeParams.auditId, $routeParams.pdvId),
+                    Question.getSuggestedQuestions(pendingSurvey.id, roleId, $routeParams.channelId, $routeParams.auditId, $routeParams.pdvId)
                 ])
                 .then(function(data){
                     $scope.mandatoryQuestions = data[0];
