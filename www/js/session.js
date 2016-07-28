@@ -1,41 +1,41 @@
 var BrfNameSpace = BrfNameSpace || {};
 
-BrfNameSpace.Session = (function() {
+BrfNameSpace.Session = (function(){
 
-    var instance;
+	var instance;
 
-    function init() {
+	function init(){
 
-        var sessionIdKey = "brf-session";
+		var sessionIdKey = "brf-session"; 
 
-        return {
+		return {
 
-            set: function(sessionData) {
-                window.localStorage.setItem(sessionIdKey, JSON.stringify(sessionData));
-            },
+			set: function(sessionData){
+				window.localStorage.setItem(sessionIdKey, JSON.stringify(sessionData));
+			},
 
-            get: function() {
+			get: function(){
 
-                var result = null;
+				var result = null;
 
-                try {
-                    result = JSON.parse(window.localStorage.getItem(sessionIdKey));
-                } catch (e) {}
+				try{
+					result = JSON.parse(window.localStorage.getItem(sessionIdKey));
+				}catch(e){}
 
-                return result;
-            }
+				return result;
+			}
 
-        };
-    };
+		};
+	};
 
-    return {
-        getInstance: function() {
-            if (!instance) {
-                instance = init();
-            }
+	return{
+		getInstance: function(){
+			if(!instance){
+				instance = init();
+			}
 
-            return instance;
-        }
-    }
+			return instance;
+		}
+	}
 
 }());
