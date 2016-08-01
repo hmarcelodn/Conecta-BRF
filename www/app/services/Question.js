@@ -80,11 +80,11 @@
                         '         OR QP.PDVId = 0) QP ' +
                         ' INNER JOIN Question q ON QP.questionId = q.questionId ' +
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
-                        ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
-                        //' INNER JOIN ModuleBind mod ON mod.moduleBinded = q.questionModuleId' +
+                        //' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
+                        ' INNER JOIN ModuleBind mod ON mod.moduleBinded = q.questionModuleId' +
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
-                        ' WHERE q.questionModuleId = ? '; // +
-                        //' WHERE mod.ModuleBinded = ? '; // +
+                        //' WHERE q.questionModuleId = ? '; // +
+                        ' WHERE mod.ModuleBinded = ? '; // +
             }
             else{
                 query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
