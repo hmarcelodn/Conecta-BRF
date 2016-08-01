@@ -24,8 +24,8 @@
                 });
         };
 
-        self.setModule = function (moduleId, behavior, modName, categoryType, color, icon, slug, mainModuleId){
-            Database.query('INSERT INTO Module(moduleId, behavior, modName, categoryType, color, icon, slug, idMainMod) VALUES(?, ?, ?, ?, ?, ?, ?, ?)', [moduleId, behavior, modName, categoryType, color, icon, slug, mainModuleId])
+        self.setModule = function (moduleId, behavior, modName, categoryType, color, icon, slug, mainModuleId, Bind){
+            Database.query('INSERT INTO Module(moduleId, behavior, modName, categoryType, color, icon, slug, idMainMod, Bind) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)', [moduleId, behavior, modName, categoryType, color, icon, slug, mainModuleId, Bind])
                 .then(function (result){
                     return true;
                 });
@@ -40,6 +40,13 @@
 
         self.setModuleRoles = function(moduleId, roleId){
             Database.query('INSERT INTO ModuleUserRoles(moduleId, roleId) VALUES(?, ?)', [moduleId, roleId])
+                .then(function (result){
+                    return true;
+                });
+        };
+
+        self.setModuleBind = function(moduleId, moduleBind){
+            Database.query('INSERT INTO ModuleBind(moduleId, moduleBinded) VALUES(?, ?)', [moduleId, moduleBind])
                 .then(function (result){
                     return true;
                 });
@@ -60,7 +67,8 @@
         };	
 
         self.getModules = function(channelId, roleId, auditId){
-            var query = 'SELECT DISTINCT mod.id, mod.moduleId, mod.behavior, mod.modName, mod.categoryType, mod.color, mod.icon, mod.slug FROM Module mod' +
+            var query = 'SELECT DISTINCT mod.id, mod.moduleId, mod.behavior, mod.modName, mod.categoryType, mod.color, mod.icon, mod.slug ' +
+                            ' FROM Module mod' +
                             ' INNER JOIN ModuleChannels modcha ON modcha.moduleId = mod.moduleId' +
                             ' INNER JOIN ModuleUserRoles modur ON modur.moduleId = mod.moduleId' +
                             //' INNER JOIN (Select Count(1) as cDashboard, questionModuleId qModId FROM Question q WHERE q.is_Dashboard = 1 Group By questionModuleId) dashC ON mod.id = dashC.qModId' +

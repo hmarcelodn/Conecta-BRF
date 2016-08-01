@@ -79,7 +79,8 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'color', type: 'text' },
                     { name: 'icon', type: 'text' },
                     { name: 'slug', type: 'text' },
-                    { name: 'idMainMod', type: 'integer' }
+                    { name: 'idMainMod', type: 'integer' },
+                    { name: 'bind', type: 'text'}
                 ]
             },
             {
@@ -98,6 +99,15 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'moduleId', type: 'integer' },
                     { name: 'roleId', type: 'integer' }
+                ]
+            },
+            {
+                name: "ModuleBind",
+                columns: 
+                [
+                    {name: 'id', type: 'integer primary key autoincrement'},
+                    { name: 'moduleId', type: 'integer' },
+                    { name: 'moduleBinded', type: 'integer' }
                 ]
             },
             {

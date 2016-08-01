@@ -220,6 +220,15 @@ brfPhoneGapApp.config(['$routeProvider', function($routeProvider){
                 audit: false
             }
         })
+		.when('/ElegirPdvs',{
+			templateUrl: 'app/views/elegirPdv.html',
+            controller: 'ElegirPdvController',
+            controllerAs: 'vm',
+            access:{
+                isFreeAccess: false,
+                audit: false
+            }
+		})
 		.otherwise({
 			redirectTo: '/'
 		})

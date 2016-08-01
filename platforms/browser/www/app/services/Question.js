@@ -82,6 +82,7 @@
                         ' INNER JOIN Question q ON QP.questionId = q.questionId ' +
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
                         ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
+                        //' INNER JOIN ModuleBind mod ON mod.moduleBinded = q.questionModuleId' +
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
                         ' WHERE q.questionModuleId = ? '; // +
                         //' AND q.questionId IN (Select Distinct QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) ';

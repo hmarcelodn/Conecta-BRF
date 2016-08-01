@@ -1,0 +1,55 @@
+<section class="row center-align" style="width:100%;">
+    <article class="col s12">
+        <article class="card blue-grey darken-1 col s12">
+            <div class="card-content white-text">
+                <p>SELECCIÓN DE PDVs</p>
+            </div>
+        </article>
+    </article>
+</section>
+
+<main style="margin-top:-30px;">
+    <section class="row center-align" style="width:100%;" ng-if="(vm.ChainCount > 1) && (vm.CanChangeChain != 0 )">
+        <article class="col s12">
+            <article class="card blue-grey darken-1 col s12">
+                <div class="card-content white-text">
+                    <p>Cadenas</p>
+                </div>
+            </article>
+        </article>
+    </section>
+
+    <span style="padding-right:10px;" ng-repeat="pdvchain in vm.PDVChains" ng-if="(vm.ChainCount > 1) && (vm.CanChangeChain != 0 )">
+               <md-checkbox ng-disabled=" limitchains(selectedChains) " ng-checked="existsChain(pdvchain.id, selectedChains) " ng-click="toggleChain(pdvchain.id, selectedChains) ">
+                {{ pdvchain.name }}
+                <i ng-class="existsChain(pdvchain.id, selectedChains) ? 'material-icons green-text ' : '' " ng-if="existsChain(pdvchain.id, selectedChains)">
+						   {{'check'}}
+    			</i> 
+    </md-checkbox>
+    <BR>
+    </span>
+
+    <section class="row center-align" style="width:100%;" ng-if="(vm.DisCount > 0) && (vm.CanChangeDis != 0 )">
+        <article class="col s12">
+            <article class="card blue-grey darken-1 col s12">
+                <div class="card-content white-text">
+                    <p>Distribuidoras</p>
+                </div>
+            </article>
+        </article>
+    </section>
+
+    <span style="padding-right:10px;" ng-repeat="pdvdis in  vm.PDVDis" ng-if="(vm.DisCount > 0) && (vm.CanChangeDis != 0 )">
+               <md-checkbox ng-checked="existsDis(pdvdis.id, selectedDis)" ng-click="toggleDis(pdvdis.id, selectedDis)">
+                {{ pdvdis.name }}
+                <i ng-class="existsDis(pdvdis.id, selectedDis) ? 'material-icons green-text' : ''" ng-if="existsDis(pdvdis.id, selectedDis)">
+						   {{'check'}}
+    			</i> 
+    </md-checkbox>
+    <BR>
+    </span>
+
+    <p class="center-align">
+        <a class="waves-effect waves-light btn" ng-href="#/DoSynchronization">PROCEDER A SINCRONIZAR</a>
+    </p>
+</main>

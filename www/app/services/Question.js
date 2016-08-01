@@ -74,7 +74,6 @@
             if(categoryType === 0){
                 query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
                         ' q.is_dashboard, q.weight, q.is_coaching,res.JSONData, q.thumb, q.big, q.id_group, qg.Type as grpType, qg.TargetMin, qg.TargetMax' +
-                        //' FROM (Select Distinct QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) QP ' +
                         ' FROM (SELECT Distinct QP.questionId ' + 
                         '        FROM QuestionPDV QP ' + 
                         '        WHERE QP.PDVId = (Select C.pdvType From Customer C Where C.customerId =' + PdvId + ')' +
@@ -82,10 +81,10 @@
                         ' INNER JOIN Question q ON QP.questionId = q.questionId ' +
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
                         ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
+                        //' INNER JOIN ModuleBind mod ON mod.moduleBinded = q.questionModuleId' +
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
                         ' WHERE q.questionModuleId = ? '; // +
-                        //' AND q.questionId IN (Select Distinct QP.questionId FROM QuestionPDV QP, Customer C Where ( (C.customerId =' + PdvId + ' AND QP.PDVId = C.pdvType) OR (QP.PDVId = 0) ) ) ';
-                       
+                        //' WHERE mod.ModuleBinded = ? '; // +
             }
             else{
                 query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
