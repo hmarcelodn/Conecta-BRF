@@ -230,17 +230,19 @@
                                     promises.push(Module.setModuleRoles(moduleId, value));
                                 });
                                 
-                                //console.log (moduleId);
-                                //console.log (value.bind);
-                                angular.forEach(value.bind, function(value, key) {
-                                    if (value.bind != '0'){        
-                                        promises.push(Module.setModuleBind(moduleId, moduleId));
-                                    } else {
+                                console.log (moduleId);
+                                console.log (value.bind);
+                                if (value.bind == '0'){
+                                    promises.push(Module.setModuleBind(moduleId, moduleId));
+                                } else {
+                                    promises.push(Module.setModuleBind(moduleId, moduleId));
+                                    console.log (value.bind.split(","));
+                                    angular.forEach(value.bind.split(","), function(value, key) {
+                                        console.log (moduleId);
+                                        console.log (value);
                                         promises.push(Module.setModuleBind(moduleId, value));
-                                    }
-                                });
-                                
-
+                                    });
+                                }
                             });
 
                             $q.all(promises).then(function() {

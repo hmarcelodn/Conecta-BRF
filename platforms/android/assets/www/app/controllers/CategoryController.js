@@ -34,7 +34,7 @@
                                      '/no_brf');                      
                         break;
                     default:
-                        Category.getCategories(module.categoryType, vm.routeParams.channelId, module.moduleId).then(function(categories){
+                        Category.getCategories(module.categoryType, vm.routeParams.channelId, module.moduleId, $routeParams.pdvId).then(function(categories){
                             if(categories.length > 0){
                                 $scope.categories = categories;
                             }

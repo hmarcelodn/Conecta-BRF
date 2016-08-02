@@ -85,6 +85,7 @@
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
                         //' WHERE q.questionModuleId = ? '; // +
                         ' WHERE mod.ModuleBinded = ? '; // +
+                        console.log ("Cat 0");
             }
             else{
                 query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
@@ -96,18 +97,20 @@
                         '         OR QP.PDVId = 0) QP ' +
                         ' INNER JOIN Question q ON QP.questionId = q.questionId ' +
                         ' LEFT JOIN SurveyQuestionsResults res ON res.questionId = q.questionId AND res.surveyId = ?' +
-                        ' INNER JOIN Module mod ON mod.moduleId = q.questionModuleId' +
+                        ' INNER JOIN ModuleBind mod ON mod.moduleId = q.questionModuleId ' +
                         ' INNER JOIN Category cat ON cat.categoryId = q.categoryId' +
-                        ' AND cat.type = mod.categoryType' +
+                        //' AND cat.type = mod.categoryType' +
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
-                        ' WHERE q.questionModuleId = ? ';
+                        //' WHERE q.questionModuleId = ? ';
+                        ' WHERE mod.ModuleBinded = ? ';
+                        console.log ("Cat <> 0 ");
             }
             
             if(categoryId !== undefined && categoryId !== null && categoryId != 0){
                 query = query + ' AND q.categoryId = ' + categoryId;
             }		
 //LUU
- console.log ("A");
+console.log ("A");
 console.log (query);
 console.log ("moduleId");
 console.log (moduleId);
@@ -171,11 +174,15 @@ console.log (PdvId);
                             return config;
                         };
 // LUU
-//console.log ("res.rows.length");
-//console.log (res.rows.length);
-//console.log ("//res.rows");
-
+/*console.log ("res.rows.length");
+console.log (res.rows.length);
+console.log (res.rows.item(0));
+console.log (res.rows.item(0).questionId);
+console.log (res.rows.item(1).questionId);
+console.log ("//res.rows");
+*/
                     for(var i = 0; i < res.rows.length; i++){
+//                            console.log (res.rows.item(i).questionId);
                             questions.push(
                                 { 
                                     id: res.rows.item(i).questionId, 

@@ -37,7 +37,7 @@
                     });
             };
 
-        var getCategories = function (typeId, channelId, moduleId) {
+        var getCategories = function (typeId, channelId, moduleId, PdvId) {
 
 
                 var query = ' SELECT * FROM Category cat2' +
@@ -48,7 +48,14 @@
                             ' WHERE cat.type = ?' +
                             ' AND catchan.channelId = ?' +
                             ' AND q.questionModuleId = ?' +
+                            ' AND q.questionId IN (SELECT Distinct QP.questionId ' + 
+                        '        FROM QuestionPDV QP ' + 
+                        '        WHERE QP.PDVId = (Select C.pdvType From Customer C Where C.customerId =' + PdvId + ')' +
+                        '         OR QP.PDVId = 0) ' +
                             ' )';
+                ///LUU logs
+                //console.log ("getCategories");
+                //console.log (query);
 
                 return Database.query(query, [typeId, channelId, moduleId])
                     .then(function (result) {
