@@ -230,8 +230,8 @@
                                     promises.push(Module.setModuleRoles(moduleId, value));
                                 });
                                 
-                                console.log (moduleId);
-                                console.log (value.bind);
+                                //console.log (moduleId);
+                                //console.log (value.bind);
                                 angular.forEach(value.bind, function(value, key) {
                                     if (value.bind != '0'){        
                                         promises.push(Module.setModuleBind(moduleId, moduleId));
