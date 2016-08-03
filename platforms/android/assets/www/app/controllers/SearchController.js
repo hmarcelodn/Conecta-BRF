@@ -13,6 +13,7 @@
         $scope.pdvId = $routeParams.pdvId;
         $scope.channelId = $routeParams.channelId;	
         $scope.auditId = $routeParams.auditId;
+        $scope.customerId = $routeParams.customerId;
         $scope.defaultModuleSlug;
         vm.auditId;
     
@@ -24,7 +25,7 @@
                 $scope.defaultModuleSlug = modules[0].slug;
             });
 
-            Seller.getSellers($scope.channelId).then(function(sellers){
+            Seller.getSellers($scope.channelId, $routeParams.pdvId).then(function(sellers){
                 $scope.sellers = sellers;		
             });	            
             

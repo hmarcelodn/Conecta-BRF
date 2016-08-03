@@ -35,7 +35,7 @@
 			</li>					
 		</ul>				
 	</section>
-    <p class="center-align">
+    <p class="center-align" ng-if='sellers != ""'>
         <a class="waves-effect waves-light btn" 
            ng-show="vm.lastSellerId !== undefined"
            ng-href="#/Audit/{{vm.auditId}}/Channel/{{channelId}}/Pdv/{{pdvId}}/Seller/{{vm.lastSellerId}}/{{defaultModuleSlug}}/defaultModule">

@@ -26,8 +26,8 @@
                     }
                 });
 
-                console.log("Channels!");
-                console.log(channels);
+                //console.log("Channels!");
+                //console.log(channels);
 
                 //Pre-Selected Unique Channel
                 if(availableChannels.length === 1){

@@ -10,7 +10,7 @@
     function Customer($http, Database, Login) {
 
         var synchronizeCustomers = function() {
-            console.log('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=3&selected_ids=0&id_user=' + Login.getToken().id);
+            //console.log('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=3&selected_ids=0&id_user=' + Login.getToken().id);
             return $http.get('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=3&selected_ids=0&id_user=' + Login.getToken().id);
             //return $http.get(https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=3&selected_ids=&id_user=);
         };

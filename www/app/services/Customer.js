@@ -25,8 +25,8 @@
         };
 
         var synchronizeCustomersDis = function() {
-            console.log('def chains');
-            console.log('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=2&selected_ids=' + $rootScope.SelectedDis + '&id_user=' + Login.getToken().id);
+            // console.log('def chains');
+            // console.log('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=2&selected_ids=' + $rootScope.SelectedDis + '&id_user=' + Login.getToken().id);
             return $http.get('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=2&selected_ids=' + $rootScope.SelectedDis + '&id_user=' + Login.getToken().id);
         };
 
@@ -35,8 +35,8 @@
             return $http.get('https://ws.conecta-brf.com/get/customers/type/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
-        var setCustomer = function(id, companyName, cuit, address, pdvType, highlighted, channelid, code) {
-            return Database.query('INSERT INTO Customer(customerId, companyName, cuit, address, pdvType, highlighted, channelId, code) VALUES(?, ?, ?, ?, ?, ?, ?, ?)', [id, companyName, cuit, address, pdvType, highlighted, channelid, code])
+        var setCustomer = function(id, companyName, cuit, address, pdvType, highlighted, channelid, code, id_type) {
+            return Database.query('INSERT INTO Customer(customerId, companyName, cuit, address, pdvType, highlighted, channelId, code, id_type) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)', [id, companyName, cuit, address, pdvType, highlighted, channelid, code, id_type])
                 .then(function(result) {
                     return true;
                 });
@@ -50,7 +50,7 @@
         };
 
         var getCustomers = function(channelid) {
-            return Database.query('SELECT customerId, address, highlighted, channelId, code FROM Customer WHERE channelId=? LIMIT 0, 2000', [channelid])
+            return Database.query('SELECT customerId, address, highlighted, channelId, code, id_type FROM Customer WHERE channelId=? LIMIT 0, 2000', [channelid])
                 .then(function(result) {
                     return Database.fetchAll(result);
                 });

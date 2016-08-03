@@ -6,22 +6,30 @@
         .factory('Seller', Seller);
 
     Seller.$inject = ['$http', 'Database'];
-    function Seller($http, Database) {
+    function Seller($http, Database, Customer) {
         var self = this;
 
         self.synchronizeSellers = function (){
             return $http.get('https://ws.conecta-brf.com/get/sellers/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
-        self.setSeller = function (id, name, channelId){
-            return Database.query('INSERT INTO Seller(id, name, channelId) VALUES(?, ?, ?)', [id, name, channelId])
+        self.setSeller = function (id, name, channelId, id_di){
+            return Database.query('INSERT INTO Seller(id, name, channelId, id_di) VALUES(?, ?, ?, ?)', [id, name, channelId, id_di])
                 .then(function (result){
                     return true;
                 });
         };
 
-        self.getSellers = function (channelid){
-            return Database.query('SELECT id, name, channelId FROM Seller WHERE channelId=?', [channelid])
+        self.getSellers = function (channelid, pdvId){
+            //console.log ('customer.id');
+            //console.log (pdvId);
+            //console.log (channelid);
+            var query = 'SELECT id, name, channelId, id_di FROM Seller ' +
+            ' WHERE channelId= ' + channelid +
+            ' AND ((id_di = 0 AND (Select 1 FROM customer Where customerid ='+ pdvId +  ' AND id_type = 1)) OR (id_di =' + pdvId + ')) ';
+            //console.log (query);
+            //return Database.query(query, [channelid])
+            return Database.query(query)
                 .then(function (result){
                     return Database.fetchAll(result);
                 });

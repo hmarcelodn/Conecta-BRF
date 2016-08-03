@@ -108,7 +108,9 @@
             
             if(categoryId !== undefined && categoryId !== null && categoryId != 0){
                 query = query + ' AND q.categoryId = ' + categoryId;
-            }		
+            }
+
+            query = query + ' ORDER BY  q.data DESC ';		
 //LUU
 console.log ("A");
 console.log (query);

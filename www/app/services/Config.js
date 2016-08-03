@@ -56,7 +56,8 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'pdvType', type: 'integer' },
                     { name: 'highlighted', type: 'integer' },
                     { name: 'channelId', type: 'integer' },
-                    { name: 'code', type: 'text'}
+                    { name: 'code', type: 'text'},
+                    { name: 'id_type', type: 'integer'}
                 ]
             },
             {
@@ -163,6 +164,7 @@ brfPhoneGapApp.factory('Config', function(){
                     {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'name', type: 'name' },
                     { name: 'channelId', type: 'integer' },
+                    { name: 'id_di', type: 'integer'}
                 ]
             },
             {
