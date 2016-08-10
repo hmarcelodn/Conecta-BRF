@@ -13,7 +13,7 @@
         activate();
 
         function activate() { 
-            console.log ("Observaciones In");
+            //console.log ("Observaciones In");
             Survey.getPendingSurvey().then(function(survey){
                 Survey.getObservations(survey.id).then(function(observations){
                     if(observations === undefined){

@@ -25,8 +25,8 @@
         };
 
         var synchronizeCustomersDis = function() {
-            console.log('def chains');
-            console.log('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=2&selected_ids=' + $rootScope.SelectedDis + '&id_user=' + Login.getToken().id);
+            // console.log('def chains');
+            // console.log('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=2&selected_ids=' + $rootScope.SelectedDis + '&id_user=' + Login.getToken().id);
             return $http.get('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=2&selected_ids=' + $rootScope.SelectedDis + '&id_user=' + Login.getToken().id);
         };
 

@@ -69,15 +69,15 @@
                     this.push(value.id);
                 }, $scope.selectedChains);
 
-                console.log('test');
-                console.log($scope.selectedChains);
+               // console.log('test');
+                //console.log($scope.selectedChains);
 
                 angular.forEach(allowedPDVDis, function(value, key) {
                     this.push(value.id);
                 }, $scope.selectedDis);
 
-                console.log('Dis');
-                console.log($scope.selectedDis);
+               // console.log('Dis');
+               // console.log($scope.selectedDis);
 
                 $location.path('/DoSynchronization');
             } else {

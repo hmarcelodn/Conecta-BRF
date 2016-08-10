@@ -85,7 +85,7 @@
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
                         //' WHERE q.questionModuleId = ? '; // +
                         ' WHERE mod.ModuleBinded = ? '; // +
-                        console.log ("Cat 0");
+                        //console.log ("Cat 0");
             }
             else{
                 query = 'SELECT q.questionId, q.render, q.answer, q.title, q.data, q.helper, q.config, q.styling, q.is_mandatory, q.has_percent,' +
@@ -103,7 +103,7 @@
                         ' LEFT JOIN QuestionGroups qg ON q.id_group = qg.questionGroupId' +
                         //' WHERE q.questionModuleId = ? ';
                         ' WHERE mod.ModuleBinded = ? ';
-                        console.log ("Cat <> 0 ");
+                        //console.log ("Cat <> 0 ");
             }
             
             if(categoryId !== undefined && categoryId !== null && categoryId != 0){

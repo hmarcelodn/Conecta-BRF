@@ -5,14 +5,17 @@
         .module('brfPhoneGapApp')
         .controller('SendSynchronizationController', SendSynchronizationController);
 
-    SendSynchronizationController.$inject = ['$scope', 'Survey', '$location', '$q', 'Question', 'Customer', 'Database', '$rootScope'];
-    function SendSynchronizationController($scope, Survey, $location, $q, Question, Customer, Database, $rootScope) {
+    SendSynchronizationController.$inject = ['$scope', 'Survey', '$location', '$q', 'Question', 'Customer', 'Database', '$rootScope', '$routeParams'];
+    function SendSynchronizationController($scope, Survey, $location, $q, Question, Customer, Database, $rootScope, $routeParams) {
         var vm = this;
       
         $scope.syncSurveys = 0;
         $scope.syncNoBrf = 0;
         $scope.syncQuestions = 0;        
       
+        $scope.MainModuleId = $rootScope.MainModuleId;
+        $scope.leftCoaching = $routeParams.leftCoaching;
+
         activate();
 
         function activate() { 

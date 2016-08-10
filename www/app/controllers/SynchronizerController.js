@@ -109,8 +109,10 @@
                 .then(function(data){
                     var coachingCompliance = data[0];
                     var userCoachingCompliance = data[1];
-                    
-                    if(coachingCompliance.length < userCoachingCompliance.target_coaching){
+                    $rootScope.MainModuleId = coachingCompliance[0].id;
+                    //console.log (coachingCompliance[0].id);
+                    //console.log ("//END")
+                    if ((coachingCompliance[0].id == 1) && (coachingCompliance.length < userCoachingCompliance.target_coaching)){
                         $scope.syncRoute = '#/LockSynchronization/' + (parseInt(userCoachingCompliance.target_coaching) - coachingCompliance.length).toString();
                     }
                     else{
