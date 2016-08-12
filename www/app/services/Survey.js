@@ -370,7 +370,9 @@ var auditIdKey = 'audit-id';
         };
 
         self.getCoachingComplianceSurvey = function() {
+            //??? 20160812  cambie el coaching_compliance = 1 para poder evaluar todos los surveys
             return Database.query('SELECT * FROM Survey WHERE coaching_compliance = 1')
+            //return Database.query('SELECT * FROM Survey')
                 .then(function(result) {
                     return Database.fetchAll(result);
                 })
