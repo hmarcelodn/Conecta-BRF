@@ -21,7 +21,7 @@
 
         function activate() { 
             //Get Default module to be redirected
-            Module.getModules($scope.channelId, Login.getToken().id_role, $scope.auditId).then(function(modules){
+            Module.getModules($scope.channelId, Login.getToken().id_role, $scope.auditId, $scope.pdvId).then(function(modules){
                 $scope.defaultModuleSlug = modules[0].slug;
             });
 

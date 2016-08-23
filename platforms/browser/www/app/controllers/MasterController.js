@@ -6,125 +6,128 @@
         .controller('MasterController', MasterController);
 
     MasterController.$inject = ['$scope', '$route', '$location', 'Login', 'Survey', '$routeParams', '$rootScope', 'Module', 'Customer', 'Database', '$timeout'];
+
     function MasterController($scope, $route, $location, Login, Survey, $routeParams, $rootScope, Module, Customer, Database, $timeout) {
         var vm = this;
         vm.username;
-	    vm.password;
-	    vm.routeParams;
+        vm.password;
+        vm.routeParams;
         $scope.auditCustomerName;
         $scope.mainModules = [];
         $scope.loggedUserName = '';
 
-        var loadMainModules = function () {
-            Module.getMainModules().then(function (mainModules) {
+        var loadMainModules = function() {
+            Module.getMainModules().then(function(mainModules) {
                 $scope.mainModules = mainModules;
                 updateUserName();
-            });          
-        };  
-        
-        var loadModules = function (){
-            Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId()).then(function(modules){
+            });
+        };
+
+        var loadModules = function() {
+            console.log("INN 999" + new Date());
+            Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId(), Survey.getAuditPdv()).then(function(modules) {
                 $scope.modules = modules;
 
-                if(Survey.getAuditMode() === true){
+                if (Survey.getAuditMode() === true) {
 
-                    Customer.getPdvById(Survey.getAuditPdv()).then(function(customer){
-                        $scope.auditCustomerName = customer.pdvTypeName + ' - ' + customer.address; 
+                    Customer.getPdvById(Survey.getAuditPdv()).then(function(customer) {
+                        $scope.auditCustomerName = customer.pdvTypeName + ' - ' + customer.address;
                     });
 
-                }              
+                }
             });
 
-            /* Once Loaded all modules show Side Bar */   
-            $('.button-collapse').sideNav('show'); 
-        };        
-                   
-        
-        var getUserName = function(){
-            if(!Login.authenticated()){
+            /* Once Loaded all modules show Side Bar */
+            $('.button-collapse').sideNav('show');
+        };
+
+
+        var getUserName = function() {
+            if (!Login.authenticated()) {
                 return "";
             }
 
             var token = Login.getToken();
 
             return token.name;
-        };  
+        };
 
-        var updateUserName = function(){
+        var updateUserName = function() {
             $scope.loggedUserName = vm.getUserName();
         };
 
-        function activate() { 
-            
+        function activate() {
+
             //If logged.
-            if(Login.authenticated()){
+            if (Login.authenticated()) {
                 $location.path("/Main");
-                
+
                 updateUserName();
                 vm.routeParams = $routeParams;
-                
-                Module.getMainModules().then(function (mainModules) {
+
+                Module.getMainModules().then(function(mainModules) {
                     loadMainModules();
-                });                
-            }            
-        }             
-        
-        $rootScope.$on('defaultModuleLoaded', function (event, data) {     
+                });
+            }
+        }
+
+        $rootScope.$on('defaultModuleLoaded', function(event, data) {
 
             console.log('defaultModuleLoaded');
 
-            Survey.getPendingSurvey().then(function(pendingSurvey){
-                if(pendingSurvey === undefined){        
+            Survey.getPendingSurvey().then(function(pendingSurvey) {
+                if (pendingSurvey === undefined) {
                     vm.routeParams = data;
 
-                    Customer.getPdvTypeByCustomerId(data.pdvId).then(function (customerPdvType) {
+                    Customer.getPdvTypeByCustomerId(data.pdvId).then(function(customerPdvType) {
                         Survey.setSurvey(new Date().getTime().toString(), data.channelId, data.pdvId, data.sellerId, Login.getToken().id)
-                            .then(function(){
+                            .then(function() {
+                                //AGREGAR QUE GUARDE EL SURVEYID
+                                //LUUUUU
                                 Survey.enableAuditMode(data.channelId, data.pdvId, data.sellerId, data.auditId);
                                 vm.loadModules();
-                        });                        
-                    });                              
-                }
-                else{
+                            });
+                    });
+                } else {
                     vm.loadModules();
                 }
-            });            
-        });	     
-        
-        $rootScope.$on('synchronizationSuccessfulyFinished', function (event, data) {
+            });
+        });
+
+        $rootScope.$on('synchronizationSuccessfulyFinished', function(event, data) {
             console.log('Received Event synchronizationSuccessfulyFinished');
             loadMainModules();
-        });           
-        
-        $rootScope.$on('userLoggedOff', function(){
-           console.log('userLoggedOff');
-           localStorage.clear();
-           $scope.mainModules = [];
-           $location.path("/");
         });
 
-        $rootScope.$on('sendSyncFinished', function(){
-           console.log('sendSyncFinished');
-           $scope.mainModules = [];
-           $location.path("/");
+        $rootScope.$on('userLoggedOff', function() {
+            console.log('userLoggedOff');
+            localStorage.clear();
+            $scope.mainModules = [];
+            $location.path("/");
         });
 
-        $rootScope.$on('closedSurvey', function (event, data){
+        $rootScope.$on('sendSyncFinished', function() {
+            console.log('sendSyncFinished');
+            $scope.mainModules = [];
+            $location.path("/");
+        });
+
+        $rootScope.$on('closedSurvey', function(event, data) {
             console.log('closedSurvey');
             $scope.auditCustomerName = '';
         });
-        
-        $scope.authenticated = function(){
+
+        $scope.authenticated = function() {
             return Login.authenticated();
         };
-        
-        $scope.isAuditModeEnabled = function (){
+
+        $scope.isAuditModeEnabled = function() {
             return Survey.getAuditMode();
         };
 
         vm.loadModules = loadModules;
         vm.getUserName = getUserName;
-        
-        activate();  
+
+        activate();
     }
 })();

@@ -112,7 +112,9 @@
                         //
 
                         if (coachingCompliance.length < userCoachingCompliance.target_coaching) {
-                            $rootScope.MainModuleId = 0;
+                            $rootScope.leftCoaching = (parseInt(userCoachingCompliance.target_coaching) - coachingCompliance.length);
+                            $scope.syncRoute = '#/SendSynchronization';
+                            /*$rootScope.MainModuleId = 0;
                             if (coachingCompliance.length > 0) {
                                 $rootScope.MainModuleId = coachingCompliance[0].id;
                                 //console.log("IN");
@@ -125,14 +127,14 @@
                                 } else {
                                     console.log("OUT LOCK");
                                     $scope.syncRoute = '#/SendSynchronization';
-                                }
+                                } 
                             } else {
                                 console.log("IN LOCK2");
                                 $scope.syncRoute = '#/LockSynchronization/' + (parseInt(userCoachingCompliance.target_coaching) - coachingCompliance.length).toString();
-                            }
+                            } */
                         } else {
-                            $rootScope.MainModuleId = 0;
                             console.log("IN SendSync");
+                            $rootScope.leftCoaching = 0;
                             $scope.syncRoute = '#/SendSynchronization';
                         }
                     });

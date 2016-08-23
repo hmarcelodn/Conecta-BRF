@@ -22,7 +22,7 @@ var db; //Database Global Variable
 var app = {
     // Application Constructor
     initialize: function() {
-        this.bindEvents();      
+        this.bindEvents();
     },
     // Bind Event Listeners
     //
@@ -36,7 +36,7 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');                   
+        app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

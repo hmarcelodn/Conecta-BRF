@@ -14,9 +14,10 @@
         $scope.syncNoBrf = 0;
         $scope.syncQuestions = 0;
 
-        $scope.MainModuleId = $rootScope.MainModuleId;
-        $scope.leftCoaching = $routeParams.leftCoaching;
-
+        $scope.leftCoaching = $rootScope.leftCoaching;
+        console.log("eeee");
+        console.log($scope.leftCoaching);
+        console.log("AAA");
         activate();
 
         function activate() {

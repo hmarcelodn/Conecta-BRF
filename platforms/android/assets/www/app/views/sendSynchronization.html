@@ -1,63 +1,63 @@
-<section class="row center-align" style="width:100%;">		
-	<article class="col s12">
-		<article class="card blue-grey darken-1 col s12">				
-			<div class="card-content white-text">
-				<p>SINCRONIZACIÓN</p>
-			</div>					
-		</article>			
-	</article>		
+<section class="row center-align" style="width:100%;">
+    <article class="col s12">
+        <article class="card blue-grey darken-1 col s12">
+            <div class="card-content white-text">
+                <p>SINCRONIZACIÓN</p>
+            </div>
+        </article>
+    </article>
 </section>
 
-<main style="margin-top:-30px;"> 
-    <section class="row col s12" ng-if="(MainModuleId != 1 && leftCoaching > 0)">			
+<main style="margin-top:-30px;">
+    <section class="row col s12" ng-if="leftCoaching > 0)">
         <article class="col s12">
-					<article class="card col s12 center-align">
-										<p>Aun le faltan <strong class="red-text">{{leftCoaching}} puntos de venta</strong> con cumplimiento de Coaching.</p>
-						<p class="red-text" style="font-size:18px;">Por favor realice al menos {{leftCoaching}} puntos de venta más.</p>
-					</article>
+            <article class="card col s12 center-align">
+                <p>Aun le faltan <strong class="red-text">{{leftCoaching}} puntos de venta</strong> con cumplimiento de Coaching.</p>
+                <p class="red-text" style="font-size:18px;">Por favor realice al menos {{leftCoaching}} puntos de venta más.</p>
+            </article>
         </article>
-		</section>			  
-	<section class="row col s12">			
-		<ul class="collection with-header">
-			<li class="collection-item">
-				<div>
-					AUDITORIAS
-					<div class="secondary-content" ng-show="syncSurveys == 0 || syncSurveys == 2">
-						<i ng-class="syncSurveys == 0 ? 'material-icons blue-text' : 'material-icons green-text'">
+    </section>
+    <section class="row col s12">
+        <ul class="collection with-header">
+            <li class="collection-item">
+                <div>
+                    AUDITORIAS
+                    <div class="secondary-content" ng-show="syncSurveys == 0 || syncSurveys == 2">
+                        <i ng-class="syncSurveys == 0 ? 'material-icons blue-text' : 'material-icons green-text'">
 						   {{syncSurveys == 0 ? 'access_time' : 'check'}}
 						</i>
-					</div>
-					<div class="progress" ng-show="syncSurveys == 1">
-					  <div class="indeterminate"></div>
-					</div>	
-				</div>					
-			</li>
-			<li class="collection-item">
-				<div>
-					NO BRF
-					<div class="secondary-content" ng-show="syncNoBrf == 0 || syncNoBrf == 2">
-						<i ng-class="syncNoBrf == 0 ? 'material-icons blue-text' : 'material-icons green-text'">
+                    </div>
+                    <div class="progress" ng-show="syncSurveys == 1">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item">
+                <div>
+                    NO BRF
+                    <div class="secondary-content" ng-show="syncNoBrf == 0 || syncNoBrf == 2">
+                        <i ng-class="syncNoBrf == 0 ? 'material-icons blue-text' : 'material-icons green-text'">
 						   {{syncNoBrf == 0 ? 'access_time' : 'check'}}
 						</i>
-					</div>
-					<div class="progress" ng-show="syncNoBrf == 1">
-					  <div class="indeterminate"></div>
-					</div>	
-				</div>					
-			</li>
-			<li class="collection-item">
-				<div>
-					PREGUNTAS
-					<div class="secondary-content" ng-show="syncQuestions == 0 || syncQuestions == 2">
-						<i ng-class="syncQuestions == 0 ? 'material-icons blue-text' : 'material-icons green-text'">
+                    </div>
+                    <div class="progress" ng-show="syncNoBrf == 1">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+            </li>
+            <li class="collection-item">
+                <div>
+                    PREGUNTAS
+                    <div class="secondary-content" ng-show="syncQuestions == 0 || syncQuestions == 2">
+                        <i ng-class="syncQuestions == 0 ? 'material-icons blue-text' : 'material-icons green-text'">
 						   {{syncQuestions == 0 ? 'access_time' : 'check'}}
 						</i>
-					</div>
-					<div class="progress" ng-show="syncQuestions == 1">
-					  <div class="indeterminate"></div>
-					</div>	
-				</div>					
-			</li>                        
-		</ul>
-  </section>
- </main>
+                    </div>
+                    <div class="progress" ng-show="syncQuestions == 1">
+                        <div class="indeterminate"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </section>
+</main>

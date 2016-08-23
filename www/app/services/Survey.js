@@ -18,6 +18,7 @@ var auditIdKey = 'audit-id';
 
     function Survey($http, Database, Question, $location, $rootScope, $q) {
         var self = this;
+        var leftCoaching = $rootScope.leftCoaching;
 
         self.setSurvey = function(survey, channelId, pdvId, sellerId, userId) {
             console.log('setSurvey');
@@ -54,6 +55,8 @@ var auditIdKey = 'audit-id';
             window.localStorage.setItem(lastSellerKeyId, sellerId);
             window.localStorage.setItem(lastPdvKeyId, pdvId);
             window.localStorage.setItem(auditIdKey, auditId);
+            //ACA AGREGAR QUE GUARDE EL SURVEYID
+            //LUUUU
         };
 
         self.disableAuditMode = function() {
@@ -188,13 +191,17 @@ var auditIdKey = 'audit-id';
         };
 
         self.getClosedSurveys = function() {
-            return Database.query('SELECT survey, syncStatus, channelId, pdvId, sellerId, userId, id FROM Survey WHERE syncStatus = 1')
+            var query = 'SELECT survey, syncStatus, channelId, pdvId, sellerId, userId, id FROM Survey WHERE syncStatus = 1';
+            if (leftCoaching > 0) {
+                query = query + ' AND coaching_compliance <> 1 ';
+            }
+            return Database.query(query)
                 .then(function(result) {
                     return Database.fetchAll(result);
                 });
         };
 
-        self.getClosedSurveysNoBrf = function() {
+        self.getSurveysNoBrf = function() {
             return Database.query('SELECT sur.survey, nobrf.noBrf, sur.userId FROM SurveyNoBrfResults nobrf INNER JOIN Survey sur ON sur.id = nobrf.surveyId WHERE sur.syncStatus = 1')
                 .then(function(result) {
                     return Database.fetchAll(result);
@@ -371,8 +378,8 @@ var auditIdKey = 'audit-id';
 
         self.getCoachingComplianceSurvey = function() {
             //??? 20160812  cambie el coaching_compliance = 1 para poder evaluar todos los surveys
-            return Database.query('SELECT * FROM Survey WHERE coaching_compliance = 1')
-            //return Database.query('SELECT * FROM Survey')
+            return Database.query('SELECT * FROM Survey WHERE id = 1 ')
+                //return Database.query('SELECT * FROM Survey')
                 .then(function(result) {
                     return Database.fetchAll(result);
                 })

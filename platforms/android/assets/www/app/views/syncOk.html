@@ -1,35 +1,37 @@
-		<section class="row center-align" style="width:100%;">
-		
-			<article class="col s12">
-			
-				<article class="card green darken-1 col s12">
-				
-					<div class="card-content white-text">
-						<p>SINCRONIZADO CORRECTO</p>
-					</div>
-					
-				</article>
-			
-			</article>
-		
-		</section>
-		
-		<main style="margin-top:-30px;">
-		  
-			<section class="row col s12">
-			
-				<article class="col s12">
+<section class="row center-align" style="width:100%;">
 
-					<article class="card col s12">
+    <article class="col s12">
 
-						<p ng-if="syncId === 1" class="center-align" style="font-size:22px;">Se han sincronizado correctamente sus datos</p>
+        <article class="card green darken-1 col s12">
 
-						<p ng-if="syncId !== 1" class="center-align" style="font-size:22px;">Sus datos han sido enviados correctamente.</p>
-						
-					</article>
+            <div class="card-content white-text">
+                <p>SINCRONIZADO CORRECTO</p>
+            </div>
 
-				</article>
-				
-			</section>
-		
-		</main>
+        </article>
+    </article>
+
+</section>
+
+<main style="margin-top:-30px;">
+
+    <section class="row col s12">
+
+        <article class="col s12">
+
+            <article class="card col s12">
+
+                <p ng-if="syncId === 1" class="center-align" style="font-size:22px;">Se han sincronizado correctamente sus datos</p>
+
+                <p ng-if="syncId !== 1" class="center-align" style="font-size:22px;">Sus datos han sido enviados correctamente.</p>
+
+            </article>
+
+        </article>
+        <article class="card col s12 center-align" ng-if="((syncId !== 1) && (leftCoaching > 0))">
+            <p>Aun le faltan <strong class="red-text">{{leftCoaching}} puntos de venta</strong> con cumplimiento de Coaching.</p>
+            <p class="red-text" style="font-size:18px;">Por favor realice al menos {{leftCoaching}} puntos de venta más.</p>
+        </article>
+    </section>
+
+</main>
