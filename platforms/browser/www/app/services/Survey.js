@@ -192,9 +192,20 @@ var auditIdKey = 'audit-id';
 
         self.getClosedSurveys = function() {
             var query = 'SELECT survey, syncStatus, channelId, pdvId, sellerId, userId, id FROM Survey WHERE syncStatus = 1';
+            var leftCoaching = $rootScope.leftCoaching;
+            //console.log ("leftcoaching");
+            //console.log (leftCoaching); 
+
+            //console.log ("leftcoaching2");
+            //console.log ($rootScope.leftCoaching);
+
             if (leftCoaching > 0) {
-                query = query + ' AND coaching_compliance <> 1 ';
+                console.log ("IN leftCoaching getClosedSurveys");
+                query = query + ' AND id NOT IN (Select Distinct sqr.SurveyId FROM SurveyQuestionsResults sqr INNER JOIN Question Q ON sqr.questionid = q.questionId INNER JOIN Module m ON q.QuestionModuleId = m.ModuleId WHERE m.idMainMod = 1)';
             }
+            console.log ("query leftCoaching");
+            console.log (query);
+
             return Database.query(query)
                 .then(function(result) {
                     return Database.fetchAll(result);
@@ -244,9 +255,9 @@ var auditIdKey = 'audit-id';
                 },
                 data: survey
             };
-            console.log("INIT Sync");
-            console.log(req);
-            console.log("END Sync");
+            // console.log("INIT Sync");
+            // console.log(req);
+            // console.log("END Sync");
             return $http(req);
         };
 
@@ -263,7 +274,11 @@ var auditIdKey = 'audit-id';
         };
 
         self.getVisitedCoachingPdvsCount = function(userId) {
-            return Database.query('SELECT * FROM Survey WHERE userId = ? AND coaching_compliance = 1', [userId])
+            var query = 'SELECT * FROM Survey WHERE userId ='+ [userId] + 
+            ' AND id in (Select Distinct sqr.SurveyId FROM SurveyQuestionsResults sqr INNER JOIN Question Q ON sqr.questionid = q.questionId INNER JOIN Module m ON q.QuestionModuleId = m.ModuleId WHERE m.idMainMod = 1)';
+            //console.log (query);
+
+            return Database.query(query)
                 .then(function(result) {
                     return result.rows.length;
                 });
@@ -377,8 +392,8 @@ var auditIdKey = 'audit-id';
         };
 
         self.getCoachingComplianceSurvey = function() {
-            //??? 20160812  cambie el coaching_compliance = 1 para poder evaluar todos los surveys
-            return Database.query('SELECT * FROM Survey WHERE id = 1 ')
+            //return Database.query('SELECT * FROM Survey WHERE coaching_compliance = 1 ')
+            return Database.query('SELECT s.id, survey, syncstatus, channelId, pdvId, sellerid, userid, [date], 1 as coaching_compliance FROM Survey s WHERE s.Id in (Select Distinct sqr.SurveyId FROM SurveyQuestionsResults sqr INNER JOIN Question Q ON sqr.questionid = q.questionId INNER JOIN Module m ON q.QuestionModuleId = m.ModuleId WHERE m.idMainMod = 1)')
                 //return Database.query('SELECT * FROM Survey')
                 .then(function(result) {
                     return Database.fetchAll(result);

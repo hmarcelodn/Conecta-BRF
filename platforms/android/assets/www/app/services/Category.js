@@ -6,7 +6,7 @@
         .factory('Category', Category);
 
     Category.$inject = ['$http', 'Database'];
-    function Category($http, Database) {
+    function Category($http, Database) { 
 
         var synchronizeCategories = function(){
                 return $http.get('https://ws.conecta-brf.com/get/categories/?token=560a100abad225d5afdf4fc6e5334917');

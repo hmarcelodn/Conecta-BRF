@@ -116,13 +116,13 @@
                     var promises = new Array();
 
                     Survey.getClosedSurveys().then(function(surveys) {
-
+                        console.log ("surveys");
                         console.log(surveys);
 
                         angular.forEach(surveys, function(value, key) {
                             Question.getQuestionsBySurveyId(value.id).then(function(questions) {
 
-                                console.log(questions);
+                                //console.log(questions);
 
                                 promises.push(Survey.informSurveyQuestions(
                                     JSON.stringify({
