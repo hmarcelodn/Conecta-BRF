@@ -355,7 +355,7 @@
                             });
 
                             $q.all(promises).then(function() {
-                                $scope.syncQuestions = 2;
+                                //$scope.syncQuestions = 2;
                                 deferred.resolve();
                             });
                         })
@@ -379,6 +379,7 @@
                             });
 
                             $q.all(promises).then(function() {
+                                $scope.syncQuestions = 2;
                                 $scope.syncQuestionsGroups = 2;
                                 deferred.resolve();
                             });

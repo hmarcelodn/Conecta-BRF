@@ -104,16 +104,29 @@
 
                 $q.all([
                         Survey.getCoachingComplianceSurvey(),
-                        Target.getTargetCoaching()
+                        Target.getTargetCoaching(),
+                        Survey.getCountsSurveysNonCompliance()
                     ])
                     .then(function(data) {
                         var coachingCompliance = data[0];
                         var userCoachingCompliance = data[1];
+                        var CountsSurveysNonCompliance = data[2];
                         //
 
                         if (coachingCompliance.length < userCoachingCompliance.target_coaching) {
                             $rootScope.leftCoaching = (parseInt(userCoachingCompliance.target_coaching) - coachingCompliance.length);
-                            $scope.syncRoute = '#/SendSynchronization';
+                            console.log (parseInt(userCoachingCompliance.target_coaching) - coachingCompliance.length);
+                            console.log (userCoachingCompliance.target_coaching - coachingCompliance.length);
+                            console.log ("parseint leftcoaching");
+                            /* console.log ("CountsSurveysNonCompliance");
+                            console.log (CountsSurveysNonCompliance);
+                            console.log (CountsSurveysNonCompliance.length);
+                            */
+                            if (CountsSurveysNonCompliance.length > 0){
+                                $scope.syncRoute = '#/SendSynchronization';
+                            } else {
+                                $scope.syncRoute = '#/LockSynchronization/' + $rootScope.leftCoaching;
+                            }
                             /*$rootScope.MainModuleId = 0;
                             if (coachingCompliance.length > 0) {
                                 $rootScope.MainModuleId = coachingCompliance[0].id;

@@ -138,6 +138,12 @@
                                     })
                                 ));
                             });
+                            console.log ("value.id");
+                            console.log (value.id);
+                            Survey.deleteSurveyNoBrfResults(value.id);
+                            Survey.deleteSurveyObservationResults(value.id);
+                            Survey.deleteSurveyQuestionsResults(value.id);
+                            Survey.deleteSurvey(value.id);
                         });
                     });
                     console.log("EXIT");
@@ -160,7 +166,9 @@
                 })*/
                 .then(function() {
                     //$rootScope.$emit('sendSyncFinished');
-                    $location.path('/SyncOk/2');
+                    //$location.path('/SyncOk/2');
+                    // Clean  Up surveys
+                    
                 })
                 .catch(function(error) {
                     console.log(error);

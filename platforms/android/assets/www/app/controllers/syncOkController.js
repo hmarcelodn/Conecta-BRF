@@ -14,7 +14,8 @@
 
         function activate() {
             $scope.syncId = parseInt($routeParams.syncId);
-            $scope.leftCoaching = ($rootScope.leftCoaching);
+            $scope.leftCoaching = $rootScope.leftCoaching;
+            $scope.YO = 11;
             console.log("SEND");
             console.log($scope.leftCoaching);
             console.log("END");

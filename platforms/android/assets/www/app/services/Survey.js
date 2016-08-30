@@ -394,7 +394,14 @@ var auditIdKey = 'audit-id';
         self.getCoachingComplianceSurvey = function() {
             //return Database.query('SELECT * FROM Survey WHERE coaching_compliance = 1 ')
             return Database.query('SELECT s.id, survey, syncstatus, channelId, pdvId, sellerid, userid, [date], 1 as coaching_compliance FROM Survey s WHERE s.Id in (Select Distinct sqr.SurveyId FROM SurveyQuestionsResults sqr INNER JOIN Question Q ON sqr.questionid = q.questionId INNER JOIN Module m ON q.QuestionModuleId = m.ModuleId WHERE m.idMainMod = 1)')
-                //return Database.query('SELECT * FROM Survey')
+                .then(function(result) {
+                    return Database.fetchAll(result);
+                })
+        };
+
+        self.getCountsSurveysNonCompliance = function() {
+            //return Database.query('SELECT * FROM Survey WHERE coaching_compliance = 1 ')
+            return Database.query('SELECT Distinct s.id as cSurveysNonCompliance FROM Survey s WHERE s.Id in (Select Distinct sqr.SurveyId FROM SurveyQuestionsResults sqr INNER JOIN Question Q ON sqr.questionid = q.questionId INNER JOIN Module m ON q.QuestionModuleId = m.ModuleId WHERE m.idMainMod <> 1)')
                 .then(function(result) {
                     return Database.fetchAll(result);
                 })
