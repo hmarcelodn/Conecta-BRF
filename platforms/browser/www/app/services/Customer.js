@@ -50,7 +50,9 @@
         };
 
         var getCustomers = function(channelid) {
-            return Database.query('SELECT customerId, address, highlighted, channelId, code, id_type FROM Customer WHERE channelId=? LIMIT 0, 2000', [channelid])
+            console.log ("chanel");
+            console.log (channelid);
+            return Database.query('SELECT customerId, address, highlighted, channelId, code, id_type FROM Customer WHERE channelId=? LIMIT 0, 3000', [channelid])
                 .then(function(result) {
                     return Database.fetchAll(result);
                 });

@@ -164,7 +164,8 @@ brfPhoneGapApp.factory('Config', function(){
                     {name: 'id', type: 'integer primary key autoincrement'},
                     { name: 'name', type: 'name' },
                     { name: 'channelId', type: 'integer' },
-                    { name: 'id_di', type: 'integer'}
+                    { name: 'id_di', type: 'integer'},
+                    { name: 'keyword', type: 'text'}
                 ]
             },
             {

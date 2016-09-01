@@ -24,7 +24,7 @@
         };
 
         var loadModules = function() {
-            console.log("INN 999" + new Date());
+            //console.log("INN 999" + new Date());
             Module.getModules(Survey.getAuditChannel(), Login.getToken().id_role, Survey.getAuditId(), Survey.getAuditPdv()).then(function(modules) {
                 $scope.modules = modules;
 

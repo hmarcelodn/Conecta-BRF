@@ -168,7 +168,7 @@
                             var promises = [];
 
                             angular.forEach(sellers.data.sellers, function(value, key) {
-                                promises.push(Seller.setSeller(value.id, value.name, value.id_channel, value.id_di));
+                                promises.push(Seller.setSeller(value.id, value.name, value.id_channel, value.id_di, value.keyword));
                             });
 
                             $q.all(promises).then(function() {
