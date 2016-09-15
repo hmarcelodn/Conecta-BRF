@@ -110,7 +110,7 @@
                 query = query + ' AND q.categoryId = ' + categoryId;
             }
 
-            query = query + ' ORDER BY  q.data DESC ';		
+            query = query + ' ORDER BY  q.data ASC ';		
 //LUU
 console.log ("A");
 console.log (query);
