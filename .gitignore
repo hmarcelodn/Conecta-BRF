@@ -1,3 +1,5 @@
 node_modules
 bower_components
 *.apk
+*.properties
+platforms/android/.gradle/2.2.1/taskArtifacts/cache.properties

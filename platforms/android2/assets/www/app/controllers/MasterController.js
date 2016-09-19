@@ -15,7 +15,8 @@
         $scope.auditCustomerName;
         $scope.mainModules = [];
         $scope.loggedUserName = '';
-
+        $scope.version = '1.5.0';
+        
         var loadMainModules = function() {
             Module.getMainModules().then(function(mainModules) {
                 $scope.mainModules = mainModules;
