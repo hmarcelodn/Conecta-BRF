@@ -5,13 +5,13 @@
         .module('brfPhoneGapApp')
         .factory('Module', Module);
 
-    Module.$inject = ['$http', 'Database'];
+    Module.$inject = ['$http', 'Database', 'Login'];
 
-    function Module($http, Database) {
+    function Module($http, Database, Login) {
         var self = this;
 
         self.synchronizeModules = function() {
-            return $http.get('https://ws.conecta-brf.com/get/modules/?token=560a100abad225d5afdf4fc6e5334917');
+            return $http.get('https://ws.conecta-brf.com/get/modules/?token=560a100abad225d5afdf4fc6e5334917&id_user=' + Login.getToken().id);
         };
 
         self.synchronizeMainModules = function() {
@@ -25,8 +25,8 @@
                 });
         };
 
-        self.setModule = function(moduleId, behavior, modName, categoryType, color, icon, slug, mainModuleId, Bind) {
-            Database.query('INSERT INTO Module(moduleId, behavior, modName, categoryType, color, icon, slug, idMainMod, Bind) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)', [moduleId, behavior, modName, categoryType, color, icon, slug, mainModuleId, Bind])
+        self.setModule = function(moduleId, behavior, modName, categoryType, color, icon, slug, mainModuleId, Bind, Ordering) {
+            Database.query('INSERT INTO Module(moduleId, behavior, modName, categoryType, color, icon, slug, idMainMod, Bind, Ordering) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [moduleId, behavior, modName, categoryType, color, icon, slug, mainModuleId, Bind, Ordering])
                 .then(function(result) {
                     return true;
                 });
@@ -80,7 +80,8 @@
                 //' LEFT JOIN (SELECT Count(sqr.id) as haveQuestions, q.QuestionModuleId FROM SurveyQuestionsResults sqr INNER JOIN Question q ON sqr.QuestionId = q.QuestionId WHERE sqr.surveyId = ' + auditId +' GROUP BY 	q.QuestionModuleId) hQ ON mod.ModuleId = hQ.QuestionModuleId ' +
                 ' WHERE modcha.channelId = ?' +
                 ' AND modur.roleId = ?' +
-                ' AND mod.idMainMod = ?';
+                ' AND mod.idMainMod = ?' + 
+                ' ORDER BY mod.Ordering ASC, mod.ModuleId ASC ';
 
             /* console.log('ModQry');
             console.log (query);
@@ -115,7 +116,7 @@
         };
 
         self.getModuleById = function(moduleId) {
-            return Database.query('SELECT * FROM Module WHERE moduleId = ?', [moduleId])
+            return Database.query('SELECT * FROM Module WHERE moduleId = ? ORDER BY mod.Ordering ASC, mod.ModuleId ASC ', [moduleId])
                 .then(function(result) {
                     return Database.fetch(result);
                 });

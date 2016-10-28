@@ -70,10 +70,11 @@
 
                     var deferred = $q.defer();
                     $scope.syncCustomers = 1;
-                    console.log ('A');
+                    /* console.log ('A');
                     console.log ($rootScope.SelectedChains);
                     console.log ($rootScope.SelectedDis);
                     console.log ('B');
+                    */
                     if ($rootScope.SelectedChains == 0 && $rootScope.SelectedDic == 0) {
                         Customer.synchronizeCustomersAll().then(function(customers) {
                                 console.log("IN ALL");
@@ -220,7 +221,7 @@
 
                                 var moduleId = value.id;
 
-                                promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.style.color, value.style.icon, value.slug, value.id_main_mod, value.bind));
+                                promises.push(Module.setModule(value.id, value.behavior, value.mod_name, value.category_type, value.style.color, value.style.icon, value.slug, value.id_main_mod, value.bind, value.ordering));
 
                                 angular.forEach(value.ids_channels, function(value, key) {
                                     promises.push(Module.setModuleChannels(moduleId, value));
@@ -230,16 +231,18 @@
                                     promises.push(Module.setModuleRoles(moduleId, value));
                                 });
                                 
+                                /* LUU 
                                 console.log (moduleId);
                                 console.log (value.bind);
+                                */
                                 if (value.bind == '0'){
                                     promises.push(Module.setModuleBind(moduleId, moduleId));
                                 } else {
                                     promises.push(Module.setModuleBind(moduleId, moduleId));
-                                    console.log (value.bind.split(","));
+                                    // console.log (value.bind.split(","));
                                     angular.forEach(value.bind.split(","), function(value, key) {
-                                        console.log (moduleId);
-                                        console.log (value);
+                                       // console.log (moduleId);
+                                        // console.log (value);
                                         promises.push(Module.setModuleBind(moduleId, value));
                                     });
                                 }

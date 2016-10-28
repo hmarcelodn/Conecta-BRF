@@ -5,12 +5,14 @@
         .module('brfPhoneGapApp')
         .factory('Question', Question);
 
-    Question.$inject = ['$http', 'Database'];
-    function Question($http, Database) {
+    Question.$inject = ['$http', 'Database', 'Login'];
+    function Question($http, Database,  Login) {
         var self = this;
 
         self.synchronizeQuestions = function () {
-            return $http.get('https://ws.conecta-brf.com/get/questions/?token=560a100abad225d5afdf4fc6e5334917');
+            return $http.get('https://ws.conecta-brf.com/get_questions.php?token=560a100abad225d5afdf4fc6e5334917&id_user=' + Login.getToken().id);
+            //return $http.get('https://ws.conecta-brf.com/get/questions/?token=560a100abad225d5afdf4fc6e5334917');
+             
             //return $http.get('https://ws.qa.conecta-brf.com/get/questions/?token=560a100abad225d5afdf4fc6e5334917');
         };
 

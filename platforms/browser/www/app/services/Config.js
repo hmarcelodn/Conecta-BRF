@@ -81,7 +81,8 @@ brfPhoneGapApp.factory('Config', function(){
                     { name: 'icon', type: 'text' },
                     { name: 'slug', type: 'text' },
                     { name: 'idMainMod', type: 'integer' },
-                    { name: 'bind', type: 'text'}
+                    { name: 'bind', type: 'text'},
+                    { name: 'Ordering', type: 'integer' }
                 ]
             },
             {

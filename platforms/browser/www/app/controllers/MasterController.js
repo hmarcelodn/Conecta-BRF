@@ -83,8 +83,6 @@
                     Customer.getPdvTypeByCustomerId(data.pdvId).then(function(customerPdvType) {
                         Survey.setSurvey(new Date().getTime().toString(), data.channelId, data.pdvId, data.sellerId, Login.getToken().id)
                             .then(function() {
-                                //AGREGAR QUE GUARDE EL SURVEYID
-                                //LUUUUU
                                 Survey.enableAuditMode(data.channelId, data.pdvId, data.sellerId, data.auditId);
                                 vm.loadModules();
                             });
