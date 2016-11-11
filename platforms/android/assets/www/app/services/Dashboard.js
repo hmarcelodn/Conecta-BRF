@@ -20,11 +20,13 @@
 
         ////////////////
         function synchronizeDating() { 
-            return $http.get('https://ws.conecta-brf.com/get/dashboard/dating/?token=560a100abad225d5afdf4fc6e5334917');
+            return $http.get('https://ws.qa.conecta-brf.com/get/dashboard/dating/?token=560a100abad225d5afdf4fc6e5334917');
+            //return $http.get('https://ws.conecta-brf.com/get/dashboard/dating/?token=560a100abad225d5afdf4fc6e5334917');
         }
         
         function synchronizeTargets(userId) {
-            return $http.get('https://ws.conecta-brf.com/get/user/target/?token=560a100abad225d5afdf4fc6e5334917&id_user=' + userId);
+            return $http.get('https://ws.qa.conecta-brf.com/get/user/target/?token=560a100abad225d5afdf4fc6e5334917&id_user=' + userId);
+            //return $http.get('https://ws.conecta-brf.com/get/user/target/?token=560a100abad225d5afdf4fc6e5334917&id_user=' + userId);
         }
         
         function setDating(id, type, label) {

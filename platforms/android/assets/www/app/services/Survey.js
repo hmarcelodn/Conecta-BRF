@@ -222,7 +222,8 @@ var auditIdKey = 'audit-id';
         self.informSurvey = function(survey) {
             var req = {
                 method: "POST",
-                url: "https://ws.conecta-brf.com/set/survey/?token=560a100abad225d5afdf4fc6e5334917",
+                url: "https://ws.qa.conecta-brf.com/set/survey/?token=560a100abad225d5afdf4fc6e5334917",
+                //url: "https://ws.conecta-brf.com/set/survey/?token=560a100abad225d5afdf4fc6e5334917",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -236,7 +237,8 @@ var auditIdKey = 'audit-id';
             console.log(survey);
             var req = {
                 method: "POST",
-                url: "https://ws.conecta-brf.com/set/survey/no-brf/?token=560a100abad225d5afdf4fc6e5334917",
+                url: "https://ws.qa.conecta-brf.com/set/survey/no-brf/?token=560a100abad225d5afdf4fc6e5334917",
+                //url: "https://ws.conecta-brf.com/set/survey/no-brf/?token=560a100abad225d5afdf4fc6e5334917",
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -249,7 +251,8 @@ var auditIdKey = 'audit-id';
         self.informSurveyQuestions = function(survey) {
             var req = {
                 method: "POST",
-                url: "https://ws.conecta-brf.com/set/survey/questions/?token=560a100abad225d5afdf4fc6e5334917",
+                url: "https://ws.qa.conecta-brf.com/set/survey/questions/?token=560a100abad225d5afdf4fc6e5334917",
+                //url: "https://ws.conecta-brf.com/set/survey/questions/?token=560a100abad225d5afdf4fc6e5334917",
                 headers: {
                     "Content-Type": "application/json"
                 },

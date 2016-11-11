@@ -9,11 +9,13 @@
     function Category($http, Database) { 
 
         var synchronizeCategories = function(){
-                return $http.get('https://ws.conecta-brf.com/get/categories/?token=560a100abad225d5afdf4fc6e5334917');
+                return $http.get('https://ws.qa.conecta-brf.com/get/categories/?token=560a100abad225d5afdf4fc6e5334917');
+                //return $http.get('https://ws.conecta-brf.com/get/categories/?token=560a100abad225d5afdf4fc6e5334917');
         };
         
         var synchronizeCategoryImages = function(){
-                return $http.get('https://ws.conecta-brf.com/get/categories/images/?token=560a100abad225d5afdf4fc6e5334917');
+                return $http.get('https://ws.qa.conecta-brf.com/get/categories/images/?token=560a100abad225d5afdf4fc6e5334917');
+                //return $http.get('https://ws.conecta-brf.com/get/categories/images/?token=560a100abad225d5afdf4fc6e5334917');
         };
         
         var setCategory = function(categoryId, type, name){

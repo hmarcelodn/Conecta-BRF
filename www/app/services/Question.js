@@ -10,10 +10,8 @@
         var self = this;
 
         self.synchronizeQuestions = function () {
+            //return $http.get('https://ws.qa.conecta-brf.com/get_questions.php?token=560a100abad225d5afdf4fc6e5334917&id_user=' + Login.getToken().id);
             return $http.get('https://ws.conecta-brf.com/get_questions.php?token=560a100abad225d5afdf4fc6e5334917&id_user=' + Login.getToken().id);
-            //return $http.get('https://ws.conecta-brf.com/get/questions/?token=560a100abad225d5afdf4fc6e5334917');
-             
-            //return $http.get('https://ws.qa.conecta-brf.com/get/questions/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
         self.setQuestion = function (question){
@@ -51,6 +49,7 @@
         };
 
         self.synchronizeQuestionsGroups = function () {
+            // return $http.get('https://ws.qa.conecta-brf.com/get/questions/groups/?token=560a100abad225d5afdf4fc6e5334917');
             return $http.get('https://ws.conecta-brf.com/get/questions/groups/?token=560a100abad225d5afdf4fc6e5334917');
         };
 

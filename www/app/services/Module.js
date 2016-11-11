@@ -11,10 +11,12 @@
         var self = this;
 
         self.synchronizeModules = function() {
+            //return $http.get('https://ws.qa.conecta-brf.com/get/modules/?token=560a100abad225d5afdf4fc6e5334917&id_user=' + Login.getToken().id);
             return $http.get('https://ws.conecta-brf.com/get/modules/?token=560a100abad225d5afdf4fc6e5334917&id_user=' + Login.getToken().id);
         };
 
         self.synchronizeMainModules = function() {
+            // return $http.get('https://ws.qa.conecta-brf.com/get/modules/main/?token=560a100abad225d5afdf4fc6e5334917');
             return $http.get('https://ws.conecta-brf.com/get/modules/main/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
@@ -116,7 +118,7 @@
         };
 
         self.getModuleById = function(moduleId) {
-            return Database.query('SELECT * FROM Module WHERE moduleId = ? ORDER BY mod.Ordering ASC, mod.ModuleId ASC ', [moduleId])
+            return Database.query('SELECT * FROM Module WHERE moduleId = ? ORDER BY Ordering ASC, ModuleId ASC ', [moduleId])
                 .then(function(result) {
                     return Database.fetch(result);
                 });

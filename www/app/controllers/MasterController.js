@@ -100,7 +100,8 @@
 
         $rootScope.$on('userLoggedOff', function() {
             console.log('userLoggedOff');
-            localStorage.clear();
+            // 20161111 -> Comente el localStorage.clear() porque hay usuarios a los que les  crashea la app
+            //localStorage.clear();
             $scope.mainModules = [];
             $location.path("/");
         });

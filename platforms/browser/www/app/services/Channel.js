@@ -9,7 +9,8 @@
     function Channel($http, Database) {
         
         var synchronizeChannels = function(){
-            return $http.get('https://ws.conecta-brf.com/get/channels/?token=560a100abad225d5afdf4fc6e5334917');
+            return $http.get('https://ws.qa.conecta-brf.com/get/channels/?token=560a100abad225d5afdf4fc6e5334917');
+            // return $http.get('https://ws.conecta-brf.com/get/channels/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
         var setChannel = function(id, name, channelId){

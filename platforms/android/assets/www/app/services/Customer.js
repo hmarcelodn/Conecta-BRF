@@ -11,28 +11,33 @@
         //LUUU crear 3 synchronizeCustomers 
 
         var synchronizeCustomers = function() {
-            return $http.get('https://ws.conecta-brf.com/get/customers/?token=560a100abad225d5afdf4fc6e5334917');
+            return $http.get('https://ws.qa.conecta-brf.com/get/customers/?token=560a100abad225d5afdf4fc6e5334917');
+            // return $http.get('https://ws.conecta-brf.com/get/customers/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
         var synchronizeCustomersAll = function() {
-            return $http.get('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=3&selected_ids=&id_user=' + Login.getToken().id);
+            return $http.get('https://ws.qa.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=3&selected_ids=&id_user=' + Login.getToken().id);
+            // return $http.get('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=3&selected_ids=&id_user=' + Login.getToken().id);
         };
 
         var synchronizeCustomersChains = function() {
             //console.log ('def chains');
             //console.log('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=1&selected_ids=' + $rootScope.SelectedChains + '&id_user=' + Login.getToken().id);
-            return $http.get('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=1&selected_ids=' + $rootScope.SelectedChains + '&id_user=' + Login.getToken().id);
+            return $http.get('https://ws.qa.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=1&selected_ids=' + $rootScope.SelectedChains + '&id_user=' + Login.getToken().id);
+            //return $http.get('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=1&selected_ids=' + $rootScope.SelectedChains + '&id_user=' + Login.getToken().id);
         };
 
         var synchronizeCustomersDis = function() {
             // console.log('def chains');
             // console.log('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=2&selected_ids=' + $rootScope.SelectedDis + '&id_user=' + Login.getToken().id);
-            return $http.get('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=2&selected_ids=' + $rootScope.SelectedDis + '&id_user=' + Login.getToken().id);
+            return $http.get('https://ws.qa.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=2&selected_ids=' + $rootScope.SelectedDis + '&id_user=' + Login.getToken().id);
+            // return $http.get('https://ws.conecta-brf.com/v2/get/customers/?token=560a100abad225d5afdf4fc6e5334917&customer_type=2&selected_ids=' + $rootScope.SelectedDis + '&id_user=' + Login.getToken().id);
         };
 
 
         var synchronizeCustomerTypes = function(argument) {
-            return $http.get('https://ws.conecta-brf.com/get/customers/type/?token=560a100abad225d5afdf4fc6e5334917');
+            return $http.get('https://ws.qa.conecta-brf.com/get/customers/type/?token=560a100abad225d5afdf4fc6e5334917');
+            //return $http.get('https://ws.conecta-brf.com/get/customers/type/?token=560a100abad225d5afdf4fc6e5334917');
         };
 
         var setCustomer = function(id, companyName, cuit, address, pdvType, highlighted, channelid, code, id_type) {

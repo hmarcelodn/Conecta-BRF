@@ -12,10 +12,11 @@
         
         var logout = function(){   
             $scope.isLoggingOff = 1;
-            Database.dropAll().then(function(){                
+            // 20161111 -> Comente el dropAll porque hay usuarios a los que les  crashea la app
+            //Database.dropAll().then(function(){                
                 Login.authenticate(undefined);                              
                 $rootScope.$emit('userLoggedOff');
-            });             
+            //});             
         };   
 
         activate();
